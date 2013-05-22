@@ -1,14 +1,9 @@
-
-/**
- * Module dependencies.
- */
-
 var express = require('express'),
   routes = require('./routes'),
   api = require('./routes/api'),
-  mongoose = require('mongoose');
-
-mongoose.connect(process.env.MONGODB_DEVELOPMENT_URI);
+  mongoose = require('mongoose'),
+  passport = require('passport'), 
+  LocalStrategy = require('passport-local').Strategy;
 
 var app = module.exports = express();
 
@@ -19,6 +14,10 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.static(__dirname + '/public'));
+  app.use(express.cookieParser()); 
+  app.use(express.session({ secret: 'keyboard cat' }));
+  app.use(passport.initialize());
+  app.use(passport.session());
   app.use(app.router);
 });
 
@@ -29,6 +28,13 @@ app.configure('development', function(){
 app.configure('production', function(){
   app.use(express.errorHandler());
 });
+
+//configure passport
+var User = require('./models/user');
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+mongoose.connect(process.env.MONGODB_DEVELOPMENT_URI);
 
 // Routes
 
