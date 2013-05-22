@@ -29,6 +29,6 @@ function CircleCtrl() {
 
 function HomeCtrl($timeout){
   $timeout(function(){
-    $(document).foundation();
+    $('.orbit-container').foundation('orbit');
   }, 100);
 }
