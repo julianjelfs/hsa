@@ -26,3 +26,9 @@ function RequestCtrl() {
 
 function CircleCtrl() {
 }
+
+function HomeCtrl($timeout){
+  $timeout(function(){
+    $(document).foundation();
+  }, 100);
+}
