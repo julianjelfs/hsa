@@ -12,13 +12,21 @@ function AppCtrl($scope, $http) {
   });
 }
 
-function LoginCtrl() {
-
+function LoginCtrl($scope, $http, authService) {
+  $scope.submit = function() {
+    $http.post('api/login').success(function(data, status, headers, config) {
+      authService.loginConfirmed(data);
+    });
+  }
 }
 
 
 function RegisterCtrl() {
-
+  $scope.submit = function($scope, $http, authService) {
+    $http.post('api/register').success(function(data, status, headers, config) {
+      authService.loginConfirmed(data);
+    });
+  }  
 }
 
 function RequestCtrl() {

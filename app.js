@@ -1,6 +1,5 @@
 var express = require('express'),
   routes = require('./routes'),
-  api = require('./routes/api'),
   mongoose = require('mongoose'),
   passport = require('passport'), 
   LocalStrategy = require('passport-local').Strategy;
@@ -37,13 +36,7 @@ passport.deserializeUser(User.deserializeUser());
 mongoose.connect(process.env.MONGODB_DEVELOPMENT_URI);
 
 // Routes
-
-app.get('/', routes.index);
-app.get('/partials/:area/:name', routes.partials);
-
-// JSON API
-
-app.get('/api/name', api.name);
+routes(app);
 
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);
