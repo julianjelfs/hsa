@@ -32,11 +32,20 @@ block body
            
   #main(ng-controller='AppCtrl', ng-cloak)
     .container
-      .content
-        .row
-          .span12
-            div(ng-view)
-        footer
-
+      .row.content
+        .small-12
+          div(ng-view)
+        
+  #footer.row.full-width
+    .large-8.columns
+    .large-4.columns
+      ul.inline-list.right
+        li
+          a(href="/") Home
+        li
+          a(href="/contact") Contact
+        li
+          a(href="/help") Help
+          
 block scripts
    
