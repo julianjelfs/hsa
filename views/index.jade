@@ -39,6 +39,21 @@ block body
         .small-12
           div(ng-view)
         
+  div#login-holder
+    h2 Log In
+    
+    form(ng-submit="submit()")
+      div
+        label Username
+        input(type="text",name="username", ng-model="username")
+      
+      div
+        label Password
+        input(type="password",name="password", ng-model="password")
+      
+      div
+        input(type="submit",value="Log In")
+  
   #footer.row.full-width
     .large-8.columns
     .large-4.columns
