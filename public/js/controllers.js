@@ -3,27 +3,27 @@
 /* Controllers */
 
 function AppCtrl($scope, $http) {
-  $http({method: 'GET', url: '/api/name'}).
-  success(function(data, status, headers, config) {
-    $scope.name = data.name;
-  }).
-  error(function(data, status, headers, config) {
-    $scope.name = 'Error!'
-  });
+  
 }
 
 function LoginCtrl($scope, $http, authService) {
   $scope.submit = function() {
-    $http.post('api/login').success(function(data, status, headers, config) {
+    $http.post('/api/login', {
+      username : $scope.username,
+      password : $scope.password
+    }).success(function(data, status, headers, config) {
       authService.loginConfirmed(data);
     });
   }
 }
 
 
-function RegisterCtrl() {
-  $scope.submit = function($scope, $http, authService) {
-    $http.post('api/register').success(function(data, status, headers, config) {
+function RegisterCtrl($scope, $http, authService) {
+  $scope.submit = function() {
+    $http.post('/api/register', {
+      username : $scope.username,
+      password : $scope.password
+    }).success(function(data, status, headers, config) {
       authService.loginConfirmed(data);
     });
   }  

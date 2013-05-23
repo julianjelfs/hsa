@@ -12,22 +12,22 @@ module.exports = function (app) {
     res.render('partials/' + area + '/' + name);
   });
   
-  app.post('/register', function(req, res) {
-        User.register(new User({ username : req.body.username }), req.body.password, function(err, user) {
-          if (err) {
-            return res.json({
-              error : err
-            });
-          }
-          res.json({
-            user : user  
-          });
+  app.post('/api/register', function(req, res) {
+    User.register(new User({ username : req.body.username }), req.body.password, function(err, user) {
+      if (err) {
+        return res.json({
+          error : err
         });
-    }); 
+      }
+      res.json({
+        user : user  
+      });
+    });
+  }); 
   
-  app.post('/login', passport.authenticate('local'), function(req, res) {
+  app.post('/api/login', passport.authenticate('local'), function(req, res) {
     res.json({
-      user : user  
+      user : 'hurrah'  
     });
   });
 };
