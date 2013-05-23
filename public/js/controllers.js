@@ -2,8 +2,10 @@
 
 /* Controllers */
 
-function AppCtrl($scope, $http) {
-  
+function AppCtrl($scope, $location) {
+  $scope.$on('event:auth-loginRequired', function(){
+    $location.path( "/login" );
+  });
 }
 
 function LoginCtrl($scope, $http, authService) {
@@ -29,7 +31,10 @@ function RegisterCtrl($scope, $http, authService) {
   }  
 }
 
-function RequestCtrl() {
+function RequestCtrl($scope, $http) {
+  $http.get('/api/requests').success(function(data, status, headers, config) {
+    $scope.requests = data;  
+  });
 }
 
 function CircleCtrl() {

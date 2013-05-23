@@ -12,6 +12,20 @@ module.exports = function (app) {
     res.render('partials/' + area + '/' + name);
   });
   
+  app.get('/api/requests', passport.authenticate('local'), function(req, res) {
+    res.json([{
+      description : 'Request One'
+    },{
+      description : 'Request Two'
+    },{
+      description : 'Request Three'
+    },{
+      description : 'Request Four'
+    },{
+      description : 'Request Five'
+    }]);
+  });
+  
   app.post('/api/register', function(req, res) {
     User.register(new User({ username : req.body.username }), req.body.password, function(err, user) {
       if (err) {
