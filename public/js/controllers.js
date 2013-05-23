@@ -3,10 +3,6 @@
 /* Controllers */
 
 function AppCtrl($scope, $location, $http) {
-  $scope.$on('event:auth-loginRequired', function(){
-    $location.path("/login" );
-  });
-  
   $scope.logout = function(){
     $http.post('/api/logout').success(function(data, status, headers, config) {
       $location.path("/");
