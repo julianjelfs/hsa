@@ -5,6 +5,7 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
   config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider.when('/', {templateUrl: 'partials/home/index', controller: HomeCtrl});
     $routeProvider.when('/login', {templateUrl: 'partials/account/login', controller: LoginCtrl});
+    $routeProvider.when('/logout', {controller: function(){ alert('does this work?'); }});
     $routeProvider.when('/register', {templateUrl: 'partials/account/register', controller: RegisterCtrl});
     $routeProvider.when('/request/new', {templateUrl: 'partials/request/new', controller: RequestCtrl});
     $routeProvider.when('/request/index', {templateUrl: 'partials/request/index', controller: RequestCtrl});

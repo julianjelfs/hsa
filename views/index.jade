@@ -25,12 +25,15 @@ block body
       ul.right
         li.divider
         li
+          button.btn(ng-click='logout()') Log Out
+        li.divider
+        li
           a(href='login') Log In
         li.divider
         li
           a(href='register') Register        
            
-  #main(ng-controller='AppCtrl', ng-cloak)
+  #main(ng-cloak)
     .container
       .row.content
         .small-12

@@ -1,7 +1,13 @@
 var passport = require('passport'), 
     User = require('../models/user');
 
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.send(401, 'Unauthorized');
+}
+
 module.exports = function (app) {
+  
   app.get('/', function(req, res){
     res.render('index');
   });
@@ -12,7 +18,7 @@ module.exports = function (app) {
     res.render('partials/' + area + '/' + name);
   });
   
-  app.get('/api/requests', passport.authenticate('local'), function(req, res) {
+  app.get('/api/requests', ensureAuthenticated, function(req, res) {
     res.json([{
       description : 'Request One'
     },{
@@ -37,7 +43,12 @@ module.exports = function (app) {
         user : user  
       });
     });
-  }); 
+  });
+  
+  app.post('/api/logout', function(req, res){
+    req.logout();
+    res.send(200, 'Logged out');
+  });
   
   app.post('/api/login', passport.authenticate('local'), function(req, res) {
     res.json({
