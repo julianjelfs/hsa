@@ -1,13 +1,19 @@
 var passport = require('passport'), 
-    User = require('../models/user');
+    User = require('../models/user'),
+    util = require('util');
 
 function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.send(401, 'Unauthorized');
+    if(req.user)
+        util.puts('User is authenticated ' + req.user.username);
+
+    if (req.isAuthenticated()) { return next(); }
+
+    res.send(401, 'Unauthorized');
 }
 
+
 module.exports = function (app) {
-  
+
   app.get('/', function(req, res){
     res.render('index');
   });
@@ -46,13 +52,21 @@ module.exports = function (app) {
   });
   
   app.post('/api/logout', function(req, res){
-    req.logout();
-    res.send(200, 'Logged out');
+      if(req.user)
+        util.puts('Logging out user' + req.user.username);
+      req.session.destroy();
+      req.logout();
+      delete req['user'];
+      res.send(200, 'Logged out');
   });
   
   app.post('/api/login', passport.authenticate('local'), function(req, res) {
-    res.json({
-      user : 'hurrah'  
-    });
+      util.puts("logged in as " + req.user.username);
+      res.send(200, "Logged in as " + req.user.username);
   });
+
+    app.get("*", function(req, res){
+        res.render('index');
+    });
+
 };

@@ -25,7 +25,7 @@ block body
       ul.right
         li.divider
         li
-          button.btn(ng-click='logout()') Log Out
+          a(href='logout') Log Out
         li.divider
         li
           a(href='login') Log In
@@ -39,7 +39,7 @@ block body
         .small-12
           div(ng-view)
         
-  .content#login-holder
+  .content#login-holder(ng-controller='LoginCtrl')
     h2 Log In
     
     form(ng-submit="submit()")

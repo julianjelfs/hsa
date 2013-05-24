@@ -5,11 +5,53 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
   config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider.when('/', {templateUrl: 'partials/home/index', controller: HomeCtrl});
     $routeProvider.when('/login', {templateUrl: 'partials/account/login', controller: LoginCtrl});
-    $routeProvider.when('/logout', {controller: function(){ alert('does this work?'); }});
-    $routeProvider.when('/register', {templateUrl: 'partials/account/register', controller: RegisterCtrl});
-    $routeProvider.when('/request/new', {templateUrl: 'partials/request/new', controller: RequestCtrl});
-    $routeProvider.when('/request/index', {templateUrl: 'partials/request/index', controller: RequestCtrl});
-    $routeProvider.when('/circle/index', {templateUrl: 'partials/circle/index', controller: CircleCtrl});
+
+        $routeProvider.when('/logout', {
+            templateUrl :'partials/account/login',
+            controller: function($location, logout){
+                $location.path("/");
+            },
+            resolve : {
+                logout : function($q, $http){
+                    var def = $q.defer();
+
+                    $http.post('/api/logout').success(function(data, status) {
+                        def.resolve();
+                    });
+
+                    return def.promise;
+                }
+            }
+        });
+
+        $routeProvider.when('/register', {templateUrl: 'partials/account/register', controller: RegisterCtrl});
+        $routeProvider.when('/request/new', {templateUrl: 'partials/request/new', controller: RequestCtrl});
+
+        $routeProvider.when('/request/index', {
+            templateUrl: 'partials/request/index',
+            controller: function($scope, $routeParams, requests){
+                $scope.requests = requests;
+            },
+            resolve : {
+                requests : function($q, $route, $timeout, $http){
+                    var deferred = $q.defer();
+                    //get any route params via $route.current.params object
+
+                    $http.get('/api/requests').success(function(result){
+                        if(angular.equals(result, [])){
+                            deferred.reject("No rejects to load");
+                        } else {
+                            deferred.resolve(result);
+                        }
+                    });
+
+                    return deferred.promise;
+
+                }
+            }
+        });
+
+        $routeProvider.when('/circle/index', {templateUrl: 'partials/circle/index', controller: CircleCtrl});
     $routeProvider.otherwise({redirectTo: '/'});
     $locationProvider.html5Mode(true);
   }]);

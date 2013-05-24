@@ -3,11 +3,7 @@
 /* Controllers */
 
 function AppCtrl($scope, $location, $http) {
-  $scope.logout = function(){
-    $http.post('/api/logout').success(function(data, status, headers, config) {
-      $location.path("/");
-    });      
-  }
+
 }
 
 function LoginCtrl($scope, $http, authService) {
@@ -33,10 +29,8 @@ function RegisterCtrl($scope, $http, authService) {
   }  
 }
 
-function RequestCtrl($scope, $http) {
-  $http.get('/api/requests').success(function(data, status, headers, config) {
-    $scope.requests = data;  
-  });
+function RequestCtrl($scope, $http, requests) {
+  $scope.requests = requests;
 }
 
 function CircleCtrl() {

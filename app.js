@@ -31,21 +31,8 @@ app.configure('production', function(){
 //configure passport
 var User = require('./models/user');
 passport.use(User.createStrategy());
-
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
-    done(err, user);
-  });
-});
-
-/*
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-*/
 
 mongoose.connect(process.env.MONGODB_DEVELOPMENT_URI);
 
@@ -53,7 +40,7 @@ mongoose.connect(process.env.MONGODB_DEVELOPMENT_URI);
 routes(app);
 
 // redirect all others to the index (HTML5 history)
-app.get('*', routes.index);
+//app.get('*', routes.index);
 
 // Start server
 
