@@ -39,8 +39,7 @@ function CircleCtrl($scope, circles) {
 function NewCircleCtrl($scope, $http, $location){
     $scope.submit = function(){
         $http.post('/api/circle/create', {
-            name : $scope.name,
-            description : $scope.description
+            circle : $scope.circle
         }).success(function(data, status, headers, config) {
             $location.path('/circle/index');
         });

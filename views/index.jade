@@ -37,24 +37,24 @@ block body
     .container
       .row.content
         .small-12
-          div(ng-view)
-        
-  .content#login-holder(ng-controller='LoginCtrl')
-    h2 Log In
-    
-    form(ng-submit="submit()")
-      div
-        label Username
-        input(type="text",name="username", ng-model="username")
-      
-      div
-        label Password
-        input(type="password",name="password", ng-model="password")
-      
-      div
-        button.btn(type="submit") Log In
-      p
-        a(href='register') Register
+          div.view-animate-container#content(ng-view, ng-animate="{enter: 'view-enter'}")
+
+          div#login-holder(ng-controller='LoginCtrl')
+            h2 Log In
+
+            form(ng-submit="submit()")
+              div
+                label Username
+                input(type="text",name="username", ng-model="username")
+
+              div
+                label Password
+                input(type="password",name="password", ng-model="password")
+
+              div
+                button.btn(type="submit") Log In
+              p
+                a(href='register') Register
 
 block scripts
    

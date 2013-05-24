@@ -9,7 +9,7 @@ table.table(style="width:100%")
     th(style="width:30px")
     th(style="width:30px")
     tr(ng-repeat="r in requests")
-        td {{r.date}}
+        td {{r.date | date}}
         td {{r.start}}
         td {{r.end}}
         td {{r.description}}

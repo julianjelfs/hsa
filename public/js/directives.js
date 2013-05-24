@@ -11,7 +11,7 @@ angular.module('myApp.directives', [])
         elem.removeClass('waiting-for-angular');
 
         var login = angular.element("#login-holder");
-        var main = angular.element('#main');
+        var main = angular.element('#content');
         
         login.hide();
         

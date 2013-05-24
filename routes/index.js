@@ -29,24 +29,6 @@ module.exports = function (app) {
     });
 
 
-    app.get('/api/requests', ensureAuthenticated, function (req, res) {
-        Request.find(function (err, requests) {
-            if (err) {
-                res.send(500, err);
-            }
-            res.json(requests);
-        })
-    });
-
-    app.get('/api/circles', ensureAuthenticated, function (req, res) {
-        Circle.find(function (err, circles) {
-            if (err) {
-                res.send(500, err);
-            }
-            res.json(circles);
-        })
-    });
-
     app.post('/api/register', function (req, res) {
         User.register(new User({ username: req.body.username }), req.body.password, function (err, user) {
             if (err) {
@@ -60,94 +42,61 @@ module.exports = function (app) {
         });
     });
 
-    app.post('/api/circle/delete/:id', ensureAuthenticated, function (req, res) {
-        var id = req.params.id;
-        Circle.findById(id, function (err, c) {
-            c.remove(function (err, c) {
-                if (err) {
-                    res.send(500, err);
-                }
-                res.send(200, "Deleted");
-            });
-        });
-    });
+    var models = {
+        "circle" : Circle,
+        "request" : Request
+    };
 
-    app.post('/api/request/delete/:id', ensureAuthenticated, function (req, res) {
-        var id = req.params.id;
-        Request.findById(id, function (err, c) {
-            c.remove(function (err, c) {
-                if (err) {
-                    res.send(500, err);
-                }
-                res.send(200, "Deleted");
-            });
-        });
-    });
-
-    app.post('/api/circle/edit/:id', ensureAuthenticated, function (req, res) {
-        var id = req.params.id;
-        var c = req.body.circle;
-        delete c._id;
-        Circle.update({_id: id}, c, function (err, num) {
+    app.get('/api/:model', ensureAuthenticated, function (req, res) {
+        models[req.params.model].find(function (err, models) {
             if (err) {
                 res.send(500, err);
             }
-            res.send(200, "Updated " + num + " circles");
-        });
-    });
-
-    app.post('/api/request/edit/:id', ensureAuthenticated, function (req, res) {
-        var id = req.params.id;
-        var r = req.body.request;
-        delete r._id;
-        Request.update({_id: id}, r, function (err, num) {
-            if (err) {
-                res.send(500, err);
-            }
-            res.send(200, "Updated " + num + " requests");
-        });
-    });
-
-    app.get('/api/circle/:id', ensureAuthenticated, function (req, res) {
-        var id = req.params.id;
-        var c = Circle.findById(id, function (err, c) {
-            if (err) {
-                res.send(500, err);
-            }
-            res.json(c);
-        });
-    });
-
-    app.get('/api/request/:id', ensureAuthenticated, function (req, res) {
-        var id = req.params.id;
-        var r = Request.findById(id, function (err, r) {
-            if (err) {
-                res.send(500, err);
-            }
-            res.json(r);
-        });
-    });
-
-    app.post('/api/circle/create', ensureAuthenticated, function (req, res) {
-        var c = new Circle({
-            name: req.body.name,
-            description: req.body.description
-        });
-        c.save(function (err, c) {
-            if (err) {
-                return res.send(500, err);
-            }
-            res.send(200, "Circle added");
+            res.json(models);
         })
     });
 
-    app.post('/api/request/create', ensureAuthenticated, function (req, res) {
-        var r = new Request(req.body.request);
-        r.save(function (err, r) {
+    app.post('/api/:model/delete/:id', ensureAuthenticated, function (req, res) {
+        var model = models[req.params.model];
+        model.findById(req.params.id, function (err, m) {
+            m.remove(function (err, m) {
+                if (err) {
+                    res.send(500, err);
+                }
+                res.send(200, "Deleted " + req.params.model);
+            });
+        });
+    });
+
+    app.post('/api/:model/edit/:id', ensureAuthenticated, function (req, res) {
+        var model = models[req.params.model];
+        var m = req.body[req.params.model];
+        delete m._id;
+        model.update({_id: req.params.id}, m, function (err, num) {
+            if (err) {
+                res.send(500, err);
+            }
+            res.send(200, "Updated " + num + " " + req.params.model);
+        });
+    });
+
+    app.get('/api/:model/:id', ensureAuthenticated, function (req, res) {
+        models[req.params.model].findById(req.params.id, function (err, m) {
+            if (err) {
+                res.send(500, err);
+            }
+            res.json(m);
+        });
+    });
+
+    app.post('/api/:model/create', ensureAuthenticated, function (req, res) {
+        var model = models[req.params.model];
+        var m = new model(req.body[req.params.model]);
+        m.save(function (err, m) {
             if (err) {
                 return res.send(500, err);
             }
-            res.send(200, "Request added");
+            res.send(200, req.params.model + " added");
         })
     });
 

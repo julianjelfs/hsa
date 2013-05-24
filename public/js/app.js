@@ -42,7 +42,7 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
                 requests: function ($q, $route, $timeout, $http) {
                     var deferred = $q.defer();
                     //get any route params via $route.current.params object
-                    $http.get('/api/requests').success(function (result) {
+                    $http.get('/api/request').success(function (result) {
                         deferred.resolve(result);
                     }).error(function (error) {
                             deferred.reject(error);
@@ -67,7 +67,7 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
                 circles: function ($q, $route, $http) {
                     var deferred = $q.defer();
 
-                    $http.get('/api/circles').success(function (result) {
+                    $http.get('/api/circle').success(function (result) {
                         deferred.resolve(result);
                     }).error(function (error) {
                             deferred.reject(error);
