@@ -53,8 +53,14 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
 
         $routeProvider.when('/circle/index', {
             templateUrl: 'partials/circle/index',
-            controller: function($scope, circles){
+            controller: function($scope, $http, circles){
                 $scope.circles = circles;
+                $scope.delete = function(c){
+                    var i = $scope.circles.indexOf(c)
+                    $http.post("/api/circle/delete/" + c._id).success(function(result){
+                        $scope.circles.splice(i,1);
+                    });
+                }
             },
             resolve : {
                 circles : function($q, $route, $http){

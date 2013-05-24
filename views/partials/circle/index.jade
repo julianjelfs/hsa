@@ -1,9 +1,12 @@
+a.btn.right(href='/circle/new') New Circle
 h1 This is the list of circles
-a.btn(href='/circle/new') New Circle
 
 table.table
     th Name
     th Description
+    th
     tr(ng-repeat="circle in circles")
         td {{circle.name}}
         td {{circle.description}}
+        td
+            button.btn(ng-click='delete(circle)') Delete

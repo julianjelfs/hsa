@@ -63,6 +63,17 @@ module.exports = function (app) {
     });
   });
 
+    app.post('/api/circle/delete/:id', ensureAuthenticated, function(req, res){
+        var id = req.params.id;
+        var c = Circle.findById(id);
+        c.remove(function(err, c){
+            if(err){
+                res.send(500, err);
+            }
+            res.send(200, "Deleted");
+        });
+    });
+
     app.post('/api/circle/create', ensureAuthenticated, function(req, res){
         var c = new Circle({
             name : req.body.name,
