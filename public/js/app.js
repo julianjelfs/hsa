@@ -51,7 +51,31 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
             }
         });
 
-        $routeProvider.when('/circle/index', {templateUrl: 'partials/circle/index', controller: CircleCtrl});
+        $routeProvider.when('/circle/index', {
+            templateUrl: 'partials/circle/index',
+            controller: function($scope, circles){
+                $scope.circles = circles;
+            },
+            resolve : {
+                circles : function($q, $route, $http){
+                    var deferred = $q.defer();
+
+                    $http.get('/api/circles').success(function(result){
+                        if(angular.equals(result, [])){
+                            deferred.reject("No circles to load");
+                        } else {
+                            deferred.resolve(result);
+                        }
+                    });
+
+                    return deferred.promise;
+
+                }
+            }
+        });
+
+        $routeProvider.when('/circle/new', {templateUrl: 'partials/circle/new', controller: NewCircleCtrl});
+
     $routeProvider.otherwise({redirectTo: '/'});
     $locationProvider.html5Mode(true);
   }]);

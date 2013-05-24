@@ -1,1 +1,9 @@
 h1 This is the list of circles
+a.btn(href='/circle/new') New Circle
+
+table.table
+    th Name
+    th Description
+    tr(ng-repeat="circle in circles")
+        td {{circle.name}}
+        td {{circle.description}}

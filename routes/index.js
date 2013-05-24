@@ -1,5 +1,6 @@
 var passport = require('passport'), 
     User = require('../models/user'),
+    Circle = require('../models/circle'),
     util = require('util');
 
 function ensureAuthenticated(req, res, next) {
@@ -23,6 +24,8 @@ module.exports = function (app) {
     var area = req.params.area;
     res.render('partials/' + area + '/' + name);
   });
+
+
   
   app.get('/api/requests', ensureAuthenticated, function(req, res) {
     res.json([{
@@ -37,6 +40,15 @@ module.exports = function (app) {
       description : 'Request Five'
     }]);
   });
+
+  app.get('/api/circles', ensureAuthenticated, function(req, res) {
+      Circle.find(function (err, circles) {
+          if (err){
+              res.send(500, err);
+          }
+          res.json(circles);
+      })
+  });
   
   app.post('/api/register', function(req, res) {
     User.register(new User({ username : req.body.username }), req.body.password, function(err, user) {
@@ -50,6 +62,19 @@ module.exports = function (app) {
       });
     });
   });
+
+    app.post('/api/circle/create', ensureAuthenticated, function(req, res){
+        var c = new Circle({
+            name : req.body.name,
+            description : req.body.description
+        });
+        c.save(function(err, c){
+            if(err){
+                return res.send(500, err);
+            }
+            res.send(200, "Circle added");
+        })
+    });
   
   app.post('/api/logout', function(req, res){
       if(req.user)

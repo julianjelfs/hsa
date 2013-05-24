@@ -33,8 +33,19 @@ function RequestCtrl($scope, $http, requests) {
   $scope.requests = requests;
 }
 
-function CircleCtrl() {
-  
+function CircleCtrl($scope, circles) {
+    $scope.circles = circles;
+}
+
+function NewCircleCtrl($scope, $http, $location){
+    $scope.submit = function(){
+        $http.post('/api/circle/create', {
+            name : $scope.name,
+            description : $scope.description
+        }).success(function(data, status, headers, config) {
+            $location.path('/circle/index');
+        });
+    }
 }
 
 function HomeCtrl($scope, $timeout, $window){
