@@ -5,8 +5,11 @@ table.table
     th Name
     th Description
     th
+    th
     tr(ng-repeat="circle in circles")
         td {{circle.name}}
         td {{circle.description}}
         td
             button.btn(ng-click='delete(circle)') Delete
+        td
+            a.btn(href='/circle/edit/{{circle._id}}') Edit

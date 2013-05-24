@@ -1,0 +1,13 @@
+h3 Edit a circle
+
+form(ng-submit="submit()")
+    div
+        label Name
+        input(type="text",name="name", ng-model="circle.name")
+
+    div
+        label Description
+        input(type="text",name="description", ng-model="circle.description")
+
+    div
+        button.btn(type="submit") Update

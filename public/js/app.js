@@ -36,17 +36,12 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
                 requests : function($q, $route, $timeout, $http){
                     var deferred = $q.defer();
                     //get any route params via $route.current.params object
-
                     $http.get('/api/requests').success(function(result){
-                        if(angular.equals(result, [])){
-                            deferred.reject("No rejects to load");
-                        } else {
-                            deferred.resolve(result);
-                        }
+                        deferred.resolve(result);
+                    }).error(function(error){
+                        deferred.reject(error);
                     });
-
                     return deferred.promise;
-
                 }
             }
         });
@@ -67,15 +62,40 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
                     var deferred = $q.defer();
 
                     $http.get('/api/circles').success(function(result){
-                        if(angular.equals(result, [])){
-                            deferred.reject("No circles to load");
-                        } else {
-                            deferred.resolve(result);
-                        }
+                        deferred.resolve(result);
+                    }).error(function(error){
+                        deferred.reject(error);
                     });
 
                     return deferred.promise;
+                }
+            }
+        });
+    
+    $routeProvider.when('/circle/edit/:id', {
+            templateUrl: 'partials/circle/edit',
+            controller: function($scope, $http, $location, circle){
+                $scope.circle = circle;
+                $scope.submit = function(){
+                  $http.post("/api/circle/edit/" + $scope.circle._id, {
+                    circle : $scope.circle
+                  }).success(function(result){
+                        $location.path("/circle/index");
+                    });
+                }
+            },
+            resolve : {
+                circle : function($q, $route, $http){
+                    var deferred = $q.defer();
+                    var id = $route.current.params.id
 
+                    $http.get('/api/circle/' + id).success(function(result){
+                        deferred.resolve(result);
+                    }).error(function(error){
+                        deferred.reject(error);
+                    });
+
+                    return deferred.promise;
                 }
             }
         });
