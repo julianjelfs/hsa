@@ -1,15 +1,15 @@
-a.btn.right(href='/circle/new') New Circle
-h1 This is the list of circles
+a.button.small.right(href='/circle/new') New Circle
+h2 Circles that you belong to
 
-table.table
+table.table(style="width:100%")
     th Name
     th Description
-    th
-    th
+    th(style="width:30px")
+    th(style="width:30px")
     tr(ng-repeat="circle in circles")
         td {{circle.name}}
         td {{circle.description}}
         td
-            button.btn(ng-click='delete(circle)') Delete
+            button.button.small(ng-click='delete(circle)') Delete
         td
-            a.btn(href='/circle/edit/{{circle._id}}') Edit
+            a.button.small(href='/circle/edit/{{circle._id}}') Edit

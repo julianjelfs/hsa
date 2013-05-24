@@ -1,7 +1,6 @@
 'use strict';
 
 /* Controllers */
-
 function AppCtrl($scope, $location, $http) {
 
 }
@@ -44,6 +43,16 @@ function NewCircleCtrl($scope, $http, $location){
             description : $scope.description
         }).success(function(data, status, headers, config) {
             $location.path('/circle/index');
+        });
+    }
+}
+
+function NewRequestCtrl($scope, $http, $location){
+    $scope.submit = function(){
+        $http.post('/api/request/create', {
+            request : $scope.request
+        }).success(function(data, status, headers, config) {
+            $location.path('/request/index');
         });
     }
 }

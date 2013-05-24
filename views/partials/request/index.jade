@@ -1,5 +1,19 @@
-h1 This is where the requests get displayed
+a.button.small.right(href='/request/new') New Request
+h2 Can you baby sit?
 
-div(ng-repeat="request in requests")
-  div {{request.description}}
-  
+table.table(style="width:100%")
+    th Date
+    th Start
+    th End
+    th Description
+    th(style="width:30px")
+    th(style="width:30px")
+    tr(ng-repeat="r in requests")
+        td {{r.date}}
+        td {{r.start}}
+        td {{r.end}}
+        td {{r.description}}
+        td
+            button.button.small(ng-click='delete(r)') Delete
+        td
+            a.button.small(href='/request/edit/{{r._id}}') Edit
