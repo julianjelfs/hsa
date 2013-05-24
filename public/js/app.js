@@ -29,8 +29,8 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
 
         $routeProvider.when('/request/index', {
             templateUrl: 'partials/request/index',
-            controller: function ($scope, $routeParams, $http, requests) {
-                $scope.requests = requests;
+            controller: function ($scope, $routeParams, $http, request) {
+                $scope.requests = request;
                 $scope.delete = function (c) {
                     var i = $scope.requests.indexOf(c)
                     $http.post("/api/request/delete/" + c._id).success(function (result) {
@@ -38,24 +38,13 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
                     });
                 }
             },
-            resolve: {
-                requests: function ($q, $route, $timeout, $http) {
-                    var deferred = $q.defer();
-                    //get any route params via $route.current.params object
-                    $http.get('/api/request').success(function (result) {
-                        deferred.resolve(result);
-                    }).error(function (error) {
-                            deferred.reject(error);
-                        });
-                    return deferred.promise;
-                }
-            }
+            resolve : getResolver('request')
         });
 
         $routeProvider.when('/circle/index', {
             templateUrl: 'partials/circle/index',
-            controller: function ($scope, $http, circles) {
-                $scope.circles = circles;
+            controller: function ($scope, $http, circle) {
+                $scope.circles = circle;
                 $scope.delete = function (c) {
                     var i = $scope.circles.indexOf(c)
                     $http.post("/api/circle/delete/" + c._id).success(function (result) {
@@ -63,20 +52,22 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
                     });
                 }
             },
-            resolve: {
-                circles: function ($q, $route, $http) {
-                    var deferred = $q.defer();
-
-                    $http.get('/api/circle').success(function (result) {
-                        deferred.resolve(result);
-                    }).error(function (error) {
-                            deferred.reject(error);
-                        });
-
-                    return deferred.promise;
-                }
-            }
+            resolve : getResolver('circle')
         });
+
+        function getResolver(name){
+            var r = {};
+            r[name] = function ($q, $route, $timeout, $http) {
+                var deferred = $q.defer();
+                $http.get('/api/' + name).success(function (result) {
+                    deferred.resolve(result);
+                }).error(function (error) {
+                        deferred.reject(error);
+                    });
+                return deferred.promise;
+            };
+            return r;
+        }
 
         $routeProvider.when('/circle/edit/:id', {
             templateUrl: 'partials/circle/edit',

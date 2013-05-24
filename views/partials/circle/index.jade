@@ -1,15 +1,17 @@
 a.button.small.right(href='/circle/new') New Circle
 h2 Circles that you belong to
 
-table.table(style="width:100%")
-    th Name
-    th Description
-    th(style="width:30px")
-    th(style="width:30px")
-    tr(ng-repeat="circle in circles")
-        td {{circle.name}}
-        td {{circle.description}}
-        td
-            button.button.small(ng-click='delete(circle)') Delete
-        td
-            a.button.small(href='/circle/edit/{{circle._id}}') Edit
+.row.header-row
+    .small-4.columns Name
+    .small-6.columns Description
+    .small-1.columns
+    .small-1.columns
+hr
+
+div.requests.row(ng-repeat="c in circles", ng-animate="'custom'")
+    .small-4.columns {{c.name}}
+    .small-6.columns {{c.description}}
+    .small-1.columns
+        button.button.small(ng-click='delete(r)') Delete
+    .small-1.columns
+        a.button.small(href='/circle/edit/{{r._id}}') Edit

@@ -2,34 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fa24e2f2-4a37-4b3f-8c31-52a20fbe543f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/components/angular/angular.js" afterPath="$PROJECT_DIR$/public/js/components/angular/angular.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/components/angular/angular.min.js" afterPath="$PROJECT_DIR$/public/js/components/angular/angular.min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/app.css" afterPath="$PROJECT_DIR$/public/css/app.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/app.js" afterPath="$PROJECT_DIR$/public/js/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/components/angular/bower.json" afterPath="$PROJECT_DIR$/public/js/components/angular/bower.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/components/jquery/component.json" afterPath="$PROJECT_DIR$/public/js/components/jquery/component.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/controllers.js" afterPath="$PROJECT_DIR$/public/js/controllers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/directives.js" afterPath="$PROJECT_DIR$/public/js/directives.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/index.jade" afterPath="$PROJECT_DIR$/views/index.jade" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/partials/circle/index.jade" afterPath="$PROJECT_DIR$/views/partials/circle/index.jade" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/partials/request/index.jade" afterPath="$PROJECT_DIR$/views/partials/request/index.jade" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/index.js" afterPath="$PROJECT_DIR$/routes/index.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/components/jquery/jquery-migrate.js" afterPath="$PROJECT_DIR$/public/js/components/jquery/jquery-migrate.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/components/jquery/jquery-migrate.min.js" afterPath="$PROJECT_DIR$/public/js/components/jquery/jquery-migrate.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/layout.jade" afterPath="$PROJECT_DIR$/views/layout.jade" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/partials/circle/new.jade" afterPath="$PROJECT_DIR$/views/partials/circle/new.jade" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/partials/account/register.jade" afterPath="$PROJECT_DIR$/views/partials/account/register.jade" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="helpmegoout.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="fa24e2f2-4a37-4b3f-8c31-52a20fbe543f" time="1369414559543" ignored="false" />
+    <file path="/Dummy.txt" changelist="fa24e2f2-4a37-4b3f-8c31-52a20fbe543f" time="1369418546087" ignored="false" />
     <file path="/directives.js" changelist="fa24e2f2-4a37-4b3f-8c31-52a20fbe543f" time="1369344205975" ignored="false" />
     <file path="/layout.jade" changelist="fa24e2f2-4a37-4b3f-8c31-52a20fbe543f" time="1369417894899" ignored="false" />
-    <file path="/index.jade" changelist="fa24e2f2-4a37-4b3f-8c31-52a20fbe543f" time="1369417309984" ignored="false" />
-    <file path="/app.css" changelist="fa24e2f2-4a37-4b3f-8c31-52a20fbe543f" time="1369418351292" ignored="false" />
+    <file path="/index.jade" changelist="fa24e2f2-4a37-4b3f-8c31-52a20fbe543f" time="1369425100334" ignored="false" />
+    <file path="/app.css" changelist="fa24e2f2-4a37-4b3f-8c31-52a20fbe543f" time="1369424814948" ignored="false" />
     <file path="/index.js" changelist="fa24e2f2-4a37-4b3f-8c31-52a20fbe543f" time="1369416082513" ignored="false" />
     <file path="/controllers.js" changelist="fa24e2f2-4a37-4b3f-8c31-52a20fbe543f" time="1369415473166" ignored="false" />
-    <file path="/app.js" changelist="fa24e2f2-4a37-4b3f-8c31-52a20fbe543f" time="1369414393790" ignored="false" />
+    <file path="/app.js" changelist="fa24e2f2-4a37-4b3f-8c31-52a20fbe543f" time="1369418892770" ignored="false" />
     <file path="/circle.js" changelist="fa24e2f2-4a37-4b3f-8c31-52a20fbe543f" time="1369396302338" ignored="false" />
     <file path="/new.jade" changelist="fa24e2f2-4a37-4b3f-8c31-52a20fbe543f" time="1369415437363" ignored="false" />
     <file path="/fragment.js" changelist="fa24e2f2-4a37-4b3f-8c31-52a20fbe543f" time="1369410241978" ignored="false" />
@@ -60,16 +52,7 @@
       <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/js/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="43" selection-start="2234" selection-end="2234" vertical-scroll-proportion="-12.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="60" column="7" selection-start="1569" selection-end="1569" vertical-scroll-proportion="0.0">
+            <state line="132" column="91" selection-start="5342" selection-end="5342" vertical-scroll-proportion="-31.96">
               <folding />
             </state>
           </provider>
@@ -78,7 +61,16 @@
       <file leaf-file-name="index.jade" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/partials/request/index.jade">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="26" selection-start="277" selection-end="277" vertical-scroll-proportion="0.0">
+            <state line="3" column="0" selection-start="76" selection-end="616" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.jade" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/views/partials/circle/index.jade">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="11" selection-start="499" selection-end="499" vertical-scroll-proportion="0.29859486">
               <folding />
             </state>
           </provider>
@@ -87,16 +79,16 @@
       <file leaf-file-name="index.jade" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/index.jade">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="39" column="36" selection-start="788" selection-end="810" vertical-scroll-proportion="0.0">
+            <state line="24" column="52" selection-start="487" selection-end="487" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.css" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="app.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/css/app.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="139" column="69" selection-start="3415" selection-end="3415" vertical-scroll-proportion="0.5221239">
+            <state line="151" column="22" selection-start="3656" selection-end="3656" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -172,20 +164,20 @@
       <list>
         <option value="$PROJECT_DIR$/views/partials/request/edit.jade" />
         <option value="$PROJECT_DIR$/views/partials/request/new.jade" />
-        <option value="$PROJECT_DIR$/views/partials/circle/index.jade" />
         <option value="$PROJECT_DIR$/models/request.js" />
         <option value="$PROJECT_DIR$/public/js/controllers.js" />
         <option value="$PROJECT_DIR$/views/partials/circle/new.jade" />
         <option value="$PROJECT_DIR$/routes/index.js" />
-        <option value="$PROJECT_DIR$/public/js/app.js" />
-        <option value="$PROJECT_DIR$/views/partials/request/index.jade" />
         <option value="$PROJECT_DIR$/public/js/directives.js" />
         <option value="$PROJECT_DIR$/views/partials/account/register.jade" />
         <option value="$PROJECT_DIR$/public/js/components/angular/angular.js" />
         <option value="$PROJECT_DIR$/public/js/components/angular/angular.min.js" />
         <option value="$PROJECT_DIR$/views/layout.jade" />
+        <option value="$PROJECT_DIR$/public/js/app.js" />
         <option value="$PROJECT_DIR$/views/index.jade" />
+        <option value="$PROJECT_DIR$/views/partials/request/index.jade" />
         <option value="$PROJECT_DIR$/public/css/app.css" />
+        <option value="$PROJECT_DIR$/views/partials/circle/index.jade" />
       </list>
     </option>
   </component>
@@ -596,7 +588,11 @@
       <created>1369414565465</created>
       <updated>1369414565465</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="integrated a touch of ng-animate. Think it's a bit gimicky really">
+      <created>1369418560577</created>
+      <updated>1369418560577</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -612,7 +608,7 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39954597" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3291714" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3280363" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3280363" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3291714" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -664,7 +660,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="basic CRUD ops on circles and requests" />
+    <option name="LAST_COMMIT_MESSAGE" value="integrated a touch of ng-animate. Think it's a bit gimicky really" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -682,6 +678,7 @@
     <MESSAGE value="had a go at creating my own css carousel. Sort of ok but the images need to scale really" />
     <MESSAGE value="added ability to add and list circles" />
     <MESSAGE value="basic CRUD ops on circles and requests" />
+    <MESSAGE value="integrated a touch of ng-animate. Think it's a bit gimicky really" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -689,13 +686,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/views/partials/circle/index.jade">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="14" selection-start="14" selection-end="14" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/circle.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="30" selection-start="0" selection-end="192" vertical-scroll-proportion="0.0">
@@ -734,20 +724,6 @@
     <entry file="file://$PROJECT_DIR$/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="60" column="7" selection-start="1569" selection-end="1569" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="43" selection-start="2234" selection-end="2234" vertical-scroll-proportion="-12.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/partials/request/index.jade">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="26" selection-start="277" selection-end="277" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -792,16 +768,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="132" column="91" selection-start="5342" selection-end="5342" vertical-scroll-proportion="-31.96">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/views/index.jade">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="36" selection-start="788" selection-end="810" vertical-scroll-proportion="0.0">
+        <state line="24" column="52" selection-start="487" selection-end="487" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/css/app.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="139" column="69" selection-start="3415" selection-end="3415" vertical-scroll-proportion="0.5221239">
+        <state line="151" column="22" selection-start="3656" selection-end="3656" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/partials/request/index.jade">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="0" selection-start="76" selection-end="616" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/partials/circle/index.jade">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="11" selection-start="499" selection-end="499" vertical-scroll-proportion="0.29859486">
           <folding />
         </state>
       </provider>
