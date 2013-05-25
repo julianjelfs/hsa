@@ -12,6 +12,6 @@ div.requests.row(ng-repeat="c in circles", ng-animate="'custom'")
     .small-4.columns {{c.name}}
     .small-6.columns {{c.description}}
     .small-1.columns
-        button.button.small(ng-click='delete(r)') Delete
+        button.button.small(ng-click='delete(c)') Delete
     .small-1.columns
-        a.button.small(href='/circle/edit/{{r._id}}') Edit
+        a.button.small(href='/circle/edit/{{c._id}}') Edit
