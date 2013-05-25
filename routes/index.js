@@ -36,9 +36,17 @@ module.exports = function (app) {
                     error: err
                 });
             }
-            res.json({
-                user: user
+            req.login(user, function(err) {
+              if (err) { 
+                return res.json({
+                    error: err
+                }); 
+              }
+              return res.json({
+                  user: user
+              });
             });
+            
         });
     });
 
@@ -113,6 +121,16 @@ module.exports = function (app) {
         util.puts("logged in as " + req.user.username);
         res.send(200, "Logged in as " + req.user.username);
     });
+  
+  app.get('/api/search/users/:prefix', ensureAuthenticated, function(req, res){
+    var prefix = req.params.prefix;
+    User.find({ username: { $regex: prefix, $options: 'i' }}, function(err, users){
+      if(err) {
+        return res.send(500, err);
+      }
+      return res.json(users);
+    });
+  });
 
     app.get("*", function (req, res) {
         res.render('index');

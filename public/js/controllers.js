@@ -17,13 +17,14 @@ function LoginCtrl($scope, $http, authService) {
 }
 
 
-function RegisterCtrl($scope, $http, authService) {
+function RegisterCtrl($scope, $http, $location, authService) {
   $scope.submit = function() {
     $http.post('/api/register', {
       username : $scope.username,
       password : $scope.password
     }).success(function(data, status, headers, config) {
       authService.loginConfirmed(data);
+      $location.path("/");
     });
   }  
 }

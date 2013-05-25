@@ -3,11 +3,13 @@ h3 Edit a circle
 form(ng-submit="submit()")
     div
         label Name
-        input(type="text",name="name", ng-model="circle.name")
+        input(type="text", ng-model="circle.name")
 
     div
         label Description
-        input(type="text",name="description", ng-model="circle.description")
+        input(type="text", ng-model="circle.description")
+        
+    user-lookup        
 
     div
         button.btn(type="submit") Update
