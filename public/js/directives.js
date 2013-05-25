@@ -29,11 +29,39 @@ angular.module('myApp.directives', [])
     }
   })
 .directive('userLookup', function($http){
+  var up = 38, down = 40;
+  
   return {
     restrict : 'E',
     replace : true,
     templateUrl : 'partials/account/userlookup',
     link : function(scope, elem, attrs){
+      var selectedIndex = 0;
+      var inp = angular.element("input.user-lookup-input", elem);
+      var result = angular.element("div.lookup-result", elem);
+      result.css('top', inp.position().top + inp.outerHeight());
+      
+      inp.keydown(function(e){
+        scope.$apply(function(){
+          if(e.which == down){
+            selectedIndex += 1; 
+            e.preventDefault();
+          }
+          if(e.which == up){
+            selectedIndex -= 1;   
+            e.preventDefault();
+          }
+        });
+      }).blur(function(){
+        scope.$apply(function(){
+          scope.results = [];
+        });
+      });
+      
+      scope.class = function(index){
+        return index == selectedIndex ? "entry active" : "entry"; 
+      }
+      
       scope.$watch('prefix', function(newVal, oldVal){
         if(newVal == null || newVal == ''){        
           scope.results = [];

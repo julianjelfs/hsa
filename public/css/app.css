@@ -159,11 +159,22 @@ $white:#ffffff;
 
 .lookup-result{
   padding:10px;
-  position:relative;
+  position:absolute;
+  z-index:1000;
+  background-color:#ffffff;
   -webkit-box-shadow: 4px 4px 10px rgba(76,43,47,.4);
   -moz-box-shadow: 4px 4px 10px rgba(76,43,47,.4);
   box-shadow: 4px 4px 10px rgba(76,43,47,.4);
   -webkit-border-radius: 6px 6px 6px 6px;
   -moz-border-radius: 6px 6px 6px 6px;
   border-radius: 6px 6px 6px 6px;
+}
+
+.lookup-result .entry{
+  padding:5px;  
+}
+
+.lookup-result .entry.active{
+  background-color:blue;
+  color : white;
 }
