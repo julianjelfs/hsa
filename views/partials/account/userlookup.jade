@@ -1,5 +1,5 @@
 div
   label Users
-  input.user-lookup-input(type='text', ng-model='prefix')
+  input.user-lookup-input(type='text', ng-model='prefix', placeholder='Type here to lookup users')
   div.lookup-result(ng-show='results != null && results.length > 0')
-    div(ng-class='class($index)', ng-repeat='result in results') {{result.username}}
+    div(ng-class='class($index)', ng-click='clickUser($index)', ng-repeat='result in results', ng-mouseenter='mouseenter($index)') {{result.username}}

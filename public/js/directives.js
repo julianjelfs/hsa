@@ -29,12 +29,15 @@ angular.module('myApp.directives', [])
     }
   })
 .directive('userLookup', function($http){
-  var up = 38, down = 40;
+  var up = 38, down = 40, enter = 13, esc = 27;
   
   return {
     restrict : 'E',
     replace : true,
     templateUrl : 'partials/account/userlookup',
+    scope : {
+      selectItem : '&selectItem'
+    },
     link : function(scope, elem, attrs){
       var selectedIndex = 0;
       var inp = angular.element("input.user-lookup-input", elem);
@@ -44,19 +47,35 @@ angular.module('myApp.directives', [])
       inp.keydown(function(e){
         scope.$apply(function(){
           if(e.which == down){
-            selectedIndex += 1; 
+            selectedIndex = selectedIndex == scope.results.length-1 ? 0 : selectedIndex + 1; 
             e.preventDefault();
           }
           if(e.which == up){
-            selectedIndex -= 1;   
+            selectedIndex = selectedIndex == 0 ? scope.results.length-1 : selectedIndex - 1; 
             e.preventDefault();
           }
-        });
-      }).blur(function(){
-        scope.$apply(function(){
-          scope.results = [];
+          if(e.which == enter){
+            scope.selectItem({item : scope.results[selectedIndex]});
+            scope.results = [];
+            scope.prefix = '';
+            e.preventDefault();  
+          }
+          if(e.which == esc){
+            scope.results = [];
+          }
         });
       });
+      
+      scope.mouseenter = function(index){
+        selectedIndex = index;  
+      }
+      
+      scope.clickUser = function(index){
+        selectedIndex = index; 
+        scope.selectItem({item : scope.results[selectedIndex]});
+        scope.results = [];
+        scope.prefix = '';
+      }
       
       scope.class = function(index){
         return index == selectedIndex ? "entry active" : "entry"; 
@@ -68,6 +87,7 @@ angular.module('myApp.directives', [])
           return;
         }
         $http.get("/api/search/users/" + newVal).success(function(data){
+          selectedIndex = 0;
           scope.results = data;
         }).error(function(error){
           alert("user lookup went wrong: " + error);

@@ -171,10 +171,11 @@ $white:#ffffff;
 }
 
 .lookup-result .entry{
-  padding:5px;  
+  padding:5px;
+  cursor:pointer;  
 }
 
 .lookup-result .entry.active{
-  background-color:blue;
+  background-color:#2ba6cb;
   color : white;
 }

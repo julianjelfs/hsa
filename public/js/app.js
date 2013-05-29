@@ -80,6 +80,12 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
                             $location.path("/circle/index");
                         });
                 }
+                $scope.addUser = function(user){
+                  if($scope.circle.users == null){
+                    $scope.circle.users = [];
+                  }
+                  $scope.circle.users.push(user);
+                }
             },
             resolve: {
                 circle: function ($q, $route, $http) {

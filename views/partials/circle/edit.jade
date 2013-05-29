@@ -9,7 +9,13 @@ form(ng-submit="submit()")
         label Description
         input(type="text", ng-model="circle.description")
         
-    user-lookup        
-
+    user-lookup(select-item="addUser(item)") 
+    
+    div
+      div(ng-repeat="user in circle.users")
+        div.alert-box.success.radius(data-alert)
+          {{user.username}}
+          a.close(href="#", ng-click="deleteUser(user)") &times;
+        
     div
         button.btn(type="submit") Update

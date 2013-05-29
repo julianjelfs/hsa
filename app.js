@@ -2,7 +2,8 @@ var express = require('express'),
   routes = require('./routes'),
   mongoose = require('mongoose'),
   passport = require('passport'), 
-  LocalStrategy = require('passport-local').Strategy;
+  LocalStrategy = require('passport-local').Strategy,
+  compass = require('node-compass');
 
 var app = module.exports = express();
 
@@ -17,6 +18,11 @@ app.configure(function(){
   app.use(express.session({ secret: 'keyboard cat' }));
   app.use(passport.initialize());
   app.use(passport.session());
+  app.use(compass({
+    cache : false,
+    css : 'css',
+    sass : 'css'
+  }));
   app.use(app.router);
 });
 
