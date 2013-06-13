@@ -1,0 +1,21 @@
+a.button.small.right(href='/request/new') New Event
+h2 Upcoming events?
+
+.row.header-row
+    .small-2.columns Date
+    .small-2.columns Start
+    .small-2.columns End
+    .small-4.columns Description
+    .small-1.columns
+    .small-1.columns
+hr
+
+div.events.row(ng-repeat="e in events", ng-animate="'custom'")
+    .small-2.columns {{e.date | date}}
+    .small-2.columns {{e.start}}
+    .small-2.columns {{e.end}}
+    .small-4.columns {{e.description}}
+    .small-1.columns
+        button.button.small(ng-click='delete(e)') Delete
+    .small-1.columns
+        a.button.small(href='/event/edit/{{e._id}}') Edit

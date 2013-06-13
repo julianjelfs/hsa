@@ -40,7 +40,7 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-mongoose.connect(process.env.MONGODB_DEVELOPMENT_URI);
+mongoose.connect(process.env.MONGODB_HSA_URI);
 
 // Routes
 routes(app);

@@ -1,0 +1,17 @@
+a.button.small.right(href='/newsitem/new') New News Item
+h2 News
+
+.row.header-row
+    .small-4.columns Title
+    .small-6.columns Description
+    .small-1.columns
+    .small-1.columns
+hr
+
+div.requests.row(ng-repeat="n in newsitems", ng-animate="'custom'")
+    .small-4.columns {{n.title}}
+    .small-6.columns {{n.description}}
+    .small-1.columns
+        button.button.small(ng-click='delete(n)') Delete
+    .small-1.columns
+        a.button.small(href='/circle/edit/{{n._id}}') Edit

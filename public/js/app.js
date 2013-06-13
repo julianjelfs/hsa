@@ -25,7 +25,6 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
         });
 
         $routeProvider.when('/register', {templateUrl: 'partials/account/register', controller: RegisterCtrl});
-        $routeProvider.when('/request/new', {templateUrl: 'partials/request/new', controller: RequestCtrl});
 
         $routeProvider.when('/request/index', {
             templateUrl: 'partials/request/index',
@@ -41,18 +40,18 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
             resolve : getResolver('request')
         });
 
-        $routeProvider.when('/circle/index', {
-            templateUrl: 'partials/circle/index',
-            controller: function ($scope, $http, circle) {
-                $scope.circles = circle;
-                $scope.delete = function (c) {
-                    var i = $scope.circles.indexOf(c)
-                    $http.post("/api/circle/delete/" + c._id).success(function (result) {
-                        $scope.circles.splice(i, 1);
+        $routeProvider.when('/newsitem/index', {
+            templateUrl: 'partials/newsitem/index',
+            controller: function ($scope, $http, newsitem) {
+                $scope.newsitems = newsitems;
+                $scope.delete = function (n) {
+                    var i = $scope.newsitems.indexOf(n)
+                    $http.post("/api/newsitem/delete/" + n._id).success(function (result) {
+                        $scope.newsitems.splice(i, 1);
                     });
                 }
             },
-            resolve : getResolver('circle')
+            resolve : getResolver('newsitem')
         });
 
         function getResolver(name){
@@ -69,22 +68,16 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
             return r;
         }
 
-        $routeProvider.when('/circle/edit/:id', {
-            templateUrl: 'partials/circle/edit',
-            controller: function ($scope, $http, $location, circle) {
-                $scope.circle = circle;
+        $routeProvider.when('/newsitems/edit/:id', {
+            templateUrl: 'partials/newsitem/edit',
+            controller: function ($scope, $http, $location, newsitem) {
+                $scope.newsitem = newsitem;
                 $scope.submit = function () {
-                    $http.post("/api/circle/edit/" + $scope.circle._id, {
-                        circle: $scope.circle
+                    $http.post("/api/newsitem/edit/" + $scope.newsitem._id, {
+                        circle: $scope.newsitem
                     }).success(function (result) {
-                            $location.path("/circle/index");
+                            $location.path("/newsitem/index");
                         });
-                }
-                $scope.addUser = function(user){
-                  if($scope.circle.users == null){
-                    $scope.circle.users = [];
-                  }
-                  $scope.circle.users.push(user);
                 }
             },
             resolve: {
@@ -92,7 +85,7 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
                     var deferred = $q.defer();
                     var id = $route.current.params.id
 
-                    $http.get('/api/circle/' + id).success(function (result) {
+                    $http.get('/api/newsitem/' + id).success(function (result) {
                         deferred.resolve(result);
                     }).error(function (error) {
                             deferred.reject(error);
@@ -103,15 +96,15 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
             }
         });
 
-        $routeProvider.when('/request/edit/:id', {
-            templateUrl: 'partials/request/edit',
-            controller: function ($scope, $http, $location, request) {
-                $scope.request = request;
+        $routeProvider.when('/event/edit/:id', {
+            templateUrl: 'partials/event/edit',
+            controller: function ($scope, $http, $location, event) {
+                $scope.event = event;
                 $scope.submit = function () {
-                    $http.post("/api/request/edit/" + $scope.request._id, {
-                        request: $scope.request
+                    $http.post("/api/event/edit/" + $scope.event._id, {
+                        event: $scope.event
                     }).success(function (result) {
-                        $location.path("/request/index");
+                        $location.path("/event/index");
                     });
                 }
             },
@@ -120,7 +113,7 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
                     var deferred = $q.defer();
                     var id = $route.current.params.id
 
-                    $http.get('/api/request/' + id).success(function (result) {
+                    $http.get('/api/event/' + id).success(function (result) {
                         deferred.resolve(result);
                     }).error(function (error) {
                         deferred.reject(error);
@@ -131,8 +124,8 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
             }
         });
 
-        $routeProvider.when('/circle/new', {templateUrl: 'partials/circle/new', controller: NewCircleCtrl});
-        $routeProvider.when('/request/new', {templateUrl: 'partials/request/new', controller: NewRequestCtrl});
+        $routeProvider.when('/newsitem/new', {templateUrl: 'partials/newsitem/new', controller: NewNewsItemCtrl});
+        $routeProvider.when('/event/new', {templateUrl: 'partials/event/new', controller: NewEventCtrl});
 
         $routeProvider.otherwise({redirectTo: '/'});
         $locationProvider.html5Mode(true);

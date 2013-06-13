@@ -1,0 +1,13 @@
+h2 Create a new news item
+
+form(ng-submit="submit()")
+    div
+        label Title
+        input(type="text", ng-model="newsitem.title")
+
+    div
+        label Description
+        input(type="text", ng-model="newsitem.description")
+
+    div
+        button.btn(type="submit") Create

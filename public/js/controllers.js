@@ -29,58 +29,34 @@ function RegisterCtrl($scope, $http, $location, authService) {
   }  
 }
 
-function RequestCtrl($scope, $http, requests) {
-  $scope.requests = requests;
-}
 
-function CircleCtrl($scope, circles) {
+function NewsItemCtrl($scope, circles) {
     $scope.circles = circles;
 }
 
-function NewCircleCtrl($scope, $http, $location){
+function NewNewsItemCtrl($scope, $http, $location){
     $scope.submit = function(){
-        $http.post('/api/circle/create', {
-            circle : $scope.circle
+        $http.post('/api/newsitem/create', {
+            circle : $scope.newsitem
         }).success(function(data, status, headers, config) {
-            $location.path('/circle/index');
+            $location.path('/newsitem/index');
         });
     }
 }
 
-function NewRequestCtrl($scope, $http, $location){
+function NewEventCtrl($scope, $http, $location){
     $scope.submit = function(){
-        $http.post('/api/request/create', {
-            request : $scope.request
+        $http.post('/api/event/create', {
+            request : $scope.event
         }).success(function(data, status, headers, config) {
-            $location.path('/request/index');
+            $location.path('/event/index');
         });
     }
 }
 
 function HomeCtrl($scope, $timeout, $window){
   $scope.$on("$viewContentLoaded", function(){
-    $timeout(function(){
-      $('.orbit-container').foundation('orbit', {
-        timer_speed: 3000,
-        animation_speed: 300,
-        bullets: false,
-        stack_on_small: true,
-        container_class: 'orbit-container',
-        stack_on_small_class: 'orbit-stack-on-small',
-        next_class: 'orbit-next',
-        prev_class: 'orbit-prev',
-        timer_container_class: 'orbit-timer',
-        timer_paused_class: 'paused',
-        timer_progress_class: 'orbit-progress',
-        slides_container_class: 'orbit-slides-container',
-        bullets_container_class: 'orbit-bullets',
-        bullets_active_class: 'active',
-        slide_number_class: 'orbit-slide-number',
-        caption_class: 'orbit-caption',
-        active_slide_class: 'active',
-        orbit_transition_class: 'orbit-transitioning'
-      });
-    }, 150);
+    
   }); 
   
 }

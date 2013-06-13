@@ -1,0 +1,25 @@
+h2 Create a new event
+
+form(ng-submit="submit()")
+    div
+        label Date
+        input(type="text", ng-model="event.date")
+
+    div
+        label Start
+        input(type="text", ng-model="event.start")
+
+    div
+        label End
+        input(type="text", ng-model="event.end")
+
+    div
+        label Title
+        input(type="text", ng-model="event.title")
+    
+    div
+        label Description
+        input(type="text", ng-model="event.description")
+
+    div
+        button.button(type="submit") Create

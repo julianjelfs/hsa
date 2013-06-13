@@ -1,7 +1,7 @@
 var passport = require('passport'),
     User = require('../models/user'),
-    Circle = require('../models/circle'),
-    Request = require('../models/request'),
+    NewsItem = require('../models/newsitem'),
+    Event = require('../models/event'),
     util = require('util');
 
 function ensureAuthenticated(req, res, next) {
@@ -51,8 +51,8 @@ module.exports = function (app) {
     });
 
     var models = {
-        "circle" : Circle,
-        "request" : Request
+        "newsitem" : NewsItem,
+        "event" : Event
     };
 
     app.get('/api/:model', ensureAuthenticated, function (req, res) {
