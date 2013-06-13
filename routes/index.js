@@ -55,7 +55,7 @@ module.exports = function (app) {
         "event" : Event
     };
 
-    app.get('/api/:model', ensureAuthenticated, function (req, res) {
+    app.get('/api/:model', function (req, res) {
         models[req.params.model].find(function (err, models) {
             if (err) {
                 res.send(500, err);
@@ -88,7 +88,7 @@ module.exports = function (app) {
         });
     });
 
-    app.get('/api/:model/:id', ensureAuthenticated, function (req, res) {
+    app.get('/api/:model/:id', function (req, res) {
         models[req.params.model].findById(req.params.id, function (err, m) {
             if (err) {
                 res.send(500, err);

@@ -4,7 +4,7 @@
 
 
 angular.module('myApp.directives', [])
-  .directive('helpmegooutApp', function() {
+  .directive('hsaApp', function() {
     return {
       restrict: 'C',
       link: function(scope, elem, attrs) {

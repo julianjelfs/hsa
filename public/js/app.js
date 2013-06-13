@@ -5,6 +5,10 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
     config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
         $routeProvider.when('/', {templateUrl: 'partials/home/index', controller: HomeCtrl});
         $routeProvider.when('/login', {templateUrl: 'partials/account/login', controller: LoginCtrl});
+      $routeProvider.when('/team', {templateUrl: 'partials/team/index', controller: TeamCtrl});
+        $routeProvider.when('/help', {templateUrl: 'partials/help/index'});
+        $routeProvider.when('/contact', {templateUrl: 'partials/contact/index'});
+        $routeProvider.when('/links', {templateUrl: 'partials/links/index'});
 
         $routeProvider.when('/logout', {
             templateUrl: 'partials/account/login',
@@ -26,24 +30,24 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
 
         $routeProvider.when('/register', {templateUrl: 'partials/account/register', controller: RegisterCtrl});
 
-        $routeProvider.when('/request/index', {
-            templateUrl: 'partials/request/index',
-            controller: function ($scope, $routeParams, $http, request) {
-                $scope.requests = request;
-                $scope.delete = function (c) {
-                    var i = $scope.requests.indexOf(c)
-                    $http.post("/api/request/delete/" + c._id).success(function (result) {
-                        $scope.requests.splice(i, 1);
+        $routeProvider.when('/event/index', {
+            templateUrl: 'partials/event/index',
+            controller: function ($scope, $routeParams, $http, event) {
+                $scope.events = event;
+                $scope.delete = function (e) {
+                    var i = $scope.events.indexOf(e)
+                    $http.post("/api/event/delete/" + e._id).success(function (result) {
+                        $scope.events.splice(i, 1);
                     });
                 }
             },
-            resolve : getResolver('request')
+            resolve : getResolver('event')
         });
 
         $routeProvider.when('/newsitem/index', {
             templateUrl: 'partials/newsitem/index',
             controller: function ($scope, $http, newsitem) {
-                $scope.newsitems = newsitems;
+                $scope.newsitems = newsitem;
                 $scope.delete = function (n) {
                     var i = $scope.newsitems.indexOf(n)
                     $http.post("/api/newsitem/delete/" + n._id).success(function (result) {
@@ -68,20 +72,20 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
             return r;
         }
 
-        $routeProvider.when('/newsitems/edit/:id', {
+        $routeProvider.when('/newsitem/edit/:id', {
             templateUrl: 'partials/newsitem/edit',
             controller: function ($scope, $http, $location, newsitem) {
                 $scope.newsitem = newsitem;
                 $scope.submit = function () {
                     $http.post("/api/newsitem/edit/" + $scope.newsitem._id, {
-                        circle: $scope.newsitem
+                        newsitem: $scope.newsitem
                     }).success(function (result) {
                             $location.path("/newsitem/index");
                         });
                 }
             },
             resolve: {
-                circle: function ($q, $route, $http) {
+                newsitem: function ($q, $route, $http) {
                     var deferred = $q.defer();
                     var id = $route.current.params.id
 
@@ -109,7 +113,7 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
                 }
             },
             resolve: {
-                request: function ($q, $route, $http) {
+                event: function ($q, $route, $http) {
                     var deferred = $q.defer();
                     var id = $route.current.params.id
 

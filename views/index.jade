@@ -5,7 +5,7 @@ block body
     ul.title-area
       li.name
         h1
-          a(href='/') Hatfeild School HSA
+          a(href='/') Hatfeild School Association
       li.toggle-topbar.menu-icon
         a(href='#')
           span
@@ -14,13 +14,22 @@ block body
       ul.left
         li.divider
         li.active
-          a(href='request/new') Go Out
+          a(href='newsitem/index') News
         li.divider
         li
-          a(href='request/index') Baby Sit
+          a(href='event/index') Events
         li.divider
         li
-          a(href='circle/index') Circles
+          a(href='help') How to Help
+        li.divider
+        li
+          a(href='team') Team
+        li.divider
+        li
+          a(href='contact') Contact Us
+        li.divider
+        li
+          a(href='links') Links
           
       ul.right
         li.divider
@@ -35,7 +44,7 @@ block body
            
   #main(ng-cloak)
     .container
-      .row.content
+      .row.panel.main
         .small-12
           div.view-animate-container#content(ng-view)
 
@@ -55,6 +64,9 @@ block body
                 button.btn(type="submit") Log In
               p
                 a(href='register') Register
+
+      .row.panel.footer
+        p Let's have a ticker of all the sponsors in here
 
 block scripts
    
