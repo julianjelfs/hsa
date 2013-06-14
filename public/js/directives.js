@@ -28,6 +28,69 @@ angular.module('myApp.directives', [])
       }
     }
   })
+.directive("breadcrumb", function(){
+  return {
+    restrict : "E",
+    replace : "true",
+    template : "<ul class='breadcrumbs'></ul>",
+    link : function(scope, elem, attrs) {
+      scope.$on("$routeChangeSuccess", function(ev, current, prev){
+        var template = current.templateUrl;
+        var path = [{
+          name : 'home',
+          href : '/'
+        }];
+        console.log(template);
+        switch(template) {
+          case 'partials/contact/index' : 
+            path.push({name : "contact us"});
+            break;
+          case 'partials/sponsors/index' : 
+            path.push({name : "sponsors"});
+            break;
+          case 'partials/links/index' : 
+            path.push({name : "links"});
+            break;
+          case 'partials/help/index' : 
+            path.push({name : "how to help"});
+            break;
+          case 'partials/team/index' : 
+            path.push({name : "team"});
+            break;
+          case 'partials/event/index' : 
+            path.push({name : "events"});
+            break;
+          case 'partials/event/view' :
+          case 'partials/event/edit' :
+          case 'partials/event/new' : 
+            path.push({
+              name : "events",
+              href : "/event/index"
+            });
+            path.push({name : "event"});
+            break;
+          case 'partials/newsitem/index' : 
+            path.push({name : "news"});
+            break;
+          case 'partials/newsitem/view' :
+          case 'partials/newsitem/edit' :
+          case 'partials/newsitem/new' :
+            path.push({
+              name : "news",
+              href : "/newsitem/index"
+            });
+            path.push({name : "item"});
+            break;
+        }
+        $("li", elem).remove();
+        angular.forEach(path, function(val){
+          $("<li "+ (val.href == null ? "class='current'" : "") +"><a href='"+ (val.href  == null ? "#" : val.href) +"'>" + val.name + "</a></li>").appendTo(elem);
+        });
+          
+      });
+    }
+  }
+})
 .directive('userLookup', function($http){
   var up = 38, down = 40, enter = 13, esc = 27;
   

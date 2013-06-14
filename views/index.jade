@@ -29,23 +29,21 @@ block body
           a(href='contact') Contact Us
         li.divider
         li
+          a(href='sponsors') Sponsors
+        li.divider
+        li
           a(href='links') Links
           
       ul.right
         li.divider
-        li
-          a(href='logout') Log Out
-        li.divider
-        li
-          a(href='login') Log In
-        li.divider
-        li
-          a(href='register') Register        
-           
+        li 
+          a This should say who's logged in       
+  
   #main(ng-cloak)
     .container
+      breadcrumb.row
       .row.panel.main
-        .small-12
+        .small-12          
           div.view-animate-container#content(ng-view)
 
           div#login-holder(ng-controller='LoginCtrl')
@@ -64,9 +62,6 @@ block body
                 button.btn(type="submit") Log In
               p
                 a(href='register') Register
-
-      .row.panel.footer
-        p Let's have a ticker of all the sponsors in here
 
 block scripts
    

@@ -1,21 +1,13 @@
-a.button.small.right(href='/event/new') New Event
-h3 Upcoming events
+//a.button.small.right(href='/event/new') New Event
 
-.row.header-row
-    .small-2.columns Date
-    .small-2.columns Start
-    .small-2.columns End
-    .small-4.columns Description
-    .small-1.columns
-    .small-1.columns
-hr
+div.row(ng-repeat="e in events", ng-animate="'custom'")
+  .small-offset-1.small-10.columns
+    .news
+      a(href='/event/view/{{e._id}}') 
+        h4 {{e.title}} on {{e.date | date}} from {{e.start}} to {{e.end}}
+      p {{e.description|truncate:200}} 
+        a(href='/event/view/{{e._id}}') read more ...
+      p 
+        a.button.success(href="/volunteer") Volunteer!
+  .small-1.columns
 
-div.events.row(ng-repeat="e in events", ng-animate="'custom'")
-    .small-2.columns {{e.date | date}}
-    .small-2.columns {{e.start}}
-    .small-2.columns {{e.end}}
-    .small-4.columns {{e.description}}
-    .small-1.columns
-        button.button.small(ng-click='delete(e)') Delete
-    .small-1.columns
-        a.button.small(href='/event/edit/{{e._id}}') Edit

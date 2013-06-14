@@ -14,11 +14,85 @@ $background:#f6f6f6;
 $white:#ffffff;
 */
 
+ul.breadcrumbs {
+  margin-left:auto !important;
+  top : -30px;
+  position:relative;  
+}
+
 .intro{
   padding:40px;
 }
 
+.recipient {
+  display:inline-block;
+  padding:8px;
+  background-color:#fff;
+  border:solid 1px #ccc;
+  margin-right:5px;
+  margin-bottom:10px;
+  -webkit-border-radius: 3px 3px 3px 3px;
+  -moz-border-radius: 3px 3px 3px 3px;
+  border-radius: 3px 3px 3px 3px;
+}
 
+.news {
+  padding:20px;
+  border:solid 1px #ccc;
+  margin-bottom:10px;
+  background-color:#fff;
+  -webkit-border-radius: 6px 6px 6px 6px;
+  -moz-border-radius: 6px 6px 6px 6px;
+  border-radius: 6px 6px 6px 6px;
+  -webkit-box-shadow: 3px 3px 8px rgba(76,43,47,.4);
+  -moz-box-shadow: 3px 3px 8px rgba(76,43,47,.4);
+  box-shadow: 3px 3px 8px rgba(76,43,47,.4);
+}
+
+.sponsor h3 {
+  float:left;
+  margin-right:20px;
+  font-size : 1.5em;
+  border-color:#ccc;
+  border-width:1px;
+  border-style:solid;
+  padding:10px;
+  -webkit-border-radius: 3px 3px 3px 3px;
+  -moz-border-radius: 3px 3px 3px 3px;
+  border-radius: 3px 3px 3px 3px;
+  -moz-transition:font-size 0.2s, color 0.2s;
+  -webkit-transition:font-size 0.2s, color 0.2s;
+  -o-transition:font-size 0.2s, color 0.2s;
+  transition:font-size 0.2s, color 0.2s;
+}
+
+.sponsor h3:hover {
+  font-size : 1.5em;
+  color : #2ba6cb;
+  border-color:#2ba6cb;
+  -webkit-box-shadow: 3px 3px 8px rgba(76,43,47,.4);
+  -moz-box-shadow: 3px 3px 8px rgba(76,43,47,.4);
+  box-shadow: 3px 3px 8px rgba(76,43,47,.4);
+}
+
+textarea {
+ height:auto !important; 
+}
+
+.recipient .close{
+  color:#ddd;
+  cursor:pointer;
+}
+
+.ping {
+  width : 40px;
+  height : 32px;
+  float:left;
+  background-image : url("/images/mail.png");
+  background-repeat: no-repeat;  
+  cursor:pointer;
+  background-position:0 -5px;
+}
 
 #login-holder{
     display:none;
@@ -31,8 +105,16 @@ $white:#ffffff;
   margin-bottom:10px !important;
 }
 
+ul.help{margin-left:60px;}
+ul.help li {
+  list-style-image : url("/images/tick_32.png");
+  list-style-position :inside;
+}
+
 .main {
   min-height:400px;
+  position:relative;
+  top:-25px;
 }
 .main, .footer {
   -webkit-box-shadow: 3px 3px 8px rgba(76,43,47,.4);

@@ -5,10 +5,12 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
     config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
         $routeProvider.when('/', {templateUrl: 'partials/home/index', controller: HomeCtrl});
         $routeProvider.when('/login', {templateUrl: 'partials/account/login', controller: LoginCtrl});
-      $routeProvider.when('/team', {templateUrl: 'partials/team/index', controller: TeamCtrl});
+        $routeProvider.when('/team', {templateUrl: 'partials/team/index', controller: TeamCtrl});
         $routeProvider.when('/help', {templateUrl: 'partials/help/index'});
-        $routeProvider.when('/contact', {templateUrl: 'partials/contact/index'});
-        $routeProvider.when('/links', {templateUrl: 'partials/links/index'});
+      $routeProvider.when('/contact/:name', {templateUrl: 'partials/contact/index'});
+      $routeProvider.when('/contact', {templateUrl: 'partials/contact/index'});
+      $routeProvider.when('/links', {templateUrl: 'partials/links/index'});
+      $routeProvider.when('/sponsors', {templateUrl: 'partials/sponsors/index', controller : SponsorsCtrl});
 
         $routeProvider.when('/logout', {
             templateUrl: 'partials/account/login',
@@ -71,6 +73,31 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
             };
             return r;
         }
+      
+      function getNewsItemResolver(){
+        return {
+                newsitem: function ($q, $route, $http) {
+                    var deferred = $q.defer();
+                    var id = $route.current.params.id
+
+                    $http.get('/api/newsitem/' + id).success(function (result) {
+                        deferred.resolve(result);
+                    }).error(function (error) {
+                            deferred.reject(error);
+                        });
+
+                    return deferred.promise;
+                }
+            };
+      }
+      
+        $routeProvider.when('/newsitem/view/:id', {
+            templateUrl: 'partials/newsitem/view',
+            controller: function ($scope, $http, $location, newsitem) {
+                $scope.newsitem = newsitem;
+            },
+            resolve: getNewsItemResolver()
+        });
 
         $routeProvider.when('/newsitem/edit/:id', {
             templateUrl: 'partials/newsitem/edit',
@@ -84,35 +111,11 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
                         });
                 }
             },
-            resolve: {
-                newsitem: function ($q, $route, $http) {
-                    var deferred = $q.defer();
-                    var id = $route.current.params.id
-
-                    $http.get('/api/newsitem/' + id).success(function (result) {
-                        deferred.resolve(result);
-                    }).error(function (error) {
-                            deferred.reject(error);
-                        });
-
-                    return deferred.promise;
-                }
-            }
+            resolve: getNewsItemResolver()
         });
-
-        $routeProvider.when('/event/edit/:id', {
-            templateUrl: 'partials/event/edit',
-            controller: function ($scope, $http, $location, event) {
-                $scope.event = event;
-                $scope.submit = function () {
-                    $http.post("/api/event/edit/" + $scope.event._id, {
-                        event: $scope.event
-                    }).success(function (result) {
-                        $location.path("/event/index");
-                    });
-                }
-            },
-            resolve: {
+      
+      function getEventResolver(){
+        return {
                 event: function ($q, $route, $http) {
                     var deferred = $q.defer();
                     var id = $route.current.params.id
@@ -125,7 +128,31 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
 
                     return deferred.promise;
                 }
-            }
+            };
+      }
+
+      $routeProvider.when('/event/view/:id', {
+            templateUrl: 'partials/event/view',
+            controller: function ($scope, $http, $location, event) {
+                $scope.event = event;
+            },
+            resolve: getEventResolver()
+        });
+      
+      
+        $routeProvider.when('/event/edit/:id', {
+            templateUrl: 'partials/event/edit',
+            controller: function ($scope, $http, $location, event) {
+                $scope.event = event;
+                $scope.submit = function () {
+                    $http.post("/api/event/edit/" + $scope.event._id, {
+                        event: $scope.event
+                    }).success(function (result) {
+                        $location.path("/event/index");
+                    });
+                }
+            },
+            resolve: getEventResolver()
         });
 
         $routeProvider.when('/newsitem/new', {templateUrl: 'partials/newsitem/new', controller: NewNewsItemCtrl});

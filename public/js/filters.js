@@ -3,8 +3,8 @@
 /* Filters */
 
 angular.module('myApp.filters', []).
-  filter('interpolate', ['version', function(version) {
-    return function(text) {
-      return String(text).replace(/\%VERSION\%/mg, version);
+  filter('truncate', function() {
+    return function(input, limit) {
+      return input.substring(0, limit) + "...";
     }
-  }]);
+  });

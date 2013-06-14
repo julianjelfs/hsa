@@ -1,17 +1,12 @@
-a.button.small.right(href='/newsitem/new') New News Item
-h3 News
+//a.button.small.right(href='/newsitem/new') New News Item
 
-.row.header-row
-    .small-4.columns Title
-    .small-6.columns Description
-    .small-1.columns
-    .small-1.columns
-hr
-
-div.requests.row(ng-repeat="n in newsitems", ng-animate="'custom'")
-    .small-4.columns {{n.title}}
-    .small-6.columns {{n.description}}
-    .small-1.columns
-        button.button.small(ng-click='delete(n)') Delete
-    .small-1.columns
-        a.button.small(href='/newsitem/edit/{{n._id}}') Edit
+div.row(ng-repeat="n in newsitems", ng-animate="'custom'")
+  .small-offset-1.small-10.columns
+    .news
+      a(href='/newsitem/view/{{n._id}}') 
+        h4 {{n.title}}
+      p {{n.description|truncate:200}} 
+        a(href='/newsitem/view/{{n._id}}') read more ...
+      p 
+        i posted by {{n.author}} on {{n.created}}
+  .small-1.columns
