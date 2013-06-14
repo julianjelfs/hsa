@@ -18,6 +18,7 @@ app.configure(function(){
   app.use(express.session({ secret: 'keyboard cat' }));
   app.use(passport.initialize());
   app.use(passport.session());
+  app.use(express.favicon("public/images/favicon.ico")); 
   app.use(compass({
     cache : false,
     css : 'css',

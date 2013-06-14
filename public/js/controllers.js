@@ -5,6 +5,21 @@ function AppCtrl($scope, $location, $http) {
 
 }
 
+function ContactCtrl($scope, $http, $location){
+  $scope.send = function(c){
+    $http.post("/api/contact/send", {
+      contact: $scope.contact
+    }).success(function (result) {      
+      $('#confirm').foundation('reveal', 'open');
+    });
+    
+    $scope.closeConfirm = function(){
+      $('#confirm').foundation('reveal', 'close');
+      $location.path("/");
+    }
+  }
+}
+
 function SponsorsCtrl($scope) {
   $scope.sponsors = [{
     name : "Evergreen Loft Company", 

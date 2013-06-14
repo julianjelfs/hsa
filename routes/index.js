@@ -96,6 +96,11 @@ module.exports = function (app) {
             res.json(m);
         });
     });
+  
+  app.post('/api/contact/send', function(req, res) {
+    var msg = req.params.contact;
+    res.send(200, "message sent successfully");
+  });
 
     app.post('/api/:model/create', ensureAuthenticated, function (req, res) {
         var model = models[req.params.model];
