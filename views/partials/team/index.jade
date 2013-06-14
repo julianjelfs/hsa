@@ -1,0 +1,18 @@
+h3 Meet the members of the HSA team
+p
+
+div.row.team-member(ng-repeat='member in team')
+  div.small-offset-2.small-5.columns
+    p 
+      u 
+        b 
+          h4 {{member.position}}  
+      h4 
+        i 
+          .ping(ng-click="contact(member)")            
+          {{member.name}}        
+      {{member.phone}}      
+    p
+  div.small-3.columns
+    img(src="http://placehold.it/200x150")
+  div.small-2.columns

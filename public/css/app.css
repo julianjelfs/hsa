@@ -20,8 +20,20 @@ ul.breadcrumbs {
   position:relative;  
 }
 
+body{
+  background-image: url("/images/watermark.png");
+  background-repeat:no-repeat;
+  background-position: 0 80px;
+}
+
 .intro{
   padding:40px;
+  /*background-image: url("/images/logo.png");
+  background-repeat:no-repeat;*/
+}
+
+.intro img.logo {
+  margin-bottom:10px;
 }
 
 .recipient {

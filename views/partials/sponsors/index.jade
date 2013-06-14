@@ -1,0 +1,6 @@
+p The following companies generously support the HSA. If you would like to see your company on the list then 
+  a(href="/contact") get in contact
+  
+div.sponsor(ng-repeat="s in sponsors")
+  a(href="{{s.website}}", target="_blank") 
+    h3 {{s.name}}

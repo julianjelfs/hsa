@@ -1,0 +1,26 @@
+form.form(novalidate, name="form")
+  div
+    label(for="name") Your Name
+    input(required, type="text", placeholder="Your Name", name="name", ng-model="contact.name")
+    
+  div
+    label Recipients
+    .recipient Kallina Jelfs
+      span.close &nbsp;&times;
+    .recipient Nicky Gray
+      span.close &nbsp;&times;
+  div
+    label(for="email") Your Email
+    input(required, type="email", placeholder="Your Email", name="email", ng-model="contact.email")
+    
+  div
+    label(for="message") Your Message
+    textarea(required, rows="10", type="text", placeholder="Your Message", name="message", ng-model="contact.message")
+  
+  div
+    button(ng-click="send(contact)", ng-disabled="form.$invalid") Send
+    
+div#confirm.reveal-modal.small
+  h4 You message has been successfully delivered!
+  p (it hasn't really - shhhh)
+  button(ng-click="closeConfirm()") OK
