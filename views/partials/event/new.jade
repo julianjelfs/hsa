@@ -1,6 +1,6 @@
-h2 Create a new event
+h3 Create a new event
 
-form(ng-submit="submit()")
+form.form(novalidate)
     div
         label Date
         input(type="text", ng-model="event.date")
@@ -20,6 +20,29 @@ form(ng-submit="submit()")
     div
         label Description
         textarea(rows="10", ng-model="event.description")
+        
+    div
+        label Do you need volunteers?
+        input(type="checkbox", ng-model="event.requiresVolunteers")
+        
+    div(ng-show="event.requiresVolunteers")
+      div  
+        label How many time slots do you need to fill?
+        input(type="number", ng-model="event.timeSlots")
+        
+      div
+        label How long is each slot in minutes?
+        input(type="number", ng-model="event.slotDuration", value="60")
+      
+      div(ng-show="event.timeSlots > 0")
+        div.row
+          div.small-10.columns
+            input(type="text", placeholder="Add a task", ng-model="newTask")
+          div.small-2.columns
+            button.button.small(ng-click="addTask()") Add
+        
+        div(ng-repeat="t in event.tasks")
+          {{t.name}}        
 
     div
-        button.button(type="submit") Create
+        button.button(ng-click="submit()") Create

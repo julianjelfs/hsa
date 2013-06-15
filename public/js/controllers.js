@@ -149,12 +149,27 @@ function NewNewsItemCtrl($scope, $http, $location){
 }
 
 function NewEventCtrl($scope, $http, $location){
-    $scope.submit = function(){
+  $scope.event = {
+    tasks : []
+  };  
+  
+  $scope.submit = function(){
         $http.post('/api/event/create', {
             event : $scope.event
         }).success(function(data, status, headers, config) {
             $location.path('/event/index');
         });
+    }
+        
+    $scope.addTask = function() {
+       if($scope.newTask == null || $scope.newTask.length == 0)
+         return;
+       
+      $scope.event.tasks.push({
+        name : $scope.newTask
+      });
+      
+      $scope.newTask = "";
     }
 }
 
