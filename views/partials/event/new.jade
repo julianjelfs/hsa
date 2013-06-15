@@ -41,8 +41,14 @@ form.form(novalidate)
           div.small-2.columns
             button.button.small(ng-click="addTask()") Add
         
-        div(ng-repeat="t in event.tasks")
-          {{t.name}}        
+        table
+          tr
+            th Task
+            th(ng-repeat="s in event.timeSlots") Slot {{$index}}            
+          
+          tr(ng-repeat="t in event.tasks")
+            td {{t.name}}        
+            td(ng-repeat="s in event.timeSlots") 
 
     div
         button.button(ng-click="submit()") Create

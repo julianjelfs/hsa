@@ -153,6 +153,17 @@ function NewEventCtrl($scope, $http, $location){
     tasks : []
   };  
   
+  function emptySlotsArray(){
+    var arr = [];
+    for(var i=0; i<$scope.timeSlots; i++){
+      arr.push({
+        required : 0,
+        volunteers :[]
+      });
+    }
+    return arr;
+  }
+  
   $scope.submit = function(){
         $http.post('/api/event/create', {
             event : $scope.event
@@ -166,7 +177,8 @@ function NewEventCtrl($scope, $http, $location){
          return;
        
       $scope.event.tasks.push({
-        name : $scope.newTask
+        name : $scope.newTask,
+        slots : emptySlotsArray()
       });
       
       $scope.newTask = "";
