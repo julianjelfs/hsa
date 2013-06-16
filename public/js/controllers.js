@@ -150,13 +150,23 @@ function NewNewsItemCtrl($scope, $http, $location){
 
 function NewEventCtrl($scope, $http, $location){
   $scope.event = {
-    tasks : []
+    tasks : [],
+    slotDuration : 60
   };  
+  
+  $scope.timeSlotsArray = function(){
+    var arr = [];
+    for(var i=0; i<$scope.event.timeSlots; i++){
+      arr.push({_id : i});
+    }
+    return arr; 
+  }
   
   function emptySlotsArray(){
     var arr = [];
-    for(var i=0; i<$scope.timeSlots; i++){
+    for(var i=0; i<$scope.event.timeSlots; i++){
       arr.push({
+        _id : i,
         required : 0,
         volunteers :[]
       });
