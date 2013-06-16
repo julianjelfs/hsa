@@ -60,6 +60,7 @@ angular.module('myApp.directives', [])
           case 'partials/event/index' : 
             path.push({name : "events"});
             break;
+          case 'partials/event/volunteer' :
           case 'partials/event/view' :
           case 'partials/event/edit' :
           case 'partials/event/new' : 

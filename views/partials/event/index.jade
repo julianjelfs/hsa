@@ -7,7 +7,7 @@ div.row(ng-repeat="e in events", ng-animate="'custom'")
         h4 {{e.title}} on {{e.date | date}} from {{e.start}} to {{e.end}}
       p {{e.description|truncate:200}} 
         a(href='/event/view/{{e._id}}') read more ...
-      p 
-        a.button.success(href="/volunteer") Volunteer!
+      p(ng-show="e.requiresVolunteers") 
+        a.button.success(href="/event/volunteer/{{e._id}}") Volunteer!
   .small-1.columns
 

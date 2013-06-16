@@ -26,6 +26,15 @@ ul.breadcrumbs {
   width:30px;
 }
 
+.slot {
+   text-align:center; 
+}
+
+.slotFiller {
+  font-style:italic;
+  color:#bbb;
+}
+
 body{
   background-image: url("/images/watermark.png");
   background-repeat:no-repeat;

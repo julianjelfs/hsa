@@ -139,6 +139,23 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
             resolve: getEventResolver()
         });
       
+      $routeProvider.when('/event/volunteer/:id', {
+            templateUrl: 'partials/event/volunteer',
+            controller: function ($scope, $http, $location, event) {
+              $scope.event = event;
+              $scope.timeSlotsArray = function(){
+                var slots = $scope.event.timeSlots;
+                var arr = [];
+                for(var i=0; i<slots; i++) { arr.push(i); }
+                return arr;
+              }; 
+              $scope.volunteer = function(task, slot){
+                alert("thanks for volunteering for the " + task.name + " task");  
+                //need to throw up a modal dialog here. 
+              }
+            },
+            resolve: getEventResolver()
+        });
       
         $routeProvider.when('/event/edit/:id', {
             templateUrl: 'partials/event/edit',

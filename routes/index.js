@@ -55,6 +55,15 @@ module.exports = function (app) {
         "event" : Event
     };
 
+  app.get('/api/event', function (req, res) {
+        Event.find(null, 'date start end title description requiresVolunteers', function (err, events) {
+            if (err) {
+                res.send(500, err);
+            }
+            res.json(events);
+        })
+    });
+  
     app.get('/api/:model', function (req, res) {
         models[req.params.model].find(function (err, models) {
             if (err) {

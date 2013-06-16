@@ -167,7 +167,7 @@ function NewEventCtrl($scope, $http, $location){
     var slots = $scope.event.timeSlots;
     for(var i=0; i<slots; i++){
       arr.push({
-        _id : i,
+        index : i,
         required : 0,
         volunteers :[]
       });
@@ -187,7 +187,7 @@ function NewEventCtrl($scope, $http, $location){
       
       if(val.slots.length < $scope.event.timeSlots){
         val.slots.push({
-          _id : val.slots.length,
+          index : val.slots.length,
           required : 0,
           volunteers :[]
         });    
