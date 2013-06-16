@@ -151,20 +151,21 @@ function NewNewsItemCtrl($scope, $http, $location){
 function NewEventCtrl($scope, $http, $location){
   $scope.event = {
     tasks : [],
-    slotDuration : 60
-  };  
+    slotDuration : 60,
+    timeSlots : 0
+  }; 
   
   $scope.timeSlotsArray = function(){
+    var slots = $scope.event.timeSlots;
     var arr = [];
-    for(var i=0; i<$scope.event.timeSlots; i++){
-      arr.push({_id : i});
-    }
-    return arr; 
-  }
+    for(var i=0; i<slots; i++) { arr.push(i); }
+    return arr;
+  };  
   
   function emptySlotsArray(){
     var arr = [];
-    for(var i=0; i<$scope.event.timeSlots; i++){
+    var slots = $scope.event.timeSlots;
+    for(var i=0; i<slots; i++){
       arr.push({
         _id : i,
         required : 0,
@@ -172,6 +173,29 @@ function NewEventCtrl($scope, $http, $location){
       });
     }
     return arr;
+  }
+  
+  $scope.removeTask = function(t){
+    var index = $scope.event.tasks.indexOf(t)
+    if(index >= 0)
+      $scope.event.tasks.splice(index,1);   
+  }
+  
+  $scope.rejigSlots = function(){
+    //go through all tasks in the event and make sure we have the right number of slots. 
+    angular.forEach($scope.event.tasks, function(val, key){
+      
+      if(val.slots.length < $scope.event.timeSlots){
+        val.slots.push({
+          _id : val.slots.length,
+          required : 0,
+          volunteers :[]
+        });    
+      }
+      if(val.slots.length > $scope.event.timeSlots){
+        val.slots.splice(val.slots.length-1,1);
+      }
+    });
   }
   
   $scope.submit = function(){

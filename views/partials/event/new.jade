@@ -3,15 +3,15 @@ h3 Create a new event
 form.form(novalidate)
     div
         label Date
-        input(type="text", ng-model="event.date")
+        input(type="date", ng-model="event.date")
 
     div
         label Start
-        input(type="text", ng-model="event.start")
+        input(type="time", ng-model="event.start")
 
     div
         label End
-        input(type="text", ng-model="event.end")
+        input(type="time", ng-model="event.end")
 
     div
         label Title
@@ -28,7 +28,7 @@ form.form(novalidate)
     div(ng-show="event.requiresVolunteers")
       div  
         label How many time slots do you need to fill?
-        input(type="number", ng-model="event.timeSlots")
+        input(type="number", ng-model="event.timeSlots", ng-change="rejigSlots()")
         
       div
         label How long is each slot in minutes?
@@ -43,12 +43,16 @@ form.form(novalidate)
         
         table(style="width:100%")
           tr
+            th(style="width:40px")
             th Task
             th(ng-repeat="slot in timeSlotsArray()") Slot {{$index}}            
           
           tr(ng-repeat="t in event.tasks")
+            td
+              button.button.tiny(ng-click="removeTask(t)") X
             td {{t.name}}        
             td(ng-repeat="slot in t.slots") 
+              input(type="number", ng-model="slot.required")
 
     div
         button.button(ng-click="submit()") Create

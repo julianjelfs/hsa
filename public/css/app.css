@@ -20,6 +20,12 @@ ul.breadcrumbs {
   position:relative;  
 }
 
+.trash {
+  background-image : url("/images/trash.png");
+  background-repeat:no-repeat;
+  width:30px;
+}
+
 body{
   background-image: url("/images/watermark.png");
   background-repeat:no-repeat;
