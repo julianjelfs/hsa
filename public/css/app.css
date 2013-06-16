@@ -30,7 +30,7 @@ ul.breadcrumbs {
    text-align:center; 
 }
 
-.slotFiller {
+.slotFilled {
   font-style:italic;
   color:#bbb;
 }
@@ -51,8 +51,7 @@ body{
   margin-bottom:10px;
 }
 
-.recipient {
-  display:inline-block;
+.recipient, .volunteer {
   padding:8px;
   background-color:#fff;
   border:solid 1px #ccc;
@@ -62,6 +61,16 @@ body{
   -moz-border-radius: 3px 3px 3px 3px;
   border-radius: 3px 3px 3px 3px;
 }
+
+.recipient {
+  display: inline-block;    
+}
+
+span.close {
+  cursor : pointer;
+  float:right;
+}
+
 
 .news {
   padding:20px;

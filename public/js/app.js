@@ -142,7 +142,9 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
       $routeProvider.when('/event/volunteer/:id', {
             templateUrl: 'partials/event/volunteer',
             controller: function ($scope, $http, $location, event) {
+              $scope.currentVolunteer = null;
               $scope.event = event;
+              var currentSlot;
               $scope.timeSlotsArray = function(){
                 var slots = $scope.event.timeSlots;
                 var arr = [];
@@ -150,9 +152,28 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
                 return arr;
               }; 
               $scope.volunteer = function(task, slot){
-                alert("thanks for volunteering for the " + task.name + " task");  
-                //need to throw up a modal dialog here. 
+                $('#confirm').foundation('reveal', 'open');
+                currentSlot = slot;
               }
+              $scope.submitVolunteer = function(){
+                $scope.currentVolunteer.index = currentSlot.volunteers.length;
+                currentSlot.volunteers.push($scope.currentVolunteer);   
+                $scope.cancel();
+                $scope.currentVolunteer = {};
+                $scope.form.$setPristine();
+              }
+              $scope.cancel = function(){
+                $('#confirm').foundation('reveal', 'close');
+                $scope.currentVolunteer = {};
+                $scope.form.$setPristine();
+              }
+              $scope.removeVolunteer = function(slot, volunteer){
+                var i = slot.volunteers.indexOf(volunteer);
+                if(i >= 0){
+                  slot.volunteers.splice(i,1);  
+                }
+              }
+              
             },
             resolve: getEventResolver()
         });
