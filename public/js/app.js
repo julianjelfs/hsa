@@ -121,7 +121,8 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
                     var id = $route.current.params.id
 
                     $http.get('/api/event/' + id).success(function (result) {
-                        deferred.resolve(result);
+                      result.date = new Date(result.date);
+                      deferred.resolve(result);
                     }).error(function (error) {
                         deferred.reject(error);
                     });
@@ -129,6 +130,16 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
                     return deferred.promise;
                 }
             };
+      }
+      
+      function nullResolver(){
+        return {
+          event : function($q){
+            var deferred = $q.defer();
+            deferred.resolve(null);            
+            return deferred.promise;
+          }
+        }
       }
 
       $routeProvider.when('/event/view/:id', {
@@ -141,61 +152,23 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
       
       $routeProvider.when('/event/volunteer/:id', {
             templateUrl: 'partials/event/volunteer',
-            controller: function ($scope, $http, $location, event) {
-              $scope.currentVolunteer = null;
-              $scope.event = event;
-              var currentSlot;
-              $scope.timeSlotsArray = function(){
-                var slots = $scope.event.timeSlots;
-                var arr = [];
-                for(var i=0; i<slots; i++) { arr.push(i); }
-                return arr;
-              }; 
-              $scope.volunteer = function(task, slot){
-                $('#confirm').foundation('reveal', 'open');
-                currentSlot = slot;
-              }
-              $scope.submitVolunteer = function(){
-                $scope.currentVolunteer.index = currentSlot.volunteers.length;
-                currentSlot.volunteers.push($scope.currentVolunteer);   
-                $scope.cancel();
-                $scope.currentVolunteer = {};
-                $scope.form.$setPristine();
-              }
-              $scope.cancel = function(){
-                $('#confirm').foundation('reveal', 'close');
-                $scope.currentVolunteer = {};
-                $scope.form.$setPristine();
-              }
-              $scope.removeVolunteer = function(slot, volunteer){
-                var i = slot.volunteers.indexOf(volunteer);
-                if(i >= 0){
-                  slot.volunteers.splice(i,1);  
-                }
-              }
-              
-            },
+            controller: VolunteerCtrl,
             resolve: getEventResolver()
         });
       
         $routeProvider.when('/event/edit/:id', {
-            templateUrl: 'partials/event/edit',
-            controller: function ($scope, $http, $location, event) {
-                $scope.event = event;
-                $scope.submit = function () {
-                    $http.post("/api/event/edit/" + $scope.event._id, {
-                        event: $scope.event
-                    }).success(function (result) {
-                        $location.path("/event/index");
-                    });
-                }
-            },
-            resolve: getEventResolver()
+          templateUrl: 'partials/event/new',
+          controller: EventCtrl, 
+          resolve: getEventResolver()
         });
+      
+      $routeProvider.when('/event/new', { 
+        templateUrl: 'partials/event/new', 
+        controller: EventCtrl, 
+        resolve : nullResolver() 
+      });
 
         $routeProvider.when('/newsitem/new', {templateUrl: 'partials/newsitem/new', controller: NewNewsItemCtrl});
-        $routeProvider.when('/event/new', {templateUrl: 'partials/event/new', controller: NewEventCtrl});
-
         $routeProvider.otherwise({redirectTo: '/'});
         $locationProvider.html5Mode(true);
     }]);

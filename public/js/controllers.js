@@ -148,8 +148,50 @@ function NewNewsItemCtrl($scope, $http, $location){
     }
 }
 
-function NewEventCtrl($scope, $http, $location){
-  $scope.event = {
+function VolunteerCtrl($scope, $http, $location, event){
+  $scope.currentVolunteer = null;
+  $scope.event = event;
+  var currentSlot;
+  $scope.timeSlotsArray = function(){
+    var slots = $scope.event.timeSlots;
+    var arr = [];
+    for(var i=0; i<slots; i++) { arr.push(i); }
+    return arr;
+  }; 
+  
+  $scope.volunteer = function(task, slot){
+    $('#confirm').foundation('reveal', 'open');
+    currentSlot = slot;
+  }
+  $scope.submitVolunteer = function(){
+    $scope.currentVolunteer.index = currentSlot.volunteers.length;
+    currentSlot.volunteers.push($scope.currentVolunteer);   
+    $http.post("/api/event/edit/" + $scope.event._id, {
+      event: $scope.event
+    }).success(function (result) {
+      $scope.cancel();
+      $scope.currentVolunteer = {};
+      $scope.form.$setPristine();
+    });                
+  }
+  $scope.cancel = function(){
+    $('#confirm').foundation('reveal', 'close');
+    $scope.currentVolunteer = {};
+    $scope.form.$setPristine();
+  }
+  $scope.removeVolunteer = function(slot, volunteer){
+    var i = slot.volunteers.indexOf(volunteer);
+    if(i >= 0){
+      slot.volunteers.splice(i,1);  
+    }
+    $http.post("/api/event/edit/" + $scope.event._id, { event: $scope.event });
+  }  
+}
+
+function EventCtrl($scope, $http, $location, event){
+  $scope.viewTitle = event == null ? "Create a new event" : "Update event";
+  $scope.buttonText = event == null ? "Create" : "Update";
+  $scope.event = event || {
     tasks : [],
     slotDuration : 60,
     timeSlots : 0
@@ -199,11 +241,12 @@ function NewEventCtrl($scope, $http, $location){
   }
   
   $scope.submit = function(){
-        $http.post('/api/event/create', {
-            event : $scope.event
-        }).success(function(data, status, headers, config) {
-            $location.path('/event/index');
-        });
+      var url = event == null ? '/api/event/create' : "/api/event/edit/" + $scope.event._id;
+      $http.post(url, {
+        event: $scope.event
+      }).success(function (result) {
+        $location.path("/event/index");
+      });
     }
         
     $scope.addTask = function() {

@@ -1,10 +1,10 @@
-h3 Create a new event
+h3 {{viewTitle}}
 
 form.form(novalidate, name="form")
     div
         label Date
         input(type="date", ng-model="event.date", required)
-
+  
     div
         label Start
         input(type="time", ng-model="event.start", required)
@@ -55,4 +55,4 @@ form.form(novalidate, name="form")
               input(type="number", ng-model="slot.required")
 
     div
-        button.button(ng-click="submit()", ng-disabled="form.$invalid") Create
+        button.button(ng-click="submit()", ng-disabled="form.$invalid") {{buttonText}}
