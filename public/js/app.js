@@ -93,24 +93,13 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
       
         $routeProvider.when('/newsitem/view/:id', {
             templateUrl: 'partials/newsitem/view',
-            controller: function ($scope, $http, $location, newsitem) {
-                $scope.newsitem = newsitem;
-            },
+            controller: NewsItemCtrl,
             resolve: getNewsItemResolver()
         });
 
         $routeProvider.when('/newsitem/edit/:id', {
-            templateUrl: 'partials/newsitem/edit',
-            controller: function ($scope, $http, $location, newsitem) {
-                $scope.newsitem = newsitem;
-                $scope.submit = function () {
-                    $http.post("/api/newsitem/edit/" + $scope.newsitem._id, {
-                        newsitem: $scope.newsitem
-                    }).success(function (result) {
-                            $location.path("/newsitem/index");
-                        });
-                }
-            },
+            templateUrl: 'partials/newsitem/new',
+            controller: NewsItemCtrl,
             resolve: getNewsItemResolver()
         });
       
@@ -132,14 +121,14 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
             };
       }
       
-      function nullResolver(){
-        return {
-          event : function($q){
+      function nullResolver(name){
+        var obj = {};
+        obj[name] = function($q){
             var deferred = $q.defer();
             deferred.resolve(null);            
             return deferred.promise;
-          }
-        }
+          };
+        return obj;
       }
 
       $routeProvider.when('/event/view/:id', {
@@ -165,10 +154,15 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
       $routeProvider.when('/event/new', { 
         templateUrl: 'partials/event/new', 
         controller: EventCtrl, 
-        resolve : nullResolver() 
+        resolve : nullResolver('event') 
       });
 
-        $routeProvider.when('/newsitem/new', {templateUrl: 'partials/newsitem/new', controller: NewNewsItemCtrl});
-        $routeProvider.otherwise({redirectTo: '/'});
+        $routeProvider.when('/newsitem/new', {
+          templateUrl: 'partials/newsitem/new', 
+          controller: NewsItemCtrl,
+          resolve : nullResolver('newsitem')
+        });
+        
+      $routeProvider.otherwise({redirectTo: '/'});
         $locationProvider.html5Mode(true);
     }]);

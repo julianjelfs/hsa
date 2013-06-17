@@ -1,12 +1,13 @@
-//a.button.small.right(href='/newsitem/new') New News Item
+a.button.tiny.right(href='/newsitem/new') New
 
 div.row(ng-repeat="n in newsitems", ng-animate="'custom'")
   .small-offset-1.small-10.columns
     .news
+      a.button.tiny.right(href='/newsitem/edit/{{n._id}}') Edit
       a(href='/newsitem/view/{{n._id}}') 
         h4 {{n.title}}
       p {{n.description|truncate:200}} 
         a(href='/newsitem/view/{{n._id}}') read more ...
       p 
-        i posted by {{n.author}} on {{n.created}}
+        i posted by {{n.author}} on {{n.date|date}}
   .small-1.columns

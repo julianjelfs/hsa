@@ -133,21 +133,6 @@ function RegisterCtrl($scope, $http, $location, authService) {
   }  
 }
 
-
-function NewsItemCtrl($scope, circles) {
-    $scope.circles = circles;
-}
-
-function NewNewsItemCtrl($scope, $http, $location){
-    $scope.submit = function(){
-        $http.post('/api/newsitem/create', {
-            newsitem : $scope.newsitem
-        }).success(function(data, status, headers, config) {
-            $location.path('/newsitem/index');
-        });
-    }
-}
-
 function VolunteerCtrl($scope, $http, $location, event){
   $scope.currentVolunteer = null;
   $scope.event = event;
@@ -186,6 +171,25 @@ function VolunteerCtrl($scope, $http, $location, event){
     }
     $http.post("/api/event/edit/" + $scope.event._id, { event: $scope.event });
   }  
+}
+
+function NewsItemCtrl($scope, $http, $location, newsitem){
+  $scope.viewTitle = newsitem == null ? "Create a news item" : "Update news item";
+  $scope.buttonText = newsitem == null ? "Create" : "Update";
+  
+  $scope.newsitem = newsitem || {
+    date : new Date(),
+    author : 'Julian'
+  }; 
+  
+    $scope.submit = function () {
+      var url = newsitem == null ? '/api/newsitem/create' : "/api/newsitem/edit/" + $scope.newsitem._id;
+      $http.post(url, {
+        newsitem: $scope.newsitem
+      }).success(function (result) {
+        $location.path("/newsitem/index");
+      });
+    }
 }
 
 function EventCtrl($scope, $http, $location, event){

@@ -1,7 +1,7 @@
 .small-offset-1.small-10.columns
     .news 
       h4 {{newsitem.title}}
-      p {{newsitem.description}} 
+      p(ng-bind-html-unsafe="newsitem.description|htmlifyLineBreaks")
       p 
         i posted by {{newsitem.author}} on {{newsitem.created}}
   .small-1.columns

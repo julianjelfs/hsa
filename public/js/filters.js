@@ -7,4 +7,9 @@ angular.module('myApp.filters', []).
     return function(input, limit) {
       return input.substring(0, limit) + "...";
     }
+  }).
+  filter('htmlifyLineBreaks', function() {
+    return function(input) {
+      return input.replace(/\n/g, '<br/>');
+    }
   });

@@ -1,6 +1,6 @@
 .small-offset-1.small-10.columns
     .news
       h4 {{event.title}} on {{event.date | date}} from {{event.start}} to {{event.end}}
-      p {{event.description}} 
+      p(ng-bind-html-unsafe="event.description|htmlifyLineBreaks") 
       p 
-        a.button.success(href="/volunteer") Volunteer!
+        a.button.success(href="/event/volunteer/{{event._id}}") Volunteer!
