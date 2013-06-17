@@ -54,23 +54,25 @@ module.exports = function (app) {
         "newsitem" : NewsItem,
         "event" : Event
     };
+  
+  //let's add some paging to the index api calls
 
   app.get('/api/event', function (req, res) {
-        Event.find(null, 'date start end title description requiresVolunteers', function (err, events) {
+    Event.find(null, 'date start end title description requiresVolunteers', { sort : { date : 'asc', start : 'asc' }}, function (err, events) {
             if (err) {
                 res.send(500, err);
             }
             res.json(events);
-        })
+        });
     });
   
     app.get('/api/:model', function (req, res) {
-        models[req.params.model].find(function (err, models) {
+        models[req.params.model].find(null, null, { sort : { date : 'desc' }}, function (err, models) {
             if (err) {
                 res.send(500, err);
             }
             res.json(models);
-        })
+        });
     });
 
     app.post('/api/:model/delete/:id', ensureAuthenticated, function (req, res) {

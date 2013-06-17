@@ -47,23 +47,47 @@ block body
       .row.panel.main
         .small-12          
           div.view-animate-container#content(ng-view)
-
-          div#login-holder(ng-controller='LoginCtrl')
-            h2 Log In
-
-            form(ng-submit="submit()")
-              div
-                label Username
-                input(type="text",name="username", ng-model="username")
-
-              div
-                label Password
-                input(type="password",name="password", ng-model="password")
-
-              div
-                button.btn(type="submit") Log In
-              p
-                a(href='register') Register
+         
+          div#login-holder.login-container(ng-controller='LoginCtrl')
+          
+            div#login-reg
+              div.flip.front
+                h3 Log In
+    
+                form.form(name="loginForm", ng-submit="submit()", novalidate)
+                  div
+                    label Username
+                    input(type="text",name="username", ng-model="username", required)
+    
+                  div
+                    label Password
+                    input(type="password",name="password", ng-model="password", required)
+    
+                  div
+                    //div.loginBtn(ng-disabled="loginForm.$invalid") Log In
+                    button(ng-disabled="loginForm.$invalid") Log In
+                  p
+                    a(href="#", ng-click="flippy()") Register
+              div.flip.back
+                h3 Register
+    
+                form.form(name="registerForm", ng-submit="register()", novalidate)
+                  div
+                    label Name
+                    input(type="text",name="name", ng-model="name", required)
+                  
+                  div
+                    label Username
+                    input(type="text",name="username", ng-model="username", required)
+    
+                  div
+                    label Password
+                    input(type="password",name="password", ng-model="password", required)
+    
+                  div
+                    button.button.small(type="submit", ng-disabled="registerForm.$invalid") Register
+                  p
+                    a(href="#", ng-click="flippy()") Log In
 
 block scripts
    

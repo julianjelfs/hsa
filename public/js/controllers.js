@@ -110,6 +110,9 @@ function TeamCtrl($scope, $location){
 }
 
 function LoginCtrl($scope, $http, authService) {
+  $scope.flippy = function(){
+     $("#login-reg").toggleClass("flipped"); 
+  }
   $scope.submit = function() {
     $http.post('/api/login', {
       username : $scope.username,

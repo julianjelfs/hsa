@@ -16,14 +16,13 @@ angular.module('myApp.directives', [])
         login.hide();
         
         scope.$on('event:auth-loginRequired', function() {
-          login.slideDown('fast', function() {
-            main.hide();
-          });
+          login.show();
+          main.hide();
         });
 
         scope.$on('event:auth-loginConfirmed', function() {
           main.show();
-          login.slideUp('fast');
+          login.hide();
         });
       }
     }
