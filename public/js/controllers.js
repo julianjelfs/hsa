@@ -85,6 +85,16 @@ function SponsorsCtrl($scope) {
     name : "Kinleigh, Folkard & Hayward",
     website : "http://www.kfh.co.uk/"
   }]; 
+  
+  (function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    return array;
+  })($scope.sponsors);
 }
 
 function TeamCtrl($scope, $location){
@@ -121,19 +131,15 @@ function LoginCtrl($scope, $http, authService) {
       authService.loginConfirmed(data);
     });
   }
-}
-
-
-function RegisterCtrl($scope, $http, $location, authService) {
-  $scope.submit = function() {
+  $scope.register = function() {
     $http.post('/api/register', {
+      name : $scope.name,
       username : $scope.username,
       password : $scope.password
     }).success(function(data, status, headers, config) {
       authService.loginConfirmed(data);
-      $location.path("/");
     });
-  }  
+  }
 }
 
 function VolunteerCtrl($scope, $http, $location, event){

@@ -30,8 +30,6 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
             }
         });
 
-        $routeProvider.when('/register', {templateUrl: 'partials/account/register', controller: RegisterCtrl});
-
         $routeProvider.when('/event/index', {
             templateUrl: 'partials/event/index',
             controller: function ($scope, $routeParams, $http, event) {
