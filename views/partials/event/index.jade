@@ -2,12 +2,10 @@ a.button.tiny.right(href='/event/new') New
 
 div.row(ng-repeat="e in events", ng-animate="'custom'")
   .small-offset-1.small-10.columns
-    .news
+    .news(ng-click="viewItem(e)")
       a.button.tiny.right(href='/event/edit/{{e._id}}') Edit
-      a(href='/event/view/{{e._id}}') 
-        h4 {{e.title}} on {{e.date | date}} from {{e.start}} to {{e.end}}
+      h4 {{e.title}} on {{e.date | date}} from {{e.start}} to {{e.end}}
       p {{e.description|truncate:200}} 
-        a(href='/event/view/{{e._id}}') read more ...
       p(ng-show="e.requiresVolunteers") 
         a.button.success(href="/event/volunteer/{{e._id}}") Volunteer!
   .small-1.columns

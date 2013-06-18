@@ -32,13 +32,16 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
 
         $routeProvider.when('/event/index', {
             templateUrl: 'partials/event/index',
-            controller: function ($scope, $routeParams, $http, event) {
+            controller: function ($scope, $http, $location, event) {
                 $scope.events = event;
                 $scope.delete = function (e) {
                     var i = $scope.events.indexOf(e)
                     $http.post("/api/event/delete/" + e._id).success(function (result) {
                         $scope.events.splice(i, 1);
                     });
+                }                
+                $scope.viewItem = function(item){
+                  $location.path("/event/view/" + item._id);  
                 }
             },
             resolve : getResolver('event')
@@ -46,13 +49,16 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
 
         $routeProvider.when('/newsitem/index', {
             templateUrl: 'partials/newsitem/index',
-            controller: function ($scope, $http, newsitem) {
+            controller: function ($scope, $http, $location, newsitem) {
                 $scope.newsitems = newsitem;
                 $scope.delete = function (n) {
                     var i = $scope.newsitems.indexOf(n)
                     $http.post("/api/newsitem/delete/" + n._id).success(function (result) {
                         $scope.newsitems.splice(i, 1);
                     });
+                }
+                $scope.viewItem = function(item){
+                  $location.path("/newsitem/view/" + item._id);  
                 }
             },
             resolve : getResolver('newsitem')
