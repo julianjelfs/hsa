@@ -2,7 +2,8 @@ var passport = require('passport'),
     User = require('../models/user'),
     NewsItem = require('../models/newsitem'),
     Event = require('../models/event'),
-    util = require('util');
+    util = require('util'),
+    pageSize = 5;
 
 function ensureAuthenticated(req, res, next) {
     if (req.user)
@@ -55,10 +56,20 @@ module.exports = function (app) {
         "event" : Event
     };
   
-  //let's add some paging to the index api calls
+  function pageQuery(req, q){
+    var page = req.params.page;
+    if(page!=null){
+       q.skip(page * pageSize)
+        .limit(pageSize);
+    }
+    return q;
+  }
 
-  app.get('/api/event', function (req, res) {
-    Event.find(null, 'date start end title description requiresVolunteers', { sort : { date : 'asc', start : 'asc' }}, function (err, events) {
+  app.get('/api/events/:page?', function (req, res) {
+    pageQuery(req, Event.find()
+      .select('date start end title description requiresVolunteers')
+      .sort({ date : 'asc', start : 'asc' }))
+      .exec(function (err, events) {
             if (err) {
                 res.send(500, err);
             }
@@ -66,13 +77,14 @@ module.exports = function (app) {
         });
     });
   
-    app.get('/api/:model', function (req, res) {
-        models[req.params.model].find(null, null, { sort : { date : 'desc' }}, function (err, models) {
-            if (err) {
-                res.send(500, err);
-            }
-            res.json(models);
-        });
+  app.get('/api/newsitems/:page?', function (req, res) {
+    pageQuery(req, NewsItem.find().sort('-date'))
+      .exec(function (err, models) {
+        if (err) {
+          res.send(500, err);
+        }
+        res.json(models);
+      });
     });
 
     app.post('/api/:model/delete/:id', ensureAuthenticated, function (req, res) {

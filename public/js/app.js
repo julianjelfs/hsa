@@ -30,10 +30,11 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
             }
         });
 
-        $routeProvider.when('/event/index', {
+      $routeProvider.when('/event/index/:page', {
             templateUrl: 'partials/event/index',
-            controller: function ($scope, $http, $location, event) {
-                $scope.events = event;
+            controller: function ($scope, $http, $location, event, $routeParams) {
+              var page = parseInt($routeParams.page);    
+              $scope.events = event;
                 $scope.delete = function (e) {
                     var i = $scope.events.indexOf(e)
                     $http.post("/api/event/delete/" + e._id).success(function (result) {
@@ -43,33 +44,34 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
                 $scope.viewItem = function(item){
                   $location.path("/event/view/" + item._id);  
                 }
+                $scope.nextPage = function(){
+                  return page + 1;
+                }
             },
             resolve : getResolver('event')
         });
 
-        $routeProvider.when('/newsitem/index', {
+      $routeProvider.when('/newsitem/index/:page', {
             templateUrl: 'partials/newsitem/index',
-            controller: function ($scope, $http, $location, newsitem) {
-                $scope.newsitems = newsitem;
-                $scope.delete = function (n) {
-                    var i = $scope.newsitems.indexOf(n)
-                    $http.post("/api/newsitem/delete/" + n._id).success(function (result) {
-                        $scope.newsitems.splice(i, 1);
-                    });
-                }
-                $scope.viewItem = function(item){
-                  $location.path("/newsitem/view/" + item._id);  
-                }
+            controller: function ($scope, $location, newsitem, $routeParams) {
+              var page = parseInt($routeParams.page);  
+              $scope.newsitems = newsitem;
+              $scope.viewItem = function(item){
+                $location.path("/newsitem/view/" + item._id);  
+              }
+              $scope.nextPage = function(){
+                return page + 1;
+              }
             },
             resolve : getResolver('newsitem')
         });
 
         function getResolver(name){
             var r = {};
-            r[name] = function ($q, $route, $timeout, $http) {
-                var deferred = $q.defer();
-                $http.get('/api/' + name).success(function (result) {
-                    deferred.resolve(result);
+            r[name] = function ($q, $http, $route, $routeParams) {
+              var deferred = $q.defer();
+                $http.get('/api/' + name + "s/" + $route.current.params.page).success(function (result) {
+                  deferred.resolve(result);
                 }).error(function (error) {
                         deferred.reject(error);
                     });

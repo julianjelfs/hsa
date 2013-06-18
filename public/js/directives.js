@@ -65,7 +65,7 @@ angular.module('myApp.directives', [])
           case 'partials/event/new' : 
             path.push({
               name : "events",
-              href : "/event/index"
+              href : "/event/index/0"
             });
             path.push({name : "event"});
             break;
@@ -77,7 +77,7 @@ angular.module('myApp.directives', [])
           case 'partials/newsitem/new' :
             path.push({
               name : "news",
-              href : "/newsitem/index"
+              href : "/newsitem/index/0"
             });
             path.push({name : "item"});
             break;
