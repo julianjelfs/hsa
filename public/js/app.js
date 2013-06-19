@@ -33,8 +33,11 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
       $routeProvider.when('/event/index/:page', {
             templateUrl: 'partials/event/index',
             controller: function ($scope, $http, $location, event, $routeParams) {
-              var page = parseInt($routeParams.page);    
-              $scope.events = event;
+              $scope.page = parseInt($routeParams.page);    
+              $scope.events = event.events;
+              $scope.pages = Math.ceil(event.total / event.pageSize);
+              $scope.pageSize = event.pageSize;
+              
                 $scope.delete = function (e) {
                     var i = $scope.events.indexOf(e)
                     $http.post("/api/event/delete/" + e._id).success(function (result) {
@@ -45,7 +48,7 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
                   $location.path("/event/view/" + item._id);  
                 }
                 $scope.nextPage = function(){
-                  return page + 1;
+                  return $scope.page + 1;
                 }
             },
             resolve : getResolver('event')
@@ -54,13 +57,16 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
       $routeProvider.when('/newsitem/index/:page', {
             templateUrl: 'partials/newsitem/index',
             controller: function ($scope, $location, newsitem, $routeParams) {
-              var page = parseInt($routeParams.page);  
-              $scope.newsitems = newsitem;
+              $scope.page = parseInt($routeParams.page);  
+              $scope.newsitems = newsitem.items;
+              $scope.pages = Math.ceil(newsitem.total / newsitem.pageSize);
+              $scope.pageSize = newsitem.pageSize;
+              
               $scope.viewItem = function(item){
                 $location.path("/newsitem/view/" + item._id);  
               }
               $scope.nextPage = function(){
-                return page + 1;
+                return $scope.page + 1;
               }
             },
             resolve : getResolver('newsitem')

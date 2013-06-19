@@ -66,24 +66,46 @@ module.exports = function (app) {
   }
 
   app.get('/api/events/:page?', function (req, res) {
-    pageQuery(req, Event.find()
-      .select('date start end title description requiresVolunteers')
-      .sort({ date : 'asc', start : 'asc' }))
-      .exec(function (err, events) {
-            if (err) {
-                res.send(500, err);
-            }
-            res.json(events);
-        });
+    
+    Event.count(null, function(err, count){
+      if (err) {
+        res.send(500, err);
+      }
+      
+      pageQuery(req, Event.find()
+        .select('date start end title description requiresVolunteers')
+        .sort({ date : 'asc', start : 'asc' }))
+        .exec(function (err, events) {
+              if (err) {
+                  res.send(500, err);
+              }
+            res.json({
+              events : events,
+              total : count,
+              pageSize : pageSize
+            });
+          });
+      });
     });
+    
+    
   
   app.get('/api/newsitems/:page?', function (req, res) {
-    pageQuery(req, NewsItem.find().sort('-date'))
-      .exec(function (err, models) {
-        if (err) {
-          res.send(500, err);
-        }
-        res.json(models);
+    NewsItem.count(null, function(err, count){
+      if (err) {
+        res.send(500, err);
+      }      
+      pageQuery(req, NewsItem.find().sort('-date'))
+        .exec(function (err, models) {
+          if (err) {
+            res.send(500, err);
+          }
+          res.json({
+              items : models,
+              total : count,
+              pageSize : pageSize
+            });
+        });
       });
     });
 

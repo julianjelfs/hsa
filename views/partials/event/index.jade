@@ -1,5 +1,6 @@
 a.button.tiny.right(href='/event/new') New
 
+pager(model="event")
 div.row(ng-repeat="e in events", ng-animate="'custom'")
   .small-offset-1.small-10.columns
     .news(ng-click="viewItem(e)")
@@ -9,4 +10,3 @@ div.row(ng-repeat="e in events", ng-animate="'custom'")
       p(ng-show="e.requiresVolunteers") 
         a.button.success(href="/event/volunteer/{{e._id}}") Volunteer!
   .small-1.columns
-

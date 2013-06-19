@@ -27,6 +27,30 @@ angular.module('myApp.directives', [])
       }
     }
   })
+.directive("pager", function(){
+  return {
+    restrict : "E",
+    replace : true,
+    template : "<div class='pagination-centered'><ul class='pagination'></ul></div>",
+    link : function(scope, elem, attrs) {
+      
+      function nextPage(){
+        return scope.page < scope.pages-1 ? scope.page+1 : scope.page;
+      }
+      
+      function prevPage(){
+        return scope.page > 0 ? scope.page-1 : 0;
+      }
+      
+      var ul = $("ul", elem);
+      $("<li class='arrow "+ (scope.page == 0 ? "unavailable" : "") +"'><a href='/"+ attrs.model +"/index/"+ prevPage() +"'>&laquo;</a></li>").appendTo(ul);
+      for(var i=0; i<scope.pages; i++){
+        $("<li "+ (scope.page == i ? "class='current'" : "") +"><a href='/"+ attrs.model +"/index/"+ i +"'>"+ (i+1) +"</a></li>").appendTo(ul);  
+      }
+      $("<li class='arrow "+ (scope.page == scope.pages-1 ? "unavailable" : "") +"'><a href='/"+ attrs.model +"/index/"+ nextPage() +"'>&raquo;</a></li>").appendTo(ul);
+    }
+  }
+})
 .directive("breadcrumb", function(){
   return {
     restrict : "E",
