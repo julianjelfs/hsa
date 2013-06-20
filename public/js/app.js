@@ -7,7 +7,7 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
         $routeProvider.when('/login', {templateUrl: 'partials/account/login', controller: LoginCtrl});
         $routeProvider.when('/team', {templateUrl: 'partials/team/index', controller: TeamCtrl});
         $routeProvider.when('/help', {templateUrl: 'partials/help/index'});
-      $routeProvider.when('/contact/:name', {templateUrl: 'partials/contact/index', controller : ContactCtrl});
+      $routeProvider.when('/contact/:flag', {templateUrl: 'partials/contact/index', controller : ContactCtrl});
       $routeProvider.when('/contact', {templateUrl: 'partials/contact/index', controller : ContactCtrl});
       $routeProvider.when('/links', {templateUrl: 'partials/links/index'});
       $routeProvider.when('/sponsors', {templateUrl: 'partials/sponsors/index', controller : SponsorsCtrl});

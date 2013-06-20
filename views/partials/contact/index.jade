@@ -4,10 +4,8 @@ form.form(novalidate, name="form")
     input(required, type="text", placeholder="Your Name", name="name", ng-model="contact.name")
     
   div
-    label Recipients
-    .recipient Kallina Jelfs
-      span.close &nbsp;&times;
-    .recipient Nicky Gray
+    label To
+    div.recipient(ng-repeat="t in to") {{t.name}}
       span.close &nbsp;&times;
   div
     label(for="email") Your Email

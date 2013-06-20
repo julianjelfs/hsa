@@ -5,8 +5,25 @@ function AppCtrl($scope, $location, $http) {
 
 }
 
-function ContactCtrl($scope, $http, $location){
-  $scope.send = function(c){
+function ContactCtrl($scope, $http, $routeParams, $location, contact){
+  var flag = 1;
+  if($routeParams.flag != null) {
+    flag = parseInt($routeParams.flag);
+  }
+  $scope.to = [];
+  
+  for(var prop in contact) {
+    if((contact[prop].flag & flag) === contact[prop].flag) {
+      $scope.to.push(contact[prop]);
+    }
+  }
+  
+  $scope.send = function(c) {
+    $scope.contact.to = 0;
+    angular.forEach($scope.to, function(t){
+        $scope.contact.to = $scope.contact.to | t.flag;
+    });
+    
     $http.post("/api/contact/send", {
       contact: $scope.contact
     }).success(function (result) {      
@@ -97,25 +114,10 @@ function SponsorsCtrl($scope) {
   })($scope.sponsors);
 }
 
-function TeamCtrl($scope, $location){
-  $scope.team = [{
-    position : 'Chair',
-    name : 'Nicky	Gray',
-    description : "Nicky thinks she is in charge, and also Alan thinks he is in charge. I'm not sure who's in charge but Nicky scares me a bit",
-    phone : '07729 773 885'
-  },{
-    position : 'Deputy Chair',
-    name : 'Karen Wright',
-    description : "Most unsuitable",
-    phone : '07941 410 045'
-  },{
-    position : 'Treasurer',
-    name : 'Kallina Jelfs',
-    phone : '07747 064 621'
-  }]; 
-  
+function TeamCtrl($scope, $location, contact){
+  $scope.team = [contact.NickyGray,contact.KarenWright, contact.KallinaJelfs];
   $scope.contact = function(member){
-    $location.path("/contact/" + member.name);  
+    $location.path("/contact/" + member.flag);  
   }
 }
 
