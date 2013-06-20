@@ -4,9 +4,13 @@ form.form(novalidate, name="form")
     input(required, type="text", placeholder="Your Name", name="name", ng-model="contact.name")
     
   div
-    label To
-    div.recipient(ng-repeat="t in to") {{t.name}}
-      span.close &nbsp;&times;
+    button.button.small.dropdown(data-dropdown="to-drop", ng-disabled="members.length<=0") Choose Recipients
+    ul.f-dropdown#to-drop(data-dropdown-content)
+      li(ng-repeat="m in members", ng-click="addRecipient(m)") {{m.name}}
+      
+  div.recipient(ng-repeat="t in to") {{t.name}}
+    span.close(ng-click="removeRecipient(t)") &nbsp;&times;
+  
   div
     label(for="email") Your Email
     input(required, type="email", placeholder="Your Email", name="email", ng-model="contact.email")
