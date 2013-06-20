@@ -20,7 +20,7 @@ form.form(novalidate, name="form")
     textarea(required, rows="10", type="text", placeholder="Your Message", name="message", ng-model="contact.message")
   
   div
-    button(ng-click="send(contact)", ng-disabled="form.$invalid") Send
+    button(ng-click="send(contact)", ng-disabled="form.$invalid || to.length === 0") Send
     
 div#confirm.reveal-modal.small
   h4 You message has been successfully delivered!
