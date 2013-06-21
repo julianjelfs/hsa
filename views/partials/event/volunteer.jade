@@ -4,7 +4,7 @@ p We need at least one volunteer for any slot that has a Volunteer button in it.
 table(style="width:100%")
   tr
     th Task
-    th(ng-repeat="slot in timeSlotsArray()") Slot {{$index}}            
+    th(ng-repeat="slot in timeSlotsArray") {{slot.start}} to {{slot.end}}            
 
     tr(ng-repeat="t in event.tasks")
       td {{t.name}}        

@@ -4,8 +4,15 @@ form.form(novalidate, name="form")
     div
         label Date
         input(type="date", ng-model="event.date", required)
-  
-    timerange(start-model="event.start", end-model="event.end")
+    
+    div    
+      label Start and End
+      div.row
+        .small-2.columns
+          input(type="time", ng-model="event.start", required)
+        .small-2.columns
+          input(type="time", ng-model="event.end", required)
+        .small-8.columns
     
     div
         label Title
@@ -22,7 +29,7 @@ form.form(novalidate, name="form")
     div(ng-show="event.requiresVolunteers")
       div  
         label How many time slots do you need to fill?
-        input(type="number", ng-model="event.timeSlots", ng-change="rejigSlots()")
+        input(type="number", ng-model="event.timeSlots")
         
       div
         label How long is each slot in minutes?
@@ -39,7 +46,7 @@ form.form(novalidate, name="form")
           tr
             th(style="width:40px")
             th Task
-            th(ng-repeat="slot in timeSlotsArray()") Slot {{$index}}            
+            th(ng-repeat="slot in timeSlotsArray") {{slot.start}} to {{slot.end}}            
           
           tr(ng-repeat="t in event.tasks")
             td
