@@ -73,6 +73,10 @@ $white:#ffffff;
               transform: translateX( -100% ) rotateY( -180deg );
 }
 
+#login-reg a {
+  margin-right : 5px;
+}
+
 .flip.front {
 }
 .flip.back {
@@ -86,6 +90,8 @@ ul.breadcrumbs {
   margin-left:auto !important;
   top : -30px;
   position:relative;  
+  -webkit-border-radius:0px;
+  border-radius:0px;
 }
 
 .trash {

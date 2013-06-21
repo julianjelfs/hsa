@@ -1,45 +1,7 @@
 extends layout
 
 block body
-  nav.top-bar
-    ul.title-area
-      li.name
-        h1          
-          a(href='/') Hatfeild School Association
-      li.toggle-topbar.menu-icon
-        a(href='#')
-          span
-   
-    section.top-bar-section
-      ul.left
-        li.divider
-        li
-          a(href='newsitem/index/0') News
-        li.divider
-        li
-          a(href='event/index/0') Events
-        li.divider
-        li
-          a(href='help') How to Help
-        li.divider
-        li
-          a(href='team') Team
-        li.divider
-        li
-          a(href='contact/1') Contact Us
-        li.divider
-        li
-          a(href='sponsors') Sponsors
-        li.divider
-        li
-          a(href='links') Links
-          
-      ul.right
-        li.divider
-        li 
-          a This should say who's logged in       
-  
-  
+  navbar
   
   #main(ng-cloak)
     .container
@@ -64,10 +26,10 @@ block body
                     input(type="password",name="password", ng-model="password", required)
     
                   div
-                    //div.loginBtn(ng-disabled="loginForm.$invalid") Log In
                     button(ng-disabled="loginForm.$invalid") Log In
                   p
                     a(href="#", ng-click="flippy()") Register
+                    a(href="#", ng-click="cancel()") Cancel
               div.flip.back
                 h3 Register
     
@@ -88,6 +50,7 @@ block body
                     button.button.small(type="submit", ng-disabled="registerForm.$invalid") Register
                   p
                     a(href="#", ng-click="flippy()") Log In
+                    a(href="#", ng-click="cancel()") Cancel
 
 block scripts
    

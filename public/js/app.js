@@ -1,7 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on filters, and services
-angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.services', 'myApp.directives']).
+angular.module('myApp', ['ngCookies', 'http-auth-interceptor', 'myApp.filters', 'myApp.services', 'myApp.directives']).
     config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
         $routeProvider.when('/', {templateUrl: 'partials/home/index', controller: HomeCtrl});
         $routeProvider.when('/login', {templateUrl: 'partials/account/login', controller: LoginCtrl});
@@ -145,14 +145,6 @@ angular.module('myApp', ['http-auth-interceptor', 'myApp.filters', 'myApp.servic
 
       $routeProvider.when('/event/view/:id', {
             templateUrl: 'partials/event/view',
-            controller: function ($scope, $http, $location, event) {
-                $scope.event = event;
-            },
-            resolve: getEventResolver()
-        });
-      
-      $routeProvider.when('/event/volunteer/:id', {
-            templateUrl: 'partials/event/volunteer',
             controller: VolunteerCtrl,
             resolve: getEventResolver()
         });

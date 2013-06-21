@@ -169,7 +169,9 @@ module.exports = function (app) {
 
     app.post('/api/login', passport.authenticate('local'), function (req, res) {
         util.puts("logged in as " + req.user.username);
-        res.send(200, "Logged in as " + req.user.username);
+      res.send(200, {
+        username : req.user.username
+      });      
     });
   
   app.get('/api/search/users/:prefix', ensureAuthenticated, function(req, res){

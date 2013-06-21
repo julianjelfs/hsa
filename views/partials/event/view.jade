@@ -2,5 +2,34 @@
     .news
       h4 {{event.title}} on {{event.date | date}} from {{event.start}} to {{event.end}}
       p(ng-bind-html-unsafe="event.description|htmlifyLineBreaks") 
-      p 
-        a.button.success(href="/event/volunteer/{{event._id}}") Volunteer!
+      
+      div(ng-show="event.requiresVolunteers")
+        p We need at least one volunteer for any slot that has a Volunteer button in it. If you can help just click the button and fill in you details. Thanks. 
+        
+        table(style="width:100%")
+          tr
+            th Task
+            th(ng-repeat="slot in timeSlotsArray") {{slot.start}} to {{slot.end}}            
+        
+            tr(ng-repeat="t in event.tasks")
+              td {{t.name}}        
+              td.slot(ng-repeat="slot in t.slots") 
+                div(ng-show="slot.volunteers.length >= 0")
+                  .volunteer(ng-repeat="v in slot.volunteers") {{v.name}}
+                    span.close(ng-click="removeVolunteer(slot, v)") &nbsp;&times;
+                button.button.small.success(ng-click="volunteer(t, slot)", ng-show="slot.volunteers.length < slot.required") Volunteer!
+                
+        div#confirm.reveal-modal.medium
+          p Thanks for volunteering. Please enter your details below
+          form.form(novalidate, name="form")
+            div
+              input(required, type="text", placeholder="Your Name", name="name", ng-model="currentVolunteer.name")
+            div
+              input(required, type="email", placeholder="Your Email", name="email", ng-model="currentVolunteer.email")
+            div
+              input(required, type="text", placeholder="Your Phone Number", name="phone", ng-model="currentVolunteer.phone")
+            div.row
+              .small-6.columns
+                button.right(ng-click="submitVolunteer()", ng-disabled="form.$invalid") Send
+              .small-6.columns
+                button.left(ng-click="cancel()") Cancel

@@ -21,6 +21,10 @@ function ContactCtrl($scope, $http, $routeParams, $location, contact){
     }
   }
   
+  $scope.noRecipients = function(){
+    return $scope.to.length === 0;
+  }
+  
   $scope.addRecipient = function(m){
     $scope.to.push(m);
     var i = $scope.members.indexOf(m);
@@ -138,9 +142,12 @@ function TeamCtrl($scope, $location, contact){
   }
 }
 
-function LoginCtrl($scope, $http, authService) {
+function LoginCtrl($rootScope, $scope, $http, authService) {
   $scope.flippy = function(){
      $("#login-reg").toggleClass("flipped"); 
+  }
+  $scope.cancel = function(){
+    $rootScope.$broadcast("event:auth-loginCancelled");
   }
   $scope.submit = function() {
     $http.post('/api/login', {
@@ -263,7 +270,7 @@ function EventCtrl($scope, $http, $location, timeParsing, event){
     for(var i=0; i<slots; i++){
       arr.push({
         index : i,
-        required : 0,
+        required : 1,
         volunteers :[]
       });
     }

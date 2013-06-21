@@ -1,0 +1,39 @@
+nav.top-bar
+    ul.title-area
+      li.name
+        h1          
+          a(href='/') Hatfeild School Association
+      li.toggle-topbar.menu-icon
+        a(href='#')
+          span
+          
+    section.top-bar-section
+      ul.left
+        li.divider
+        li
+          a(href='newsitem/index/0') News
+        li.divider
+        li
+          a(href='event/index/0') Events
+        li.divider
+        li
+          a(href='help') How to Help
+        li.divider
+        li
+          a(href='team') Team
+        li.divider
+        li
+          a(href='contact/1') Contact Us
+        li.divider
+        li
+          a(href='sponsors') Sponsors
+        li.divider
+        li
+          a(href='links') Links
+          
+      ul.right
+        li.divider
+        li(ng-hide="loggedIn()")
+          a(ng-click="logIn()") Log In
+        li(ng-show="loggedIn()") 
+          a {{user.username}}       

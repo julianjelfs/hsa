@@ -24,34 +24,30 @@ angular.module('myApp.directives', [])
           main.show();
           login.hide();
         });
+        
+        scope.$on('event:auth-loginCancelled', function() {
+          main.show();
+          login.hide();
+        });
       }
     }
   })
-.directive("timerange", function(){
+.directive("navbar", function($cookies){
   return {
     restrict : "E",
     replace : true,
-    templateUrl : "/partials/event/timerange",
-    link : function(scope, elem, attrs){
-      var start = $("#start-time", elem);
-      var end = $("#end-time", elem);
-      var options = {
-        template: false,
-        showInputs: false,
-        minuteStep: 5,
-        showMeridian : false
-      };
-      options.defaultTime = scope.event.start;
-      start.timepicker(options).on('changeTime.timepicker', function(e) {
-        scope.$apply(function(){
-          scope.event.start = start.val();
-        });
-      });
-      options.defaultTime = scope.event.end;
-      end.timepicker(options).on('changeTime.timepicker', function(e) {
-        scope.$apply(function(){
-          scope.event.end = end.val();
-        });
+    templateUrl : "partials/home/nav",
+    link : function (scope, elem, attrs) {
+      scope.loggedIn = function(){
+        return scope.user != null;
+      }
+      
+      scope.logIn = function(){
+        scope.$broadcast('event:auth-loginRequired');
+      }
+      
+      scope.$on('event:auth-loginConfirmed', function(e, data) {
+        scope.user = data;
       });
     }
   }
