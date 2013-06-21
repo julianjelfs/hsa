@@ -27,6 +27,35 @@ angular.module('myApp.directives', [])
       }
     }
   })
+.directive("timerange", function(){
+  return {
+    restrict : "E",
+    replace : true,
+    templateUrl : "/partials/event/timerange",
+    link : function(scope, elem, attrs){
+      var start = $("#start-time", elem);
+      var end = $("#end-time", elem);
+      var options = {
+        template: false,
+        showInputs: false,
+        minuteStep: 5,
+        showMeridian : false
+      };
+      options.defaultTime = scope.event.start;
+      start.timepicker(options).on('changeTime.timepicker', function(e) {
+        scope.$apply(function(){
+          scope.event.start = start.val();
+        });
+      });
+      options.defaultTime = scope.event.end;
+      end.timepicker(options).on('changeTime.timepicker', function(e) {
+        scope.$apply(function(){
+          scope.event.end = end.val();
+        });
+      });
+    }
+  }
+})
 .directive("pager", function(){
   return {
     restrict : "E",
