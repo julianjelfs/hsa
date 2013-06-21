@@ -32,11 +32,15 @@ angular.module('myApp', ['ngCookies', 'http-auth-interceptor', 'myApp.filters', 
 
       $routeProvider.when('/event/index/:page', {
             templateUrl: 'partials/event/index',
-            controller: function ($scope, $http, $location, event, $routeParams) {
+            controller: function ($rootScope, $scope, $http, $location, event, $routeParams) {
               $scope.page = parseInt($routeParams.page);    
               $scope.events = event.events;
               $scope.pages = Math.ceil(event.total / event.pageSize);
               $scope.pageSize = event.pageSize;
+              
+              $scope.isAdmin = function(){
+                return $rootScope.user != null && $rootScope.user.admin == true;  
+              }
               
                 $scope.delete = function (e) {
                     var i = $scope.events.indexOf(e)
@@ -56,11 +60,15 @@ angular.module('myApp', ['ngCookies', 'http-auth-interceptor', 'myApp.filters', 
 
       $routeProvider.when('/newsitem/index/:page', {
             templateUrl: 'partials/newsitem/index',
-            controller: function ($scope, $location, newsitem, $routeParams) {
+            controller: function ($rootScope, $scope, $location, newsitem, $routeParams) {
               $scope.page = parseInt($routeParams.page);  
               $scope.newsitems = newsitem.items;
               $scope.pages = Math.ceil(newsitem.total / newsitem.pageSize);
               $scope.pageSize = newsitem.pageSize;
+              
+              $scope.isAdmin = function(){
+                return $rootScope.user != null && $rootScope.user.admin == true;  
+              }
               
               $scope.viewItem = function(item){
                 $location.path("/newsitem/view/" + item._id);  

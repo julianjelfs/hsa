@@ -234,7 +234,7 @@ function NewsItemCtrl($scope, $http, $location, newsitem){
     }
 }
 
-function EventCtrl($scope, $http, $location, timeParsing, event){
+function EventCtrl($rootScope, $scope, $http, $location, timeParsing, event){
   $scope.viewTitle = event == null ? "Create a new event" : "Update event";
   $scope.buttonText = event == null ? "Create" : "Update";
   $scope.event = event || {

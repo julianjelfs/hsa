@@ -1,10 +1,10 @@
-a.button.tiny.right(href='/event/new') New
+a.button.tiny.right(ng-show="isAdmin()", href='/event/new') New
 
 pager(model="event")
 div.row(ng-repeat="e in events", ng-animate="'custom'")
   .small-offset-1.small-10.columns
     .news(ng-click="viewItem(e)")
-      a.button.tiny.right(href='/event/edit/{{e._id}}') Edit
+      a.button.tiny.right(ng-show="isAdmin()", href='/event/edit/{{e._id}}') Edit
       h4 {{e.title}} on {{e.date | date}} from {{e.start}} to {{e.end}}
       p {{e.description|truncate:200}} 
       p(ng-show="e.requiresVolunteers") 

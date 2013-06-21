@@ -20,7 +20,8 @@ angular.module('myApp.directives', [])
           main.hide();
         });
 
-        scope.$on('event:auth-loginConfirmed', function() {
+        scope.$on('event:auth-loginConfirmed', function(e, data) {
+          scope.$root.user = data;
           main.show();
           login.hide();
         });

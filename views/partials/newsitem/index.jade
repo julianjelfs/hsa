@@ -1,10 +1,10 @@
-a.button.tiny.right(href='/newsitem/new') New
+a.button.tiny.right(ng-show="isAdmin()", href='/newsitem/new') New
 
 pager(model="newsitem")
 div.row(ng-repeat="n in newsitems", ng-animate="'custom'")
   .small-offset-1.small-10.columns
     .news(ng-click="viewItem(n)")
-      a.button.tiny.right(href='/newsitem/edit/{{n._id}}') Edit      
+      a.button.tiny.right(ng-show="isAdmin()", href='/newsitem/edit/{{n._id}}') Edit      
       h4 {{n.title}}
       p {{n.description|truncate:200}} 
       p 
