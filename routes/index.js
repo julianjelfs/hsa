@@ -31,7 +31,7 @@ module.exports = function (app) {
 
 
     app.post('/api/register', function (req, res) {
-        User.register(new User({ username: req.body.username }), req.body.password, function (err, user) {
+      User.register(new User({ username: req.body.username, admin : false }), req.body.password, function (err, user) {
             if (err) {
                 return res.json({
                     error: err
@@ -44,7 +44,10 @@ module.exports = function (app) {
                 }); 
               }
               return res.json({
-                  user: user
+                  user: {
+                    username : user.username,
+                    admin : user.admin
+                  }
               });
             });
             
@@ -171,7 +174,7 @@ module.exports = function (app) {
         util.puts("logged in as " + req.user.username);
       res.send(200, {
         username : req.user.username,
-        admin : true
+        admin : req.user.admin
       });      
     });
   
