@@ -18,7 +18,7 @@ block body
     
                 form.form(name="loginForm", ng-submit="submit()", novalidate)
                   div
-                    label Username
+                    label Email Address
                     input(type="text",name="username", ng-model="username", required)
     
                   div
@@ -29,6 +29,9 @@ block body
                     button(ng-disabled="loginForm.$invalid") Log In
                   p
                     a(href="#", ng-click="flippy()") Register
+                    br
+                    a(href="#", ng-click="forgotPassword()") Forgot Password?
+                    br
                     a(href="#", ng-click="cancel()") Cancel
               div.flip.back
                 h3 Register
@@ -39,7 +42,7 @@ block body
                     input(type="text",name="name", ng-model="name", required)
                   
                   div
-                    label Username
+                    label Email Address
                     input(type="text",name="username", ng-model="username", required)
     
                   div
@@ -50,6 +53,7 @@ block body
                     button.button.small(type="submit", ng-disabled="registerForm.$invalid") Register
                   p
                     a(href="#", ng-click="flippy()") Log In
+                    br
                     a(href="#", ng-click="cancel()") Cancel
 
 block scripts

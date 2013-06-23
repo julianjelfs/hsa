@@ -1,0 +1,17 @@
+h3 Please enter and confirm your new password
+
+form.form(name='resetForm', novalidate)
+  div
+    label Email Address
+    input(type='text', readonly, ng-model='account.username')
+    
+  div
+    label Password
+    input(type='password', required, ng-model='account.password')
+    
+  div
+    label Confirm
+    input(type='password', required, ng-model='account.confirm')
+    
+  div
+    button.button(ng-click='submit()') Submit

@@ -3,13 +3,25 @@ var passport = require('passport'),
     NewsItem = require('../models/newsitem'),
     Event = require('../models/event'),
     util = require('util'),
-    pageSize = 5;
+    pageSize = 5,
+    uuid = require('node-uuid');
 
 function ensureAuthenticated(req, res, next) {
     if (req.user)
         util.puts('User is authenticated ' + req.user.username);
 
     if (req.isAuthenticated()) {
+        return next();
+    }
+
+    res.send(401, 'Unauthorized');
+}
+
+function ensureAdmin(req, res, next) {
+    if (req.user)
+        util.puts('User is authenticated ' + req.user.username);
+
+    if (req.isAuthenticated() && req.user.admin) {
         return next();
     }
 
@@ -69,25 +81,29 @@ module.exports = function (app) {
   }
 
   app.get('/api/events/:page?', function (req, res) {
+    var today = new Date();
     
     Event.count(null, function(err, count){
       if (err) {
         res.send(500, err);
       }
       
-      pageQuery(req, Event.find()
-        .select('date start end title description requiresVolunteers')
-        .sort({ date : 'asc', start : 'asc' }))
-        .exec(function (err, events) {
-              if (err) {
-                  res.send(500, err);
-              }
-            res.json({
-              events : events,
-              total : count,
-              pageSize : pageSize
+      Event.where('date').lt(today).remove(function(){
+        pageQuery(req, Event.find()
+          .select('date start end title description requiresVolunteers')
+          .sort({ date : 'asc', start : 'asc' }))
+          .where('date').gte(new Date())
+          .exec(function (err, events) {
+                if (err) {
+                    res.send(500, err);
+                }
+              res.json({
+                events : events,
+                total : count,
+                pageSize : pageSize
+              });
             });
-          });
+        });
       });
     });
     
@@ -112,7 +128,7 @@ module.exports = function (app) {
       });
     });
 
-    app.post('/api/:model/delete/:id', ensureAuthenticated, function (req, res) {
+    app.post('/api/:model/delete/:id', ensureAdmin, function (req, res) {
         var model = models[req.params.model];
         model.findById(req.params.id, function (err, m) {
             m.remove(function (err, m) {
@@ -135,6 +151,18 @@ module.exports = function (app) {
             res.send(200, "Updated " + num + " " + req.params.model);
         });
     });
+  
+  app.get('/api/reset/:token', function(req, res){
+    var token = req.params.token;
+    User.findOne({
+      resetToken : token
+    }, function(err, user){
+      res.json({
+        username : user.username,
+        resetToken : user.resetToken
+      });
+    });
+  });
 
     app.get('/api/:model/:id', function (req, res) {
         models[req.params.model].findById(req.params.id, function (err, m) {
@@ -150,7 +178,7 @@ module.exports = function (app) {
     res.send(200, "message sent successfully");
   });
 
-    app.post('/api/:model/create', ensureAuthenticated, function (req, res) {
+    app.post('/api/:model/create', ensureAdmin, function (req, res) {
         var model = models[req.params.model];
         var m = new model(req.body[req.params.model]);
         m.save(function (err, m) {
@@ -177,6 +205,41 @@ module.exports = function (app) {
         admin : req.user.admin
       });      
     });
+  
+  app.post("/api/forgot", function(req, res) {
+    var username = req.body.username;
+    if(username == null){
+      return res.send(500, 'missing username from request');  
+    }
+    
+    var token = uuid.v4();
+    util.puts(username + " forgot their password, generated token " + token);
+    
+    User.update({ 
+      username: username 
+    }, {
+      resetToken : token,
+      resetTokenCreated : new Date()
+    }, function (err, count){
+      res.send(200, 'Reset instructions sent');  
+    });    
+    
+  });
+  
+  app.post('/api/reset', function(req, res){
+    var model = req.body.model;
+    User.findOne({
+      resetToken : model.token
+    }, function(err, user){
+      user.setPassword(model.password, function(){
+        delete user.resetToken;
+        delete user.resetTokenCreated;
+        user.save(function(){
+          res.send(200, 'Password reset successfully');  
+        });
+      });  
+    });
+  });
   
   app.get('/api/search/users/:prefix', ensureAuthenticated, function(req, res){
     var prefix = req.params.prefix;

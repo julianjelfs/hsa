@@ -142,32 +142,6 @@ function TeamCtrl($scope, $location, contact){
   }
 }
 
-function LoginCtrl($rootScope, $scope, $http, authService) {
-  $scope.flippy = function(){
-     $("#login-reg").toggleClass("flipped"); 
-  }
-  $scope.cancel = function(){
-    $rootScope.$broadcast("event:auth-loginCancelled");
-  }
-  $scope.submit = function() {
-    $http.post('/api/login', {
-      username : $scope.username,
-      password : $scope.password
-    }).success(function(data, status, headers, config) {
-      authService.loginConfirmed(data);
-    });
-  }
-  $scope.register = function() {
-    $http.post('/api/register', {
-      name : $scope.name,
-      username : $scope.username,
-      password : $scope.password
-    }).success(function(data, status, headers, config) {
-      authService.loginConfirmed(data);
-    });
-  }
-}
-
 function VolunteerCtrl($scope, $http, $location, timeParsing, event){
   $scope.currentVolunteer = null;
   $scope.event = event;

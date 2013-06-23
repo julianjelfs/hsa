@@ -11,6 +11,33 @@ angular.module('myApp', ['ngCookies', 'http-auth-interceptor', 'myApp.filters', 
       $routeProvider.when('/contact', {templateUrl: 'partials/contact/index', controller : ContactCtrl});
       $routeProvider.when('/links', {templateUrl: 'partials/links/index'});
       $routeProvider.when('/sponsors', {templateUrl: 'partials/sponsors/index', controller : SponsorsCtrl});
+      
+      $routeProvider.when('/reset/:token', {
+        templateUrl : 'partials/account/reset',
+        controller : function($scope, $location, $http, account){
+          $scope.account = account;
+          $scope.submit = function(){
+            $http.post('/api/reset', {
+              model : {
+                token : $scope.account.resetToken,
+                password : $scope.account.password
+              }
+            }).success(function(data){
+              $location.path('/');    
+              //should probably fire the authenticated event here as well
+            });
+          }
+        },
+        resolve : {
+          account : function ($q, $http, $route) {
+            var def = $q.defer();
+            $http.get('/api/reset/' + $route.current.params.token).success(function(data){
+              def.resolve(data);  
+            });
+            return def.promise;
+          }
+        }
+      });
 
         $routeProvider.when('/logout', {
             templateUrl: 'partials/account/login',
