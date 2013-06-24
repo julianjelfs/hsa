@@ -1,4 +1,5 @@
 var User = require('../models/user'),
+    uuid = require('node-uuid'),
     util = require('util');
 
 exports.register = function (req, res) {
@@ -61,7 +62,19 @@ exports.forgot = function(req, res) {
   }); 
 };
 
-exports.reset = function(req, res){
+exports.requestReset = function(req, res){
+  var token = req.params.token;
+  User.findOne({
+    resetToken : token
+  }, function(err, user){
+    res.json({
+      username : user.username,
+      resetToken : user.resetToken
+    });
+  });
+}
+
+exports.doReset = function(req, res){
   var model = req.body.model;
   User.findOne({
     resetToken : model.token
