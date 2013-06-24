@@ -41,31 +41,6 @@ module.exports = function (app) {
         res.render('partials/' + area + '/' + name);
     });
 
-
-    app.post('/api/register', function (req, res) {
-      User.register(new User({ username: req.body.username, admin : false }), req.body.password, function (err, user) {
-            if (err) {
-                return res.json({
-                    error: err
-                });
-            }
-            req.login(user, function(err) {
-              if (err) { 
-                return res.json({
-                    error: err
-                }); 
-              }
-              return res.json({
-                  user: {
-                    username : user.username,
-                    admin : user.admin
-                  }
-              });
-            });
-            
-        });
-    });
-
     var models = {
         "newsitem" : NewsItem,
         "event" : Event
@@ -187,59 +162,7 @@ module.exports = function (app) {
             }
             res.send(200, req.params.model + " added");
         })
-    });
-
-    app.post('/api/logout', function (req, res) {
-        if (req.user)
-            util.puts('Logging out user' + req.user.username);
-        req.session.destroy();
-        req.logout();
-        delete req['user'];
-        res.send(200, 'Logged out');
-    });
-
-    app.post('/api/login', passport.authenticate('local'), function (req, res) {
-        util.puts("logged in as " + req.user.username);
-      res.send(200, {
-        username : req.user.username,
-        admin : req.user.admin
-      });      
-    });
-  
-  app.post("/api/forgot", function(req, res) {
-    var username = req.body.username;
-    if(username == null){
-      return res.send(500, 'missing username from request');  
-    }
-    
-    var token = uuid.v4();
-    util.puts(username + " forgot their password, generated token " + token);
-    
-    User.update({ 
-      username: username 
-    }, {
-      resetToken : token,
-      resetTokenCreated : new Date()
-    }, function (err, count){
-      res.send(200, 'Reset instructions sent');  
     });    
-    
-  });
-  
-  app.post('/api/reset', function(req, res){
-    var model = req.body.model;
-    User.findOne({
-      resetToken : model.token
-    }, function(err, user){
-      user.setPassword(model.password, function(){
-        delete user.resetToken;
-        delete user.resetTokenCreated;
-        user.save(function(){
-          res.send(200, 'Password reset successfully');  
-        });
-      });  
-    });
-  });
   
   app.get('/api/search/users/:prefix', ensureAuthenticated, function(req, res){
     var prefix = req.params.prefix;

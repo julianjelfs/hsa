@@ -1,5 +1,6 @@
 var express = require('express'),
   routes = require('./routes'),
+  accountRoutes = require('./routes/account'),
   mongoose = require('mongoose'),
   passport = require('passport'), 
   LocalStrategy = require('passport-local').Strategy,
@@ -19,11 +20,6 @@ app.configure(function(){
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(express.favicon("public/images/favicon.ico")); 
-  app.use(compass({
-    cache : false,
-    css : 'css',
-    sass : 'css'
-  }));
   app.use(app.router);
 });
 
@@ -44,6 +40,12 @@ passport.deserializeUser(User.deserializeUser());
 mongoose.connect(process.env.MONGODB_HSA_URI);
 
 // Routes
+app.post('/api/register', accountRoutes.register);
+app.post('/api/logout', accountRoutes.logout);
+app.post('/api/login', passport.authenticate('local'), accountRoutes.login);
+app.post("/api/forgot", accountRoutes.forgot);
+app.post('/api/reset', accountRoutes.reset);
+
 routes(app);
 
 // redirect all others to the index (HTML5 history)
