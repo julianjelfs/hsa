@@ -1,4 +1,5 @@
-var User = require('../models/user');
+var User = require('../models/user'),
+    util = require('util');
 
 exports.register = function (req, res) {
   User.register(new User({ username: req.body.username, admin : false }), req.body.password, function (err, user) {
