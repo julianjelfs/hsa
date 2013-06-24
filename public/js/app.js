@@ -3,7 +3,7 @@
 // Declare app level module which depends on filters, and services
 angular.module('myApp', ['ngCookies', 'http-auth-interceptor', 'myApp.filters', 'myApp.services', 'myApp.directives']).
     config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-        $routeProvider.when('/', {templateUrl: 'partials/home/index', controller: HomeCtrl});
+        $routeProvider.when('/', {templateUrl: 'partials/home/index'});
         $routeProvider.when('/login', {templateUrl: 'partials/account/login', controller: LoginCtrl});
         $routeProvider.when('/team', {templateUrl: 'partials/team/index', controller: TeamCtrl});
         $routeProvider.when('/help', {templateUrl: 'partials/help/index'});
@@ -204,4 +204,4 @@ angular.module('myApp', ['ngCookies', 'http-auth-interceptor', 'myApp.filters', 
         
       $routeProvider.otherwise({redirectTo: '/'});
         $locationProvider.html5Mode(true);
-    }]);
+    }]).controller('AppCtrl', function(){});

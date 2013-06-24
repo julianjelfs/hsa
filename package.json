@@ -1,9 +1,14 @@
 {
-    "name": "help-me-go-out"
-  , "version": "0.0.1"
-  , "private": true
-  , "dependencies": {
-      "express": "3.0.0"
-    , "jade": ">= 0.0.1"
+  "name": "hatfeildschoolassociation",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "3.0.0",
+    "jade": ">= 0.0.1"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-watch": "~0.4.4"
   }
 }

@@ -8,7 +8,8 @@ var express = require('express'),
   passport = require('passport'), 
   LocalStrategy = require('passport-local').Strategy,
   compass = require('node-compass'),
-  utils = require('./utils/hsautils');
+  utils = require('./utils/hsautils'),
+  gzippo = require('gzippo');
 
 var app = module.exports = express();
 
@@ -17,8 +18,9 @@ app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(express.static(__dirname + '/public'));
+  app.use(express.methodOverride());  
+  //app.use(express.static(__dirname + '/public'));
+  app.use(gzippo.staticGzip(__dirname + '/public'));
   app.use(express.cookieParser()); 
   app.use(express.session({ secret: 'keyboard cat' }));
   app.use(passport.initialize());
