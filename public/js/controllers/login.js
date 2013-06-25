@@ -1,4 +1,7 @@
-function LoginCtrl($rootScope, $scope, $http, $location, authService) {
+'use strict';
+
+angular.module('myApp')
+  .controller('LoginCtrl', ["$rootScope", "$scope", "$http", "$location", "authService", function ($rootScope, $scope, $http, $location, authService) {
   $scope.flippy = function(){
      $("#login-reg").toggleClass("flipped"); 
   }
@@ -34,4 +37,4 @@ function LoginCtrl($rootScope, $scope, $http, $location, authService) {
       $location.path("/");
     });
   }
-}
+}]);

@@ -1,4 +1,6 @@
-function ContactCtrl($scope, $http, $routeParams, $location, contact){
+'use strict';
+angular.module('myApp')
+  .controller('ContactCtrl', ["$scope", "$http", "$routeParams", "$location", "contact", function($scope, $http, $routeParams, $location, contact){
   var flag = 1;
   if($routeParams.flag != null) {
     flag = parseInt($routeParams.flag);
@@ -49,4 +51,4 @@ function ContactCtrl($scope, $http, $routeParams, $location, contact){
       $location.path("/");
     }
   }
-}
+}]);

@@ -2,7 +2,7 @@
 
 /* Filters */
 
-angular.module('myApp.filters', []).
+angular.module('myApp').
   filter('truncate', function() {
     return function(input, limit) {
       if(input == null || input.length <= limit)

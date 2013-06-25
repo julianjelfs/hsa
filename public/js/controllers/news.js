@@ -1,4 +1,6 @@
-function NewsItemCtrl($scope, $http, $location, newsitem){
+'use strict';
+angular.module('myApp')
+  .controller('NewsItemCtrl', ["$scope", "$http", "$location", "newsitem", function ($scope, $http, $location, newsitem){
   $scope.viewTitle = newsitem == null ? "Create a news item" : "Update news item";
   $scope.buttonText = newsitem == null ? "Create" : "Update";
   var creating = newsitem == null;
@@ -25,4 +27,4 @@ function NewsItemCtrl($scope, $http, $location, newsitem){
         });
       }
     }
-}
+}]);

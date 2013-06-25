@@ -1,4 +1,6 @@
-function SponsorsCtrl($scope) {
+'use strict';
+angular.module('myApp')
+  .controller('SponsorsCtrl', ["$scope", function ($scope) {
   $scope.sponsors = [{
     name : "Evergreen Loft Company", 
     website : "http://www.evergreenloft.co.uk/"
@@ -73,4 +75,4 @@ function SponsorsCtrl($scope) {
     }
     return array;
   })($scope.sponsors);
-}
+}]);

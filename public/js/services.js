@@ -1,9 +1,8 @@
 'use strict';
 
 /* Services */
-var module = angular.module('myApp.services', []);
-
-module.factory("timeParsing", function(){
+angular.module('myApp')
+  .factory("timeParsing", function(){
   function parseToMinutes(timeString) {
     if(timeString == null || timeString.length == 0)
       return 0;
@@ -32,9 +31,7 @@ module.factory("timeParsing", function(){
       return arr;
     }
   }
-});
-
-module.factory("contact", function(){
+}).factory("contact", function(){
   return {
     All : {
       name : "All HSA Members",

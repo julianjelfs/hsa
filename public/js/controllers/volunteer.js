@@ -1,4 +1,6 @@
-function VolunteerCtrl($scope, $http, $location, timeParsing, event){
+'use strict';
+angular.module('myApp')
+  .controller('VolunteerCtrl', ["$scope", "$http", "$location", "timeParsing", "event", function ($scope, $http, $location, timeParsing, event){
   $scope.currentVolunteer = null;
   $scope.event = event;
   var currentSlot;
@@ -32,4 +34,4 @@ function VolunteerCtrl($scope, $http, $location, timeParsing, event){
     }
     $http.post("/api/event/edit/" + $scope.event._id, { event: $scope.event });
   }  
-}
+}]);

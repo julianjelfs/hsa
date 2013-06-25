@@ -3,7 +3,7 @@
 /* Directives */
 
 
-angular.module('myApp.directives', [])
+angular.module('myApp')
   .directive('hsaApp', function() {
     return {
       restrict: 'C',
@@ -33,7 +33,7 @@ angular.module('myApp.directives', [])
       }
     }
   })
-.directive("navbar", function($cookies){
+.directive("navbar", ["$cookies", function($cookies){
   return {
     restrict : "E",
     replace : true,
@@ -52,7 +52,7 @@ angular.module('myApp.directives', [])
       });
     }
   }
-})
+}])
 .directive("pager", function(){
   return {
     restrict : "E",
@@ -141,7 +141,7 @@ angular.module('myApp.directives', [])
     }
   }
 })
-.directive('userLookup', function($http){
+.directive('userLookup', [ "$http", function($http){
   var up = 38, down = 40, enter = 13, esc = 27;
   
   return {
@@ -209,4 +209,4 @@ angular.module('myApp.directives', [])
       });
     }
   }
-});
+}]);

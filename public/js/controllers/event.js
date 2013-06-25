@@ -1,4 +1,6 @@
-function EventCtrl($rootScope, $scope, $http, $location, timeParsing, event){
+'use strict';
+angular.module('myApp')
+  .controller('EventCtrl', ["$rootScope", "$scope", "$http", "$location", "timeParsing", "event", function($rootScope, $scope, $http, $location, timeParsing, event){
   $scope.viewTitle = event == null ? "Create a new event" : "Update event";
   $scope.buttonText = event == null ? "Create" : "Update";
   $scope.event = event || {
@@ -84,4 +86,4 @@ function EventCtrl($rootScope, $scope, $http, $location, timeParsing, event){
       
       $scope.newTask = "";
     }
-}
+}]);
