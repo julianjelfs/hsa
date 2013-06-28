@@ -1,5 +1,6 @@
 var utils = require('../utils/hsautils'),
-    NewsItem = require('../models/newsitem');
+    NewsItem = require('../models/newsitem'),
+    sleep = require('sleep');
 
 exports.index = function (req, res) {
   NewsItem.count(null, function(err, count){

@@ -1,10 +1,10 @@
 'use strict';
 angular.module('myApp').
   config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-        $routeProvider.when('/', {templateUrl: 'partials/home/index'});
-        $routeProvider.when('/login', {templateUrl: 'partials/account/login', controller: 'LoginCtrl'});
-        $routeProvider.when('/team', {templateUrl: 'partials/team/index', controller: 'TeamCtrl'});
-        $routeProvider.when('/help', {templateUrl: 'partials/help/index'});
+      $routeProvider.when('/', {templateUrl: 'partials/home/index'});
+      $routeProvider.when('/login', {templateUrl: 'partials/account/login', controller: 'LoginCtrl'});
+      $routeProvider.when('/team', {templateUrl: 'partials/team/index', controller: 'TeamCtrl'});
+      $routeProvider.when('/help', {templateUrl: 'partials/help/index'});
       $routeProvider.when('/contact/:flag', {templateUrl: 'partials/contact/index', controller : 'ContactCtrl'});
       $routeProvider.when('/contact', {templateUrl: 'partials/contact/index', controller : 'ContactCtrl'});
       $routeProvider.when('/links', {templateUrl: 'partials/links/index'});

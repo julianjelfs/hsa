@@ -77,13 +77,25 @@ angular.module('myApp')
     }
   }
 })
-.directive("breadcrumb", function(){
+.directive("breadcrumb", ["$timeout", function($timeout){
   return {
     restrict : "E",
     replace : "true",
     template : "<ul class='breadcrumbs'></ul>",
     link : function(scope, elem, attrs) {
+      var p = null;
+      scope.loading = false;            
+      scope.$on("$routeChangeStart", function(){
+        p = $timeout(function(){
+          scope.loading = true; 
+          $('#slow').foundation('reveal', 'open');
+        }, 500);
+      });
+      
       scope.$on("$routeChangeSuccess", function(ev, current, prev){
+        $timeout.cancel(p);
+        scope.loading = false;
+        $('#slow').foundation('reveal', 'close');
         var template = current.templateUrl;
         var path = [{
           name : 'home',
@@ -140,7 +152,7 @@ angular.module('myApp')
       });
     }
   }
-})
+}])
 .directive('userLookup', [ "$http", function($http){
   var up = 38, down = 40, enter = 13, esc = 27;
   

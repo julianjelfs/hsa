@@ -7,9 +7,18 @@ block body
     .container
       breadcrumb.row
       .row.panel.main
-        .small-12          
+        .small-12  
+          div#slow.panel.callout.reveal-modal.small
+            h5 This is taking a bit longer than expected
+            h5 Shouldn't be long ... 
+          
+          div#error.panel.callout.reveal-modal.small
+            h5 Oh no something has gone wrong!
+            p Sorry about that, why don't you try again? 
+            button.button.small(ng-click="dismissError()") OK
+          
           div.view-animate-container#content(ng-view)
-         
+          
           div#login-holder.login-container(ng-controller='LoginCtrl')
           
             div#login-reg

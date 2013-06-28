@@ -14,6 +14,14 @@ $background:#f6f6f6;
 $white:#ffffff;
 */
 
+#slow, #error {
+  text-align:center;  
+}
+
+.breadcrumbs {
+  padding-right:10px;
+}
+
 .timerange button {
   margin-right : 5px;  
 }
