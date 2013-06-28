@@ -8,5 +8,5 @@ div.row(ng-repeat="n in newsitems", ng-animate="'custom'")
       h4 {{n.title}}
       p {{n.description|truncate:200}} 
       p 
-        i posted by {{n.author}} on {{n.date|date}}
+        i posted by {{n.author}} {{n.date|fromNow}}
   .small-1.columns

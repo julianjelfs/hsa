@@ -33,7 +33,7 @@ angular.module('myApp')
       }
     }
   })
-.directive("navbar", ["$cookies", function($cookies){
+.directive("navbar", [function(){
   return {
     restrict : "E",
     replace : true,
@@ -92,10 +92,18 @@ angular.module('myApp')
         }, 500);
       });
       
-      scope.$on("$routeChangeSuccess", function(ev, current, prev){
-        $timeout.cancel(p);
+      function stop(){
+        $timeout.cancel(p);  
         scope.loading = false;
-        $('#slow').foundation('reveal', 'close');
+        $('#slow').foundation('reveal', 'close');  
+      }
+      
+      scope.$on("$routeChangeError", function(){
+        stop();  
+      });
+      
+      scope.$on("$routeChangeSuccess", function(ev, current, prev){
+        stop();
         var template = current.templateUrl;
         var path = [{
           name : 'home',

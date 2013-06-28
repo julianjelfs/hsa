@@ -10,6 +10,11 @@ angular.module('myApp').
       return input.substring(0, limit) + "...";
     }
   }).
+filter('fromNow', function() {
+  return function(input) {
+    return moment(input).fromNow();
+  }
+}).
   filter('htmlifyLineBreaks', function() {
     return function(input) {
       return input.replace(/\n/g, '<br/>');

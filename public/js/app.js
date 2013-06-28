@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp', ['ngCookies', 'http-auth-interceptor'])
+angular.module('myApp', ['http-auth-interceptor'])
 .config(['$httpProvider', function($httpProvider) {    
     $httpProvider.responseInterceptors.push(["$q", "$rootScope", function($q, $rootScope) {
       return function(promise) {
