@@ -9,7 +9,8 @@ var express = require('express'),
   LocalStrategy = require('passport-local').Strategy,
   compass = require('node-compass'),
   utils = require('./utils/hsautils'),
-  gzippo = require('gzippo');
+  gzippo = require('gzippo'),
+  emailer = require("./utils/emailer");
 
 var app = module.exports = express();
 
@@ -66,6 +67,8 @@ app.get('/api/event/:id', eventsRoutes.view);
 app.post('/api/event/create', utils.ensureAdmin, eventsRoutes.create); 
 
 app.get('/partials/:area/:name', staticRoutes.partials);
+
+app.get("/email/test", emailer.test);
 app.get('/', staticRoutes.index);
 
 //belt and braces
