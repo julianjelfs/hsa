@@ -3,8 +3,6 @@ var utils = require('../utils/hsautils'),
     sleep = require('sleep');
 
 exports.index = function (req, res) {
-  sleep.sleep(5);
-  res.send(500, "some error");
   NewsItem.count(null, function(err, count){
     if (err) {
       res.send(500, err);
