@@ -73,7 +73,7 @@ app.get('/', staticRoutes.index);
 
 //belt and braces
 app.get("*", function (req, res) {
-  res.render('index');
+  res.render('index', {user : utils.getUser(req)});
 });
 
 // redirect all others to the index (HTML5 history)

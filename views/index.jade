@@ -1,13 +1,15 @@
 extends layout
 
 block body
-  navbar
-  
+  navbar(user="#{JSON.stringify(user)}")
+  //navbar(user="#{JSON.stringify({username:'test',loggedIn : false, admin : true})}")
+
   #main(ng-cloak)
     .container
       breadcrumb.row
       .row.panel.main
-        .small-12  
+        .small-12
+
           div#slow.panel.callout.reveal-modal.small
             h5 This is taking a bit longer than expected
             h5 Shouldn't be long ... 

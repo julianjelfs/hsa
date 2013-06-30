@@ -11,13 +11,13 @@
     "passport": "0.1.17",
     "passport-local": "0.1.6",
     "passport-local-mongoose": "0.2.2",
-    "sendgrid" : "0.2.7"
+    "sendgrid": "~0.2.7",
+    "grunt": "~0.4.1"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-uglify": "~0.2.2",
-    "grunt-contrib-watch": "~0.4.4",
-    "sendgrid": "~0.2.7"
+    "grunt-contrib-watch": "~0.4.4"
   },
   "gitHead": "665b6b0e133f59847e87dafb9a0571a79df30abb",
   "readmeFilename": "README.md",

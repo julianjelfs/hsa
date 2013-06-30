@@ -1,5 +1,17 @@
 var pageSize = 5;
 
+exports.getUser = function(req){
+    return req.isAuthenticated() ? {
+        username : req.user.username,
+        loggedIn : true,
+        admin : req.user.admin
+    } : {
+        username : "Log In",
+        loggedIn : false,
+        admin : false
+    }
+}
+
 exports.pageSize = pageSize;
 
 exports.pageQuery = function (req, q){

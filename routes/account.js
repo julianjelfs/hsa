@@ -18,7 +18,8 @@ exports.register = function (req, res) {
       return res.json({
         user: {
           username : user.username,
-          admin : user.admin
+          admin : user.admin,
+          loggedIn : true
         }
       });
     });
@@ -39,7 +40,8 @@ exports.login = function (req, res) {
   util.puts("logged in as " + req.user.username);
   res.send(200, {
     username : req.user.username,
-    admin : req.user.admin
+    admin : req.user.admin,
+    loggedIn : true
   });      
 };
  
