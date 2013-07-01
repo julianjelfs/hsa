@@ -5,7 +5,7 @@ var all = 1;
 
 var recipients = {
   NickyGray : {
-    email : "julian.jelfs+nicky@gmail.com",
+    email : "Nicola_gray@blueyonder.co.uk",
     flag : 2
   },
   KarenWright : {
