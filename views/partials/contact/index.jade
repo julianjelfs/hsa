@@ -23,6 +23,5 @@ form.form(novalidate, name="form")
     button(ng-click="send(contact)", ng-disabled="form.$invalid || noRecipients()") Send
     
 div#confirm.reveal-modal.small
-  h4 You message has been successfully delivered!
-  p (it hasn't really - shhhh)
+  h4 Your message has been sent!
   button(ng-click="closeConfirm()") OK
