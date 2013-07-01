@@ -9,6 +9,7 @@ angular.module('myApp').
       $routeProvider.when('/contact', {templateUrl: 'partials/contact/index', controller : 'ContactCtrl'});
       $routeProvider.when('/links', {templateUrl: 'partials/links/index'});
       $routeProvider.when('/sponsors', {templateUrl: 'partials/sponsors/index', controller : 'SponsorsCtrl'});
+      $routeProvider.when('/admin', {templateUrl: 'partials/admin/index', controller : 'AdminCtrl'});
       
       $routeProvider.when('/reset/:token', {
         templateUrl : 'partials/account/reset',

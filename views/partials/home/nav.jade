@@ -29,9 +29,12 @@ nav.top-bar
           a(href='sponsors') Sponsors
         li.divider
         li
-          a(href='links') Links
+          a(href='links') Links        
           
       ul.right
+        li.divider
+        li(ng-show="isAdmin()")
+          a(href="admin") Admin
         li.divider
         li(ng-hide="loggedIn()")
           a(ng-click="logIn()") Log In

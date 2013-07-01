@@ -33,23 +33,27 @@ angular.module('myApp')
             }
         }
     })
-    .directive("navbar", [function () {
+    .directive("navbar", ["$rootScope", function ($rootScope) {
         return {
             restrict: "E",
             replace: true,
             templateUrl: "partials/home/nav",
             link: function (scope, elem, attrs) {
-                scope.user = JSON.parse(attrs.user);
+                $rootScope.user = JSON.parse(attrs.user);
                 scope.loggedIn = function () {
-                    return scope.user.loggedIn;
+                    return $rootScope.user.loggedIn;
                 }
 
                 scope.logIn = function () {
                     scope.$broadcast('event:auth-loginRequired');
                 }
+                
+                scope.isAdmin = function(){
+                  return scope.loggedIn() && $rootScope.user.admin;  
+                }
 
                 scope.$on('event:auth-loginConfirmed', function (e, data) {
-                    scope.user = data;
+                    $rootScope.user = data;
                 });
             }
         }
@@ -87,7 +91,8 @@ angular.module('myApp')
                 var p = null;
                 scope.loading = false;
                 scope.$on("$routeChangeStart", function () {
-                    p = $timeout(function () {
+                  stop();
+                  p = $timeout(function () {
                         scope.loading = true;
                         $('#slow').foundation('reveal', 'open');
                     }, 500);
@@ -100,11 +105,11 @@ angular.module('myApp')
                 }
 
                 scope.$on("$routeChangeError", function () {
-                    stop();
+                  stop();
                 });
 
                 scope.$on("$routeChangeSuccess", function (ev, current, prev) {
-                    stop();
+                  stop();
                     var template = current.templateUrl;
                     var path = [
                         {
