@@ -1,1 +1,5 @@
 h3 Let's create a new picture album and upload some pictures
+
+    form.form(action='/gallery/upload', method='post', enctype="multipart/form-data")
+        input(type='file', name='file')
+        button.button.small Upload

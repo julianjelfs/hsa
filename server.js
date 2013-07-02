@@ -4,6 +4,7 @@ var express = require('express'),
   contactRoutes = require('./routes/contact'),
   newsRoutes = require('./routes/news'),
   eventsRoutes = require('./routes/events'),
+  galleryRoutes = require('./routes/gallery'),
   mongoose = require('mongoose'),
   passport = require('passport'), 
   LocalStrategy = require('passport-local').Strategy,
@@ -64,7 +65,9 @@ app.get('/api/events/:page?', eventsRoutes.index);
 app.post('/api/event/delete/:id', utils.ensureAdmin, eventsRoutes.delete);
 app.post('/api/event/edit/:id', utils.ensureAuthenticated, eventsRoutes.update);
 app.get('/api/event/:id', eventsRoutes.view);
-app.post('/api/event/create', utils.ensureAdmin, eventsRoutes.create); 
+app.post('/api/event/create', utils.ensureAdmin, eventsRoutes.create);
+
+app.post("/gallery/upload", utils.ensureAdmin, galleryRoutes.upload);
 
 app.get('/partials/:area/:name', staticRoutes.partials);
 
