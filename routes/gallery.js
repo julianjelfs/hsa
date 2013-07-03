@@ -1,7 +1,6 @@
 var fs = require("fs"),
     dir = "./public/images/gallery/";
 
-
 function writeFiles(path, files, index, success) {
     var f = files[index];
     fs.readFile(f.path, function (err, data) {
@@ -17,15 +16,24 @@ function writeFiles(path, files, index, success) {
                 console.log(err);
                 throw err;
             }
-            console.log("File written");
-            if(index < files.length-1){
-                writeFiles(path, files, index+1, success);
-            } else {
-                success();
-            }
+            console.log("File written to " + fullPath);
+            console.log("Trying to delete to " + f.path);
+            fs.unlink(f.path, function(err){
+                if(err){
+                    console.log(err);
+                    throw err;
+                }
+                console.log("Deleted " + f.path);
+                if(index < files.length-1){
+                    process.nextTick(function(){
+                        writeFiles(path, files, index+1, success);
+                    });
+                } else {
+                    process.nextTick(success);
+                }
+            });
         });
     });
-
 }
 
 exports.upload = function(req, res) {

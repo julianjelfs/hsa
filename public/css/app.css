@@ -31,7 +31,7 @@ progress:after { content: '%'; }
   padding-right:10px;
 }
 
-.timerange button {
+.button {
   margin-right : 5px;  
 }
 

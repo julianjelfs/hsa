@@ -1,7 +1,12 @@
-h3 Drag and drop images on to the drop zone below
-
 article
+    h5 Enter a name for a new album
     input(type="text",placeholder="Album Name", ng-model="name")
-    div#holder
-    p Progress
-        progress#uploadprogress(min="0", max="100", value="0") 0
+    button.button.small(ng-disabled="noFilesToUpload()", ng-click="upload()") Upload
+    button.button.small(ng-disabled="noFilesToUpload()", ng-click="clear()") Clear
+    div(ng-show="name!=null&&name.length > 0")
+        h5 Drag and drop pictures into the zone below
+        div#holder
+
+div#progress.reveal-modal.medium
+    h4 Progess
+    progress#uploadprogress(min="0", max="100", value="0") 0

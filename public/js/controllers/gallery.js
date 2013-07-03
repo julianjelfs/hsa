@@ -12,15 +12,17 @@ angular.module('myApp')
 
     var progress = document.getElementById('uploadprogress');
     var fileupload = document.getElementById('upload');
+    var currentFiles = [];
 
     function previewfile(file) {
         if (acceptedTypes[file.type] === true) {
             var reader = new FileReader();
             reader.onload = function (event) {
-                var image = new Image();
+                $("<img src='" +event.target.result+ "' width='400' />").appendTo(holder);
+                /*var image = new Image();
                 image.src = event.target.result;
                 image.width = 400; // a fake resize
-                holder.appendChild(image);
+                holder.appendChild(image);*/
             };
 
             reader.readAsDataURL(file);
@@ -31,27 +33,51 @@ angular.module('myApp')
     }
 
     function readfiles(files) {
-        var formData = new FormData();
         for (var i = 0; i < files.length; i++) {
-            formData.append('file', files[i]);
+            currentFiles.push(files[i]);
             previewfile(files[i]);
+        }
+    }
+
+    $scope.clear = function(){
+        currentFiles = [];
+        holder.innerHTML = "";
+    }
+
+    $scope.noFilesToUpload = function(){
+        return currentFiles.length === 0;
+    }
+
+    $scope.upload = function(){
+        var formData = new FormData();
+        for (var i = 0; i < currentFiles.length; i++) {
+            formData.append('file', currentFiles[i]);
         }
 
         // now post a new XHR request
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/gallery/upload/' + $scope.name);
         xhr.onload = function() {
-            progress.value = progress.innerHTML = 100;
+            progress.value = progress.innerHTML = 0;
+            $('#progress').foundation('reveal', 'close');
+            $scope.$apply(function(){
+                $scope.clear();
+            });
         };
 
         xhr.upload.onprogress = function (event) {
-            if (event.lengthComputable) {
+             if (event.lengthComputable) {
                 var complete = (event.loaded / event.total * 100 | 0);
                 progress.value = progress.innerHTML = complete;
-            }
+             }
         }
 
         xhr.send(formData);
+        $('#progress').foundation('reveal', 'open');
+    }
+
+    $scope.remove = function(file){
+
     }
 
     holder.ondragover = function () { this.className = 'hover'; return false; };
@@ -59,7 +85,10 @@ angular.module('myApp')
     holder.ondrop = function (e) {
         this.className = '';
         e.preventDefault();
-        readfiles(e.dataTransfer.files);
+        $scope.$apply(function(){
+            readfiles(e.dataTransfer.files);
+        });
+
     }
 
 }]);
