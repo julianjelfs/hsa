@@ -1,6 +1,6 @@
 'use strict';
 angular.module('myApp')
-  .controller('GalleryCtrl', ["$scope", "$location", "$http", function ($scope, $location, $http){
+  .controller('GalleryCtrl', ["$scope", "$compile", "$location", "$http", function ($scope, $compile, $location, $http){
 
     var holder = document.getElementById("holder");
 
@@ -14,15 +14,12 @@ angular.module('myApp')
     var fileupload = document.getElementById('upload');
     var currentFiles = [];
 
-    function previewfile(file) {
+    function previewfile(file, index) {
         if (acceptedTypes[file.type] === true) {
             var reader = new FileReader();
             reader.onload = function (event) {
-                $("<img src='" +event.target.result+ "' width='400' />").appendTo(holder);
-                /*var image = new Image();
-                image.src = event.target.result;
-                image.width = 400; // a fake resize
-                holder.appendChild(image);*/
+                var img = "<img src='" +event.target.result+ "' ng-click='remove("+index+")' width='400' />";
+                $compile(img)($scope).appendTo(holder);
             };
 
             reader.readAsDataURL(file);
@@ -35,7 +32,7 @@ angular.module('myApp')
     function readfiles(files) {
         for (var i = 0; i < files.length; i++) {
             currentFiles.push(files[i]);
-            previewfile(files[i]);
+            previewfile(files[i], i);
         }
     }
 
@@ -76,8 +73,12 @@ angular.module('myApp')
         $('#progress').foundation('reveal', 'open');
     }
 
-    $scope.remove = function(file){
-
+    $scope.remove = function(index){
+        currentFiles.splice(index, 1);
+        holder.innerHTML = "";
+        for (var i = 0; i < currentFiles.length; i++) {
+            previewfile(currentFiles[i], i);
+        }
     }
 
     holder.ondragover = function () { this.className = 'hover'; return false; };
