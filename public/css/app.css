@@ -14,6 +14,15 @@ $background:#f6f6f6;
 $white:#ffffff;
 */
 
+#holder { border: 10px dashed #ccc; width: 500px; min-height: 500px; margin: 20px auto;}
+#holder.hover { border: 10px dashed #0c0; }
+#holder img { display: block; margin: 10px auto; }
+#holder p { margin: 10px; font-size: 14px; }
+progress { width: 100%; }
+progress:after { content: '%'; }
+.fail { background: #c00; padding: 2px; color: #fff; }
+.hidden { display: none !important;}
+
 #slow, #error {
   text-align:center;  
 }

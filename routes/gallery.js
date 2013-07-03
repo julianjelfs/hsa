@@ -1,43 +1,58 @@
-var papercut = require('papercut');
-
-papercut.configure(function(){
-    papercut.set('storage', 'file')
-    papercut.set('directory', '../public/images/gallery')
-    papercut.set('url', '/images/uploads')
-});
-
-/*papercut.configure('production', function(){
-    papercut.set('storage', 's3')
-    papercut.set('S3_KEY', process.env.S3_KEY)
-    papercut.set('S3_SECRET', process.env.S3_SECRET)
-    papercut.set('bucket', 'papercut')
-});*/
+var fs = require("fs"),
+    dir = "./public/images/gallery/";
 
 
-ImageUploader = papercut.Schema(function(schema){
-
-    schema.version({
-        name: 'normal',
-        size: '600x400',
-        process: 'crop'
+function writeFiles(path, files, index, success) {
+    var f = files[index];
+    fs.readFile(f.path, function (err, data) {
+        if(err){
+            console.log(err);
+            throw err;
+        }
+        console.log(f.name);
+        var fullPath = path + "/" + f.name;
+        console.log("Trying to write to " + fullPath);
+        fs.writeFile(fullPath, data, function (err) {
+            if(err){
+                console.log(err);
+                throw err;
+            }
+            console.log("File written");
+            if(index < files.length-1){
+                writeFiles(path, files, index+1, success);
+            } else {
+                success();
+            }
+        });
     });
 
-    schema.version({
-        name: 'small',
-        size: '50x50',
-        process: 'crop'
-    });
-});
-
-var imageId = 0;
+}
 
 exports.upload = function(req, res) {
-    var uploader = new ImageUploader();
 
-    uploader.process(imageId++, req.files.file.path, function(err, images){
-        console.log(images.avatar); // '/images/uploads/image1-avatar.jpg'
-        console.log(images.small); // '/images/uploads/image1-small.jpg'
+    var album = req.param("name");
+    var path = dir + album;
+    var files = req.files.file instanceof Array ? req.files.file : [req.files.file];
 
-        res.send(200, "image uploaded");
-    })
+    console.log("uploading some photos to album " + album);
+    console.log("We are here: " + __dirname);
+
+    function success(){
+        res.send(200, "ok");
+    }
+
+    fs.exists(path, function(exists){
+        if(!exists){
+            fs.mkdir(path, function(err){
+                if(err){
+                    console.log(err);
+                    throw err;
+                }
+                console.log("Directory "+ path +" written");
+                writeFiles(path, files, 0, success);
+            });
+        } else {
+            writeFiles(path, files, 0, success);
+        }
+    });
 }

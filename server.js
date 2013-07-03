@@ -8,12 +8,16 @@ var express = require('express'),
   mongoose = require('mongoose'),
   passport = require('passport'), 
   LocalStrategy = require('passport-local').Strategy,
-  compass = require('node-compass'),
   utils = require('./utils/hsautils'),
   gzippo = require('gzippo'),
   emailer = require("./utils/emailer");
 
+var port = process.env.PORT || 3000;
 var app = module.exports = express();
+var server = require('http').createServer(app);
+server.listen(port, function(){
+    console.log("Express server listening on port %d in %s mode", port, app.settings.env);
+});
 
 // Configuration
 app.configure(function(){
@@ -26,7 +30,7 @@ app.configure(function(){
   app.use(express.session({ secret: 'keyboard cat' }));
   app.use(passport.initialize());
   app.use(passport.session());
-  app.use(express.favicon("public/images/favicon.ico")); 
+  app.use(express.favicon("public/images/favicon.ico"));
   app.use(app.router);
 });
 
@@ -67,7 +71,7 @@ app.post('/api/event/edit/:id', utils.ensureAuthenticated, eventsRoutes.update);
 app.get('/api/event/:id', eventsRoutes.view);
 app.post('/api/event/create', utils.ensureAdmin, eventsRoutes.create);
 
-app.post("/gallery/upload", utils.ensureAdmin, galleryRoutes.upload);
+app.post("/gallery/upload/:name", utils.ensureAdmin, galleryRoutes.upload);
 
 app.get('/partials/:area/:name', staticRoutes.partials);
 
@@ -82,9 +86,3 @@ app.get("*", function (req, res) {
 // redirect all others to the index (HTML5 history)
 //app.get('*', routes.index);
 
-// Start server
-
-var port = process.env.PORT || 3000;
-app.listen(port, function(){
-  console.log("Express server listening on port %d in %s mode", port, app.settings.env);
-});
