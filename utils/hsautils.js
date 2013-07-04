@@ -1,5 +1,11 @@
 var pageSize = 5;
 
+exports.forEach = function(arr, fn){
+  for(var i=0, l=arr.length; i<l; i++){
+    fn(arr[i], i);
+  }
+}
+
 exports.getUser = function(req){
     return req.isAuthenticated() ? {
         username : req.user.username,

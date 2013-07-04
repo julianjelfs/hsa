@@ -1,5 +1,6 @@
 var fs = require("fs"),
     IMGR = require('imgr').IMGR,
+    utils = require("../utils/hsautils"),
     dir = "./public/images/gallery/";
 
 var imgr = new IMGR({
@@ -44,6 +45,31 @@ function writeFiles(path, files, index, success) {
                     });
                 });
         });
+}
+
+function addFilesToArray(path, arr, cb) {
+  fs.readdir(path, function(err, files){
+    if(err){
+      console.log(err);
+      throw err;
+    }
+    utils.forEach(files, function(file){
+      arr.push(file);
+    });
+    cb();
+  });
+}
+
+exports.albums = function(req, res) {  
+  var albums = [];
+  addFilesToArray(dir, albums, function(){ res.json(albums); });
+}
+
+exports.photos = function(req, res) {
+  var photos = [];
+  var album = req.param("album");
+  var path = dir + album;
+  addFilesToArray(path, photos, function(){ res.json(photos); });
 }
 
 exports.upload = function(req, res) {

@@ -9,8 +9,53 @@ angular.module('myApp').
       $routeProvider.when('/contact', {templateUrl: 'partials/contact/index', controller : 'ContactCtrl'});
       $routeProvider.when('/links', {templateUrl: 'partials/links/index'});
       $routeProvider.when('/sponsors', {templateUrl: 'partials/sponsors/index', controller : 'SponsorsCtrl'});
-      $routeProvider.when('/admin', {templateUrl: 'partials/admin/index'});
-      $routeProvider.when('/gallery/upload', {templateUrl: 'partials/gallery/upload', controller : 'GalleryCtrl'});
+      $routeProvider.when('/admin', {templateUrl: 'partials/admin/index'});      
+      $routeProvider.when('/gallery/upload', {templateUrl: 'partials/gallery/upload', controller : 'GalleryUploadCtrl'});
+    
+    $routeProvider.when('/gallery', {
+      templateUrl: 'partials/gallery/view', 
+      controller : 'GalleryCtrl',
+      resolve: getAlbumsResolver()
+    });
+    
+    $routeProvider.when('/gallery/:album', {
+      templateUrl: 'partials/gallery/album', 
+      controller : 'AlbumCtrl',
+      resolve: getPhotosResolver()
+    });
+    
+    function getPhotosResolver(){
+        return {
+                photos: ["$q", "$http", "$route", function ($q, $http, $route) {
+                    var deferred = $q.defer();
+                    var album = $route.current.params.album
+                    
+                    $http.get('/api/gallery/albums/'+album).success(function (result) {
+                      deferred.resolve(result);
+                    }).error(function (error) {
+                      deferred.reject(error);
+                    });
+
+                    return deferred.promise;
+                }]
+            };
+      }
+    
+    function getAlbumsResolver(){
+        return {
+                albums: ["$q", "$http", function ($q, $http) {
+                    var deferred = $q.defer();
+
+                    $http.get('/api/gallery/albums').success(function (result) {
+                      deferred.resolve(result);
+                    }).error(function (error) {
+                      deferred.reject(error);
+                    });
+
+                    return deferred.promise;
+                }]
+            };
+      }
       
       $routeProvider.when('/reset/:token', {
         templateUrl : 'partials/account/reset',

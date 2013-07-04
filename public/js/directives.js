@@ -134,6 +134,9 @@ angular.module('myApp')
                         case 'partials/team/index' :
                             path.push({name: "team"});
                             break;
+                        case 'partials/gallery/view' :
+                            path.push({name: "photos"});
+                            break;
                         case 'partials/event/index' :
                             path.push({name: "events"});
                             break;

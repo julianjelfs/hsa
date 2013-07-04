@@ -5,7 +5,7 @@ Doing lots of non-angular DOM manipulation in this controller. Not really right,
  */
 
 angular.module('myApp')
-  .controller('GalleryCtrl', ["$scope", "$compile", "$location", "$http", "$timeout", function ($scope, $compile, $location, $http, $timeout){
+  .controller('GalleryUploadCtrl', ["$scope", "$compile", "$location", "$http", "$timeout", function ($scope, $compile, $location, $http, $timeout){
 
     var defaultStatus = "Enter a name for a new album";
     $scope.status = defaultStatus;
@@ -117,4 +117,8 @@ angular.module('myApp')
 
     }
 
-}]);
+  }]).controller("GalleryCtrl", ["$scope", "albums", function($scope, albums){
+    $scope.albums = albums;
+  }]).controller("AlbumCtrl", ["$scope", "photos", function($scope, photos){
+    $scope.photos = photos;
+  }]);

@@ -72,6 +72,8 @@ app.get('/api/event/:id', eventsRoutes.view);
 app.post('/api/event/create', utils.ensureAdmin, eventsRoutes.create);
 
 app.post("/gallery/upload/:name", utils.ensureAdmin, galleryRoutes.upload);
+app.get("/api/gallery/albums", galleryRoutes.albums);
+app.get("/api/gallery/albums/:album", galleryRoutes.photos);
 
 app.get('/partials/:area/:name', staticRoutes.partials);
 
