@@ -1,5 +1,5 @@
 article
-    h5 Enter a name for a new album
+    h5 {{status}}
     input(type="text",placeholder="Album Name", ng-model="name")
     button.button.small(ng-disabled="noFilesToUpload()", ng-click="upload()") Upload
     button.button.small(ng-disabled="noFilesToUpload()", ng-click="clear()") Clear
@@ -10,3 +10,4 @@ article
 div#progress.reveal-modal.medium
     h4 Progess
     progress#uploadprogress(min="0", max="100", value="0") 0
+

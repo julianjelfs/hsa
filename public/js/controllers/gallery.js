@@ -1,6 +1,14 @@
 'use strict';
+
+/*
+Doing lots of non-angular DOM manipulation in this controller. Not really right, but it's easier.
+ */
+
 angular.module('myApp')
-  .controller('GalleryCtrl', ["$scope", "$compile", "$location", "$http", function ($scope, $compile, $location, $http){
+  .controller('GalleryCtrl', ["$scope", "$compile", "$location", "$http", "$timeout", function ($scope, $compile, $location, $http, $timeout){
+
+    var defaultStatus = "Enter a name for a new album";
+    $scope.status = defaultStatus;
 
     var holder = document.getElementById("holder");
 
@@ -18,8 +26,20 @@ angular.module('myApp')
         if (acceptedTypes[file.type] === true) {
             var reader = new FileReader();
             reader.onload = function (event) {
-                var img = "<img src='" +event.target.result+ "' ng-click='remove("+index+")' width='400' />";
-                $compile(img)($scope).appendTo(holder);
+                var d = document.createElement("div");
+                var i = new Image();
+                i.onload = function(){
+                    if(i.width > i.height)
+                        i.className = "landscape";
+                    else
+                        i.className = "portrait";
+                    d.className = 'thumb';
+                }
+                d.setAttribute('data-index', index);
+                i.setAttribute('ng-click', 'remove('+index+')');
+                i.src = event.target.result;
+                d.appendChild(i);
+                $compile(d)($scope).appendTo(holder);
             };
 
             reader.readAsDataURL(file);
@@ -59,6 +79,11 @@ angular.module('myApp')
             $('#progress').foundation('reveal', 'close');
             $scope.$apply(function(){
                 $scope.clear();
+                $scope.name = "";
+                $scope.status = "You upload has completed successfully";
+                $timeout(function(){
+                    $scope.status = defaultStatus;
+                },4000);
             });
         };
 
@@ -75,10 +100,11 @@ angular.module('myApp')
 
     $scope.remove = function(index){
         currentFiles.splice(index, 1);
-        holder.innerHTML = "";
-        for (var i = 0; i < currentFiles.length; i++) {
-            previewfile(currentFiles[i], i);
-        }
+        $("div[data-index="+index+"]", holder).remove();
+    }
+
+    $scope.closeComplete = function(){
+        $('#complete').foundation('reveal', 'close');
     }
 
     holder.ondragover = function () { this.className = 'hover'; return false; };
