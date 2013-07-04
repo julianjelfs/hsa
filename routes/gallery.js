@@ -2,22 +2,52 @@ var fs = require("fs"),
     IMGR = require('imgr').IMGR,
     dir = "./public/images/gallery/";
 
-function resize(path, file, success){
-    var imgr = new IMGR({
-        trace : function(ev){
-            console.log(ev);
-        }
-    });
-    imgr.load(file)
-        .resizeToWidth(500)
-        .save(path + "/small", success);
-}
+var imgr = new IMGR({
+    trace : function(ev){
+        console.log(ev);
+    }
+});
 
 function writeFiles(path, files, index, success) {
     var f = files[index];
     var fullPath = path + "/" + f.name;
+    var thumbPath = path + "/thumbs/" + f.name;
 
-    fs.readFile(f.path, function (err, data) {
+    imgr.load(f.path)
+        .resizeToWidth(500)
+        .save(fullPath, function(err){
+            if(err){
+                console.log(err);
+                throw err;
+            }
+
+            imgr.load(f.path)
+                .resizeToWidth(100)
+                .save(thumbPath, function(err){
+                    if(err){
+                        console.log(err);
+                        throw err;
+                    }
+                    console.log("File written to " + fullPath);
+                    console.log("Trying to delete to " + f.path);
+                    fs.unlink(f.path, function(err){
+                        if(err){
+                            console.log(err);
+                            throw err;
+                        }
+                        console.log("Deleted " + f.path);
+                        if(index < files.length-1){
+                            process.nextTick(function(){
+                                writeFiles(path, files, index+1, success);
+                            });
+                        } else {
+                            process.nextTick(success);
+                        }
+                    });
+                });
+        });
+
+    /*fs.readFile(f.path, function (err, data) {
         if(err){
             console.log(err);
             throw err;
@@ -38,23 +68,16 @@ function writeFiles(path, files, index, success) {
                     throw err;
                 }
                 console.log("Deleted " + f.path);
-
-                resize(path, fullPath, function(err){
-                    if(err){
-                        console.log(err);
-                        throw err;
-                    }
-                    if(index < files.length-1){
-                        process.nextTick(function(){
-                            writeFiles(path, files, index+1, success);
-                        });
-                    } else {
-                        process.nextTick(success);
-                    }
-                });
+                if(index < files.length-1){
+                    process.nextTick(function(){
+                        writeFiles(path, files, index+1, success);
+                    });
+                } else {
+                    process.nextTick(success);
+                }
             });
         });
-    });
+    });*/
 }
 
 exports.upload = function(req, res) {
@@ -70,7 +93,9 @@ exports.upload = function(req, res) {
         res.send(200, "ok");
     }
 
-    fs.exists(path, function(exists){
+    writeFiles(path, files, 0, success);
+
+    /*fs.exists(path, function(exists){
         if(!exists){
             fs.mkdir(path, function(err){
                 if(err){
@@ -83,5 +108,5 @@ exports.upload = function(req, res) {
         } else {
             writeFiles(path, files, 0, success);
         }
-    });
+    });*/
 }
