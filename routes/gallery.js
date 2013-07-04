@@ -1,8 +1,22 @@
 var fs = require("fs"),
+    IMGR = require('imgr').IMGR,
     dir = "./public/images/gallery/";
+
+function resize(path, file, success){
+    var imgr = new IMGR({
+        trace : function(ev){
+            console.log(ev);
+        }
+    });
+    imgr.load(file)
+        .resizeToWidth(500)
+        .save(path + "/small", success);
+}
 
 function writeFiles(path, files, index, success) {
     var f = files[index];
+    var fullPath = path + "/" + f.name;
+
     fs.readFile(f.path, function (err, data) {
         if(err){
             console.log(err);
@@ -24,13 +38,20 @@ function writeFiles(path, files, index, success) {
                     throw err;
                 }
                 console.log("Deleted " + f.path);
-                if(index < files.length-1){
-                    process.nextTick(function(){
-                        writeFiles(path, files, index+1, success);
-                    });
-                } else {
-                    process.nextTick(success);
-                }
+
+                resize(path, fullPath, function(err){
+                    if(err){
+                        console.log(err);
+                        throw err;
+                    }
+                    if(index < files.length-1){
+                        process.nextTick(function(){
+                            writeFiles(path, files, index+1, success);
+                        });
+                    } else {
+                        process.nextTick(success);
+                    }
+                });
             });
         });
     });

@@ -103,10 +103,6 @@ angular.module('myApp')
         $("div[data-index="+index+"]", holder).remove();
     }
 
-    $scope.closeComplete = function(){
-        $('#complete').foundation('reveal', 'close');
-    }
-
     holder.ondragover = function () { this.className = 'hover'; return false; };
     holder.ondragend = function () { this.className = ''; return false; };
     holder.ondrop = function (e) {
