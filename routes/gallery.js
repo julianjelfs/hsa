@@ -3,6 +3,7 @@ var fs = require("fs"),
     dir = "./public/images/gallery/";
 
 var imgr = new IMGR({
+  image_magick : true,
     trace : function(ev){
         console.log(ev);
     }

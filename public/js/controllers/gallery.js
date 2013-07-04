@@ -52,10 +52,10 @@ angular.module('myApp')
     function readfiles(files) {
         for (var i = 0; i < files.length; i++) {
           var file = files[i];  
-          $timeout(function(){
+          //$timeout(function(){
                 currentFiles.push(file);
                 previewfile(file, i);
-            },0);
+          //},0);
         }
     }
 
