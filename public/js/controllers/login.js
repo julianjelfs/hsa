@@ -14,6 +14,8 @@ angular.module('myApp')
       password : $scope.password
     }).success(function(data, status, headers, config) {
       authService.loginConfirmed(data);
+    }).error(function(){
+      alert("poo");
     });
   }
   $scope.register = function() {

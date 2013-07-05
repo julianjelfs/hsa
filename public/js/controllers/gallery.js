@@ -119,6 +119,14 @@ angular.module('myApp')
 
   }]).controller("GalleryCtrl", ["$scope", "albums", function($scope, albums){
     $scope.albums = albums;
-  }]).controller("AlbumCtrl", ["$scope", "photos", function($scope, photos){
+  }]).controller("AlbumCtrl", ["$scope", "$routeParams", "photos", function($scope, $routeParams, photos){
     $scope.photos = photos;
+    $scope.showModal = false;
+    $scope.album = $routeParams.album;
+    $scope.showPhoto = function(photo){
+      $scope.photo = photo;
+      $scope.showModal = true;
+      $("#photo-modal").foundation('reveal', 'open');
+    }
+    
   }]);

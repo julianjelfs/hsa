@@ -1,6 +1,7 @@
 var fs = require("fs"),
     IMGR = require('imgr').IMGR,
     utils = require("../utils/hsautils"),
+    async = require("async"),
     dir = "./public/images/gallery/";
 
 var imgr = new IMGR({
@@ -47,29 +48,85 @@ function writeFiles(path, files, index, success) {
         });
 }
 
-function addFilesToArray(path, arr, cb) {
-  fs.readdir(path, function(err, files){
-    if(err){
-      console.log(err);
-      throw err;
-    }
-    utils.forEach(files, function(file){
-      arr.push(file);
+function getAlbums(finished){
+  var albums = [];
+  fs.readdir(dir, function(err, files){
+     async.map(files, function iterator(item, cb){
+       fs.stat(dir + "/" + item, function(err, stat){
+         var album = {
+           path : item,
+           isDirectory : stat.isDirectory()  
+         }
+         if(album.isDirectory){
+           fs.readdir(dir + "/" + item, function(err, images) {
+              album.thumb = images.length > 0 ? images[0] : null;
+              cb(err, album);             
+           });
+         } else {
+           cb(err, album);  
+         }
+       });
+     }, function(err, results){
+       if(err){
+         console.log(err);
+         throw err;
+       }
+       async.filter(results, function(item, cb){
+         cb(item.isDirectory);  
+       }, function(filtered) {
+         async.each(filtered, function(item, cb){
+           albums.push(item);
+           cb();
+         }, function(err){
+           finished(err, albums);
+         });  
+       });
     });
-    cb();
-  });
+   });
 }
 
-exports.albums = function(req, res) {  
-  var albums = [];
-  addFilesToArray(dir, albums, function(){ res.json(albums); });
+function getPhotos(path, finished){
+  var photos = [];
+  fs.readdir(path, function(err, files){
+     async.map(files, function iterator(item, cb){
+       fs.stat(path + "/" + item, function(err, stat){
+         cb(err, {
+           path : item,
+           isFile : stat.isFile()  
+         }); 
+       });
+     }, function(err, results){
+       if(err){
+         console.log(err);
+         throw err;
+       }
+       async.filter(results, function(item, cb){
+         cb(item.isFile);  
+       }, function(filtered) {
+         async.each(filtered, function(item, cb){
+           photos.push(item);
+           cb();
+         }, function(err){
+           finished(err, photos);
+         });  
+       });
+    });
+   });
+}
+
+
+exports.albums = function(req, res) {
+  getAlbums(function(err, albums) {
+    res.json(albums);  
+  });  
 }
 
 exports.photos = function(req, res) {
-  var photos = [];
   var album = req.param("album");
   var path = dir + album;
-  addFilesToArray(path, photos, function(){ res.json(photos); });
+  getPhotos(path, function(err, photos) {
+    res.json(photos);  
+  });
 }
 
 exports.upload = function(req, res) {

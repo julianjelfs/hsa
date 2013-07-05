@@ -27,6 +27,25 @@ progress { width: 100%; }
 progress:after { content: '%'; }
 .fail { background: #c00; padding: 2px; color: #fff; }
 .hidden { display: none !important;}
+.little-thumb {
+  width:100px;
+  height:100px;
+  margin: 10px 10px;
+  overflow: hidden;
+  -webkit-box-shadow: 3px 3px 8px rgba(76,43,47,.4);
+  -moz-box-shadow: 3px 3px 8px rgba(76,43,47,.4);
+  box-shadow: 3px 3px 8px rgba(76,43,47,.4);
+}
+.album{margin-right:10px;}
+
+#photo-modal{
+  -webkit-box-shadow: 3px 3px 8px rgba(76,43,47,.4);
+  -moz-box-shadow: 3px 3px 8px rgba(76,43,47,.4);
+  box-shadow: 3px 3px 8px rgba(76,43,47,.4);
+  top:-100px !important;
+  padding:0 !important;
+  width:auto !important;
+}
 
 #slow, #error {
   text-align:center;  

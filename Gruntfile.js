@@ -2,9 +2,9 @@ module.exports = function(grunt){
   grunt.initConfig({
     uglify: {
       options : {
-        mangle : false,
+        mangle : true,
         report : 'min',
-        beautify : true
+        beautify : false
       },
       my_target: {
         files: {
