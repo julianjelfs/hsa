@@ -137,6 +137,10 @@ angular.module('myApp').
               $scope.newsitems = newsitem.items;
               $scope.pages = Math.ceil(newsitem.total / newsitem.pageSize);
               $scope.pageSize = newsitem.pageSize;
+              $scope.searchTerm = $location.search().s;
+              $scope.search = function(){
+                $location.search({s:$scope.searchTerm});
+              }
               
               $scope.isAdmin = function(){
                 return $rootScope.user != null && $rootScope.user.admin == true;  
@@ -154,9 +158,10 @@ angular.module('myApp').
 
         function getResolver(name){
             var r = {};
-            r[name] = ["$q", "$http", "$route", "$routeParams", function ($q, $http, $route, $routeParams) {
+            r[name] = ["$q", "$http", "$route", "$routeParams", "$location", function ($q, $http, $route, $routeParams, $location) {
+              var s = $location.search().s;
               var deferred = $q.defer();
-                $http.get('/api/' + name + "s/" + $route.current.params.page).success(function (result) {
+                $http.get('/api/' + name + "s/" + $route.current.params.page + "?s=" + s).success(function (result) {
                   deferred.resolve(result);
                 }).error(function (error) {
                         deferred.reject(error);

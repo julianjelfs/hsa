@@ -2,11 +2,22 @@ var utils = require('../utils/hsautils'),
     NewsItem = require('../models/newsitem');
 
 exports.index = function (req, res) {
-  NewsItem.count(null, function(err, count){
+  var s = req.query["s"];
+  var test = new RegExp(s, "i");
+  var condition = [{description : test}, {title : test}];
+  var countQuery = NewsItem.count();
+  if(s !== "undefined") {
+    countQuery.or(condition);
+  }
+  countQuery.exec(function(err, count){
     if (err) {
       res.send(500, err);
-    }      
-    utils.pageQuery(req, NewsItem.find().sort('-date'))
+    }
+    var query = NewsItem.find();
+    if(s !== "undefined") {
+      query.or(condition);    
+    }
+    utils.pageQuery(req, query.sort('-date'))
     .exec(function (err, models) {
       if (err) {
         res.send(500, err);

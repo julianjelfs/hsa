@@ -1,4 +1,13 @@
-pager(model="newsitem")
+div.row
+  div.small-9.columns
+    pager(model="newsitem", align="left")
+  div.small-3.columns
+    .row.collapse
+      .small-10.columns
+        input(placeholder="Search", ng-model="searchTerm")
+      .small-2.columns
+        button.button.prefix.tiny(ng-click="search()") Go      
+    
 div.row(ng-repeat="n in newsitems", ng-animate="'custom'")
   .small-offset-1.small-10.columns
     .news(ng-click="viewItem(n)")

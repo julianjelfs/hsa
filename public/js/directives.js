@@ -62,9 +62,11 @@ angular.module('myApp')
         return {
             restrict: "E",
             replace: true,
-            template: "<div class='pagination-centered'><ul class='pagination'></ul></div>",
+            template: "<div><ul class='pagination'></ul></div>",
             link: function (scope, elem, attrs) {
-
+              if(attrs.align !== 'left') {
+                elem.addClass('pagination-centered');    
+              }
                 function nextPage() {
                     return scope.page < scope.pages - 1 ? scope.page + 1 : scope.page;
                 }
