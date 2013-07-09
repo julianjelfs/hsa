@@ -2,7 +2,7 @@ div(ng-repeat="p in photos")
   
   .panel.left.album
     div.little-thumb(ng-click="showPhoto(p)")
-      img(width="100", height="100", src="/images/gallery/{{album}}/thumbs/{{p.path}}")
+      img(src="/images/gallery/{{album}}/thumbs/{{p.path}}")
       
 div#photo-modal.reveal-modal.medium
   img#photo-img(ng-src="/images/gallery/{{album}}/{{photo.path}}")

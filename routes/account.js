@@ -1,5 +1,6 @@
 var User = require('../models/user'),
     uuid = require('node-uuid'),
+    emailer = require("../utils/emailer")
     util = require('util');
 
 exports.register = function (req, res) {
@@ -45,7 +46,7 @@ exports.login = function (req, res) {
   });      
 };
  
-exports.forgot = function(req, res) {
+exports.forgot = function(req, res, port) {
   var username = req.body.username;
   if(username == null){
     return res.send(500, 'missing username from request');  
@@ -60,7 +61,17 @@ exports.forgot = function(req, res) {
     resetToken : token,
     resetTokenCreated : new Date()
   }, function (err, count){
-    res.send(200, 'Reset instructions sent');  
+    var link = req.protocol + "://" + req.host + ":" + port + "/reset/" + token;
+    console.log(link);
+    emailer.sendResetToken( {
+      email : username,
+      link : link
+    }, function(err){
+      if(err)
+        res.send(500, "Failed to send reset email: "+ err);
+      else
+        res.send(200, 'Reset instructions sent');    
+    });    
   }); 
 };
 

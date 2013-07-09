@@ -32,6 +32,10 @@ app.configure(function(){
   app.use(passport.session());
   app.use(express.favicon("public/images/favicon.ico"));
   app.use(app.router);
+  app.use(function(err, req, res, next){
+    console.error(err);  //need to do something more sensible here probably
+    next(err);
+  });
 });
 
 app.configure('development', function(){
@@ -54,7 +58,9 @@ mongoose.connect(process.env.MONGODB_HSA_URI);
 app.post('/api/register', accountRoutes.register);
 app.post('/api/logout', accountRoutes.logout);
 app.post('/api/login', passport.authenticate('local'), accountRoutes.login);
-app.post("/api/forgot", accountRoutes.forgot);
+app.post("/api/forgot", function(req, res) {
+   accountRoutes.forgot(req, res, port);
+});
 app.get('/api/reset/:token', accountRoutes.requestReset);
 app.post('/api/reset', accountRoutes.doReset);
 app.post('/api/contact/send', contactRoutes.send);

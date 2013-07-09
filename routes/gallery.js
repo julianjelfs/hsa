@@ -22,7 +22,7 @@ function writeFiles(path, files, index, success) {
             }
 
             imgr.load(f.path)
-                .resizeToWidth(100)
+                .adaptiveResize(100,100,imgr.TOP)
                 .save(thumbPath, function(err){
                     if(err){
                         console.log(err);

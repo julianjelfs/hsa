@@ -30,6 +30,18 @@ function buildToList (contact){
   return to;
 }
 
+exports.sendResetToken = function(to, cb){
+  sendgrid.send({
+    to: to.email,
+    from: "admin@hatfeildschoolassociation.co.uk",
+    subject: 'Password Reset Instructions',
+    bcc : ["julian.jelfs@gmail.com"],
+    text: "To reset your password, please click the following link: " + to.link 
+  }, function(ok, message) {
+    ok ? cb() : cb(message);
+  });
+}
+
 exports.send = function(contact, success, failure) {
   sendgrid.send({
     to: buildToList(contact),
