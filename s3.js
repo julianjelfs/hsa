@@ -1,5 +1,5 @@
 var s3 = require('s3'),
-    dir = "./public/images/gallery/test2/2012-04-14 13.44.35.jpg";
+    dir = "./public/images/gallery/test3/2012-04-14 13.43.50.jpg";
 
 
 console.log("AWSACCESSKEY:" + process.env.AWSACCESSKEY);
@@ -14,7 +14,7 @@ var client = s3.createClient({
 });
 
 // upload a file to s3
-var uploader = client.upload(dir, "test2/2012-04-14-13.44.35.jpg");
+var uploader = client.upload(dir, encodeURIComponent("test3/2012-04-14 13.43.50.jpg"));
 uploader.on('error', function(err) {
   console.error("unable to upload:", err.stack);
 });

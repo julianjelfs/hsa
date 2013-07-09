@@ -1,4 +1,5 @@
 var fs = require("fs"),
+    s3 = require('s3'),
     IMGR = require('imgr').IMGR,
     utils = require("../utils/hsautils"),
     async = require("async"),
@@ -8,6 +9,26 @@ var imgr = new IMGR({
   image_magick : true
 });
 
+var s3Client = s3.createClient({
+    key: process.env.AWSACCESSKEY,
+    secret: process.env.AWSSECRETKEY,
+    bucket: "hatfeild"
+});
+
+// upload a file to s3
+//var uploader = s3Client.upload(dir, encodeURIComponent("test3/2012-04-14 13.43.50.jpg"));
+//uploader.on('error', function(err) {
+//    console.error("unable to upload:", err.stack);
+//});
+//uploader.on('progress', function(amountDone, amountTotal) {
+//    console.log("progress", amountDone, amountTotal);
+//});
+//uploader.on('end', function(url) {
+//    console.log("file available at", url);
+//});
+
+
+//refactor this to use async to keep it a bit more sane and do the s3 upload
 function writeFiles(path, files, index, success) {
     var f = files[index];
     var fullPath = path + "/" + f.name;
@@ -28,14 +49,11 @@ function writeFiles(path, files, index, success) {
                         console.log(err);
                         throw err;
                     }
-                    console.log("File written to " + fullPath);
-                    console.log("Trying to delete to " + f.path);
                     fs.unlink(f.path, function(err){
                         if(err){
                             console.log(err);
                             throw err;
                         }
-                        console.log("Deleted " + f.path);
                         if(index < files.length-1){
                             process.nextTick(function(){
                                 writeFiles(path, files, index+1, success);
