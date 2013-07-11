@@ -1,13 +1,11 @@
 var fs = require("fs"),
     s3 = require('s3'),
-    IMGR = require('imgr').IMGR,
+    mkdirp = require('mkdirp')
+    gm = require('gm').subClass({ imageMagick: true }),
     utils = require("../utils/hsautils"),
     async = require("async"),
     dir = "./public/images/gallery/";
 
-var imgr = new IMGR({
-  image_magick : true
-});
 
 var s3Client = s3.createClient({
     key: process.env.AWSACCESSKEY,
@@ -15,55 +13,84 @@ var s3Client = s3.createClient({
     bucket: "hatfeild"
 });
 
-// upload a file to s3
-//var uploader = s3Client.upload(dir, encodeURIComponent("test3/2012-04-14 13.43.50.jpg"));
-//uploader.on('error', function(err) {
-//    console.error("unable to upload:", err.stack);
-//});
-//uploader.on('progress', function(amountDone, amountTotal) {
-//    console.log("progress", amountDone, amountTotal);
-//});
-//uploader.on('end', function(url) {
-//    console.log("file available at", url);
-//});
+exports.upload = function(req, res) {
 
+    var album = req.param("name");
+    var path = album;
+    var files = req.files.file instanceof Array ? req.files.file : [req.files.file];
+    var tmp = process.env.TMPDIR + "/" + album + "/";
+    var thumbTemp = tmp + "thumbs" + "/";
 
-//refactor this to use async to keep it a bit more sane and do the s3 upload
-function writeFiles(path, files, index, success) {
-    var f = files[index];
-    var fullPath = path + "/" + f.name;
-    var thumbPath = path + "/thumbs/" + f.name;
+    async.map(files, function iterator(f, cb){
 
-    imgr.load(f.path)
-        .resizeToWidth(500)
-        .save(fullPath, function(err){
-            if(err){
-                console.log(err);
-                throw err;
-            }
+        var fullPath = path + "/" + f.name;
+        var thumbPath = path + "/thumbs/" + f.name;
 
-            imgr.load(f.path)
-                .adaptiveResize(100,100,imgr.TOP)
-                .save(thumbPath, function(err){
-                    if(err){
-                        console.log(err);
-                        throw err;
+        var i = gm(f.path);
+        var ar = null;
+        i.size(function(err, size){
+            if(err || !size){
+                callback(err);  //couldn't work out size
+            } else {
+                ar = size.width / size.height;
+
+                async.series([
+                    //Create the output dir if it doesn't already exist
+                    function makeTempDir(callback){
+                        mkdirp(tmp, callback);
+                    },
+                    function mainResizeWrite(callback){
+                        i.resize(ar < 0 ? 500 : 800)
+                            .write(tmp + f.name, callback);
+                    },
+                    function mainUpload(callback){
+                        var uploader = s3Client.upload(tmp + f.name, encodeURIComponent(fullPath));
+                        uploader.on('error', function(err) {
+                            callback(err);
+                        });
+                        uploader.on('end', function(url) {
+                            callback(null);
+                        });
+                    },
+                    function makeTempDir(callback){
+                        mkdirp(thumbTemp, callback);
+                    },
+                    function thumbResizeWrite(callback){
+                        i.crop(150,150,0,0)
+                            .write(thumbTemp + f.name, callback);
+                    },
+                    function thumbUpload(callback){
+                        var uploader = s3Client.upload(thumbTemp + f.name, encodeURIComponent(thumbPath));
+                        uploader.on('error', function(err) {
+                            callback(err);
+                        });
+                        uploader.on('end', function(url) {
+                            callback(null);
+                        });
+                    },
+                    function deleteTempFiles(callback){
+                        async.parallel([
+                            function(callback2){
+                                fs.unlink(tmp + f.name, callback2);
+                            },
+                            function(callback2){
+                                fs.unlink(thumbTemp + f.name, callback2);
+                            },
+                            function(callback2){
+                                fs.unlink(f.path, callback2);
+                            }
+                        ], callback);
                     }
-                    fs.unlink(f.path, function(err){
-                        if(err){
-                            console.log(err);
-                            throw err;
-                        }
-                        if(index < files.length-1){
-                            process.nextTick(function(){
-                                writeFiles(path, files, index+1, success);
-                            });
-                        } else {
-                            process.nextTick(success);
-                        }
-                    });
-                });
+                ], cb)
+            }
         });
+    }, function(err, results){
+        if(err){
+            console.error(err);
+            throw err;
+        }
+        res.send(200, "ok");
+    });
 }
 
 function getAlbums(finished){
@@ -147,15 +174,3 @@ exports.photos = function(req, res) {
   });
 }
 
-exports.upload = function(req, res) {
-
-    var album = req.param("name");
-    var path = dir + album;
-    var files = req.files.file instanceof Array ? req.files.file : [req.files.file];
-
-    function success(){
-        res.send(200, "ok");
-    }
-
-    writeFiles(path, files, 0, success);
-}
