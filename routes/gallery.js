@@ -4,10 +4,17 @@ var fs = require("fs"),
     gm = require('gm').subClass({ imageMagick: true }),
     utils = require("../utils/hsautils"),
     async = require("async"),
+    knox = require("knox"),
     dir = "./public/images/gallery/";
 
 
 var s3Client = s3.createClient({
+    key: process.env.AWSACCESSKEY,
+    secret: process.env.AWSSECRETKEY,
+    bucket: "hatfeild"
+});
+
+var knoxClient = knox.createClient({
     key: process.env.AWSACCESSKEY,
     secret: process.env.AWSSECRETKEY,
     bucket: "hatfeild"
@@ -95,7 +102,31 @@ exports.upload = function(req, res) {
 
 function getAlbums(finished){
   var albums = [];
-  fs.readdir(dir, function(err, files){
+
+    knoxClient.list({ prefix: '' }, function(err, data){
+        var x=0;
+        /* `data` will look roughly like:
+
+         {
+         Prefix: 'my-prefix',
+         IsTruncated: true,
+         MaxKeys: 1000,
+         Contents: [
+         {
+         Key: 'whatever'
+         LastModified: new Date(2012, 11, 25, 0, 0, 0),
+         ETag: 'whatever',
+         Size: 123,
+         Owner: 'you',
+         StorageClass: 'whatever'
+         },
+         ⋮
+         ]
+         }
+
+         */
+    });
+  /*fs.readdir(dir, function(err, files){
      async.map(files, function iterator(item, cb){
        fs.stat(dir + "/" + item, function(err, stat){
          var album = {
@@ -127,7 +158,7 @@ function getAlbums(finished){
          });  
        });
     });
-   });
+ });*/
 }
 
 function getPhotos(path, finished){
